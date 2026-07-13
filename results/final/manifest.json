@@ -1,0 +1,66 @@
+{
+  "project": "Dual-Branch CNN for Non-Melanoma Dermoscopic Classification",
+  "experiments": [
+    {
+      "id": "EXP01",
+      "model": "resnet50",
+      "seed": 42,
+      "parameters": 23522375,
+      "checkpoint": "checkpoints/resnet50"
+    },
+    {
+      "id": "EXP02",
+      "model": "densenet121",
+      "seed": 42,
+      "parameters": 6961031,
+      "checkpoint": "checkpoints/densenet121"
+    },
+    {
+      "id": "EXP03",
+      "model": "efficientnet_b4",
+      "seed": 42,
+      "parameters": 17561167,
+      "checkpoint": "checkpoints/efficientnet_b4"
+    },
+    {
+      "id": "EXP04",
+      "model": "dual_branch_seed42",
+      "version": "V1",
+      "seed": 42,
+      "parameters": 10669639,
+      "checkpoint": "checkpoints/dual_branch_seed42_v1"
+    },
+    {
+      "id": "EXP05",
+      "model": "dual_branch_seed123",
+      "version": "V1",
+      "seed": 123,
+      "parameters": 10669639,
+      "checkpoint": "checkpoints/dual_branch_seed123"
+    },
+    {
+      "id": "EXP06",
+      "model": "dual_branch_seed999",
+      "version": "V1",
+      "seed": 999,
+      "parameters": 10669639,
+      "checkpoint": "checkpoints/dual_branch_seed999"
+    },
+    {
+      "id": "EXP07",
+      "model": "dual_branch_seed42",
+      "version": "V1.1",
+      "seed": 42,
+      "parameters": 10669639,
+      "checkpoint": "checkpoints/dual_branch_seed42_v1_1"
+    },
+    {
+      "id": "EXP08",
+      "model": "dual_branch_seed42",
+      "version": "V2",
+      "seed": 42,
+      "parameters": 9031241,
+      "checkpoint": "checkpoints/dual_branch_seed42"
+    }
+  ]
+}

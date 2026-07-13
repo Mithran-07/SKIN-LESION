@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+env/
+venv/
+
+# PyTorch
+*.pth
+*.pt
+*.ckpt
+
+# Project specifics
+datasets/
+checkpoints/
+logs/
+tensorboard/
+artifacts/checkpoints.zip
+
+# IDEs
+.idea/
+.vscode/

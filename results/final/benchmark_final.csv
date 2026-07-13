@@ -1,0 +1,10 @@
+Model,Parameters,Training_Time_s,Val_Accuracy,Test_Accuracy,Val_Macro_F1,Test_Macro_F1,Val_Macro_AUC,Test_Macro_AUC,Val_Balanced_Accuracy,Test_Balanced_Accuracy,Inference_Time_ms_per_img,Peak_VRAM_MB,Best_Epoch,Checkpoint_Path
+resnet50,23522375,1852.7,0.5762,0.5662,0.5816,0.5352,0.9241,0.9352,0.7453,0.7513,20.964,900.3,30,C:\ADL\checkpoints\resnet50\best_checkpoint.pth
+densenet121,6961031,1476.1,0.666,0.6636,0.6449,0.6242,0.9487,0.9531,0.7367,0.7914,20.371,393.7,19,C:\ADL\checkpoints\densenet121\best_checkpoint.pth
+efficientnet_b4,17561167,2337.3,0.7159,0.7364,0.6661,0.6919,0.9424,0.9592,0.7458,0.7916,8.831,677.7,35,C:\ADL\checkpoints\efficientnet_b4\best_checkpoint.pth
+dual_branch_seed42,10669639,25073.7,0.5296,0.5391,0.4401,0.449,0.8802,0.9054,0.6163,0.6862,28.47,1561.1,43,C:\ADL\checkpoints\dual_branch_seed42\best_checkpoint.pth
+dual_branch_seed123,10669639,24904.7,0.5356,0.555,0.4592,0.4855,0.8874,0.9098,0.6212,0.7031,27.231,1561.1,49,C:\ADL\checkpoints\dual_branch_seed123\best_checkpoint.pth
+dual_branch_seed999,10669639,19414.6,0.5429,0.5497,0.4538,0.4577,0.8694,0.8973,0.6376,0.6639,26.32,1561.1,29,C:\ADL\checkpoints\dual_branch_seed999\best_checkpoint.pth
+dual_branch_seed42,10669639,0.0,0,0.5391,0,0.449,0,0.9054,0,0.6862,26.557,1508.8,43,C:\ADL\checkpoints\dual_branch_seed42\best_checkpoint.pth
+dual_branch_seed42,10669639,10272.5,0.6613,0.6576,0.4784,0.4814,0.8945,0.9006,0.6085,0.6218,24.558,1561.1,16,C:\ADL\checkpoints\dual_branch_seed42\best_checkpoint.pth
+dual_branch_seed42,9031241,10869.5,0.6367,0.6424,0.5031,0.495,0.901,0.9015,0.6244,0.5948,25.54,1516.7,17,C:\ADL\checkpoints\dual_branch_seed42\best_checkpoint.pth

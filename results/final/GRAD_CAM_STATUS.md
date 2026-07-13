@@ -1,0 +1,1 @@
+The repository contains Grad-CAM infrastructure, but explainability experiments were intentionally excluded from the final experimental protocol and are reserved for future work.
