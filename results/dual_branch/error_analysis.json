@@ -1,0 +1,91 @@
+{
+    "top_confused_pairs": [
+        {
+            "true_class": "NV",
+            "pred_class": "MEL",
+            "count": 269
+        },
+        {
+            "true_class": "NV",
+            "pred_class": "BKL",
+            "count": 90
+        },
+        {
+            "true_class": "NV",
+            "pred_class": "DF",
+            "count": 48
+        },
+        {
+            "true_class": "NV",
+            "pred_class": "AKIEC",
+            "count": 39
+        },
+        {
+            "true_class": "BKL",
+            "pred_class": "AKIEC",
+            "count": 36
+        }
+    ],
+    "worst_predictions": [
+        {
+            "index": 1509,
+            "true_class": "MEL",
+            "pred_class": "BCC",
+            "confidence": 0.9973273277282715
+        },
+        {
+            "index": 1169,
+            "true_class": "NV",
+            "pred_class": "DF",
+            "confidence": 0.9979467988014221
+        },
+        {
+            "index": 1132,
+            "true_class": "NV",
+            "pred_class": "BCC",
+            "confidence": 0.9986363053321838
+        },
+        {
+            "index": 48,
+            "true_class": "BKL",
+            "pred_class": "VASC",
+            "confidence": 0.9986844658851624
+        },
+        {
+            "index": 503,
+            "true_class": "NV",
+            "pred_class": "DF",
+            "confidence": 0.9987229704856873
+        },
+        {
+            "index": 1134,
+            "true_class": "NV",
+            "pred_class": "BCC",
+            "confidence": 0.999225378036499
+        },
+        {
+            "index": 585,
+            "true_class": "NV",
+            "pred_class": "DF",
+            "confidence": 0.9997783303260803
+        },
+        {
+            "index": 264,
+            "true_class": "MEL",
+            "pred_class": "DF",
+            "confidence": 0.9998342990875244
+        },
+        {
+            "index": 1130,
+            "true_class": "NV",
+            "pred_class": "VASC",
+            "confidence": 0.9998718500137329
+        },
+        {
+            "index": 0,
+            "true_class": "BKL",
+            "pred_class": "DF",
+            "confidence": 0.9999585151672363
+        }
+    ]
+}

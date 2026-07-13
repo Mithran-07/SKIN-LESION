@@ -1,0 +1,16 @@
+{
+    "empirical_coverage": 0.8973509933774835,
+    "target_coverage": 0.9,
+    "avg_set_size": 2.8854304635761587,
+    "set_size_distribution": [
+        0,
+        101,
+        454,
+        603,
+        245,
+        84,
+        22,
+        1
+    ],
+    "q_hat": 0.9773626960442214
+}

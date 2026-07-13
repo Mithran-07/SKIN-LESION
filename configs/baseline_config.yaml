@@ -1,0 +1,81 @@
+##############################################################
+# Dual-Branch CNN — Baseline Training Configuration
+# Machine: Lenovo LOQ | GPU: RTX 3050 6GB | CUDA 12.4
+##############################################################
+
+project:
+  name: "dual_branch_cnn_dermoscopy"
+  seed: 42
+  description: "Non-Melanoma Dermoscopic Classification — Baseline Phase"
+
+# ── Data ──────────────────────────────────────────────────
+data:
+  ham10000_dir: "datasets/HAM10000"
+  isic2019_dir: "datasets/ISIC2019"
+  isic2018_dir: "datasets/ISIC2018"
+  splits_dir: "splits"
+  image_size: 224
+  num_workers: 4          # Windows-safe (max 4 on 12-thread system)
+  prefetch_factor: 2
+
+  # 7-class non-melanoma taxonomy
+  num_classes: 7
+  class_names:
+    - "akiec"   # Actinic keratoses / Bowen's disease
+    - "bcc"     # Basal cell carcinoma
+    - "bkl"     # Benign keratosis
+    - "df"      # Dermatofibroma
+    - "mel"     # Melanoma
+    - "nv"      # Melanocytic nevi
+    - "vasc"    # Vascular lesions
+
+  # Split ratios
+  train_ratio: 0.70
+  val_ratio: 0.15
+  test_ratio: 0.15
+
+# ── Training ──────────────────────────────────────────────
+training:
+  epochs: 50
+  batch_size: 32          # Auto-reduced to 16 if OOM (EfficientNet-B4)
+  lr: 1e-4
+  weight_decay: 1e-2
+  grad_clip: 1.0
+  early_stop_patience: 10
+  early_stop_metric: "val_balanced_accuracy"
+  early_stop_mode: "max"
+
+  # Mixed Precision
+  use_amp: true
+  amp_dtype: "bfloat16"   # Ampere architecture native
+
+  # Scheduler
+  scheduler: "cosine"
+  eta_min: 1e-6
+
+  # Optimizer
+  optimizer: "adamw"
+  betas: [0.9, 0.999]
+  eps: 1e-8
+
+# ── Models ────────────────────────────────────────────────
+models:
+  - name: "resnet50"
+    pretrained: true
+    batch_size: 32
+
+  - name: "densenet121"
+    pretrained: true
+    batch_size: 32
+
+  - name: "efficientnet_b4"
+    pretrained: true
+    batch_size: 16          # Smaller batch for 6GB VRAM
+
+# ── Paths ─────────────────────────────────────────────────
+paths:
+  checkpoints: "checkpoints"
+  results: "results"
+  tensorboard: "tensorboard"
+  logs: "logs"
+  splits: "splits"

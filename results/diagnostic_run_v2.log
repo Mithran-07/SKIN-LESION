@@ -1,0 +1,57 @@
+[INFO] Device: cuda
+[OK] Model loaded from C:\ADL\checkpoints\dual_branch_seed42\best_checkpoint.pth
+[INFO] Collecting gate weights from validation set...
+[INFO] Collecting gate weights from test set...
+[INFO] Combined samples: 3013
+
+[INFO] Section 1: Attention Gate Behaviour...
+  Texture: mean=0.1910 median=0.1852 std=0.0343 min=0.1160 max=0.2948
+  Structure: mean=0.8920 median=0.8975 std=0.0266 min=0.7935 max=0.9343
+[OK] Gate distribution -> C:\ADL\results\fusion_gate_distribution.png
+
+[INFO] Section 2: Sample-wise Behaviour...
+  Texture-dominant: 0 (0.0%)
+  Structure-dominant: 3013 (100.0%)
+  Balanced: 0 (0.0%)
+
+[INFO] Section 3: Class-wise Behaviour...
+  AKIEC : n= 120 | tex_gate=0.2137 | str_gate=0.8895 | tex_frac=0.193
+  BCC   : n= 133 | tex_gate=0.2212 | str_gate=0.8853 | tex_frac=0.200
+  BKL   : n= 358 | tex_gate=0.2179 | str_gate=0.8749 | tex_frac=0.199
+  DF    : n=  26 | tex_gate=0.2225 | str_gate=0.8925 | tex_frac=0.199
+  MEL   : n= 343 | tex_gate=0.1847 | str_gate=0.8806 | tex_frac=0.173
+  NV    : n=1987 | tex_gate=0.1832 | str_gate=0.8975 | tex_frac=0.169
+  VASC  : n=  46 | tex_gate=0.1993 | str_gate=0.8940 | tex_frac=0.182
+[OK] Class gate chart -> C:\ADL\results\fusion_class_gate_weights.png
+
+[INFO] Section 4: Branch Ablation Inference...
+  Running: Normal...
+    Acc=0.5404  BalAcc=0.6865  F1=0.4505  ROC=0.9056
+  Running: Texture OFF...
+    Acc=0.1788  BalAcc=0.5531  F1=0.1889  ROC=0.8189
+  Running: Structure OFF...
+    Acc=0.1854  BalAcc=0.1764  F1=0.0871  ROC=0.8116
+
+[INFO] Section 5: Feature Correlation...
+  Cosine Sim: mean=0.7602 std=0.0724 min=0.4682 max=0.9344
+
+[INFO] Section 6: Fusion Collapse Detection...
+  Structure-collapsed (>80%): 77.2%
+  Texture-suppressed  (<20%):  77.2%
+  Both (full collapse): 77.2%
+  COLLAPSED: True
+
+[INFO] Writing fusion_diagnostic.md ...
+[OK] Report -> C:\ADL\results\fusion_diagnostic.md
+[OK] JSON summary -> C:\ADL\results\fusion_diagnostic.json
+Traceback (most recent call last):
+  File "C:\ADL\scripts\fusion_diagnostic.py", line 685, in <module>
+    main()
+    ~~~~^^
+  File "C:\ADL\scripts\fusion_diagnostic.py", line 681, in main
+    print("\n\u2705 Fusion Diagnostic Analysis Complete.")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2705' in position 2: character maps to <undefined>

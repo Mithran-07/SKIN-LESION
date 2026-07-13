@@ -1,0 +1,232 @@
+# =============================================================================
+# ADL Project Configuration
+# Dual-Branch CNN for Non-Melanoma Dermoscopic Classification
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# Reproducibility
+# ---------------------------------------------------------------------------
+seed: 42
+deterministic: true  # torch.backends.cudnn.deterministic
+
+# ---------------------------------------------------------------------------
+# Device
+# Options: auto | cuda | mps | cpu
+# 'auto' selects cuda > mps > cpu automatically
+# ---------------------------------------------------------------------------
+device: auto
+
+# ---------------------------------------------------------------------------
+# Dataset
+# ---------------------------------------------------------------------------
+dataset:
+  name: ham10000                    # ham10000 | isic2019
+  root: data/raw/HAM10000           # Path to extracted dataset folder
+  metadata_csv: HAM10000_metadata.csv
+  image_dirs:
+    - HAM10000_images_part_1
+    - HAM10000_images_part_2
+  mask_dir: null                    # Set to mask folder path if available (ISIC 2018)
+  image_size: 224
+  num_classes: 7
+  class_names:
+    - MEL
+    - NV
+    - BCC
+    - AKIEC
+    - BKL
+    - DF
+    - VASC
+  # Class distribution in HAM10000 (used for focal loss alpha computation)
+  class_counts:
+    MEL: 1113
+    NV: 6705
+    BCC: 514
+    AKIEC: 327
+    BKL: 1099
+    DF: 115
+    VASC: 142
+
+# ---------------------------------------------------------------------------
+# Dataset Splits
+# ---------------------------------------------------------------------------
+split:
+  train: 0.70
+  val: 0.15
+  test: 0.15
+  stratify: true
+  patient_aware: true               # Prevent patient-level data leakage
+
+# ---------------------------------------------------------------------------
+# Augmentation
+# ---------------------------------------------------------------------------
+augmentation:
+  random_resized_crop:
+    height: 224
+    width: 224
+    scale: [0.8, 1.0]
+  horizontal_flip_p: 0.5
+  vertical_flip_p: 0.5
+  color_jitter:
+    brightness: 0.2
+    contrast: 0.2
+    saturation: 0.2
+    hue: 0.1
+  elastic_transform_p: 0.3
+  coarse_dropout_p: 0.2
+  hair_augmentation: true           # Synthetic dermoscopic hair overlay
+  # ImageNet normalization statistics
+  normalize:
+    mean: [0.485, 0.456, 0.406]
+    std: [0.229, 0.224, 0.225]
+
+# ---------------------------------------------------------------------------
+# DataLoader
+# ---------------------------------------------------------------------------
+dataloader:
+  batch_size: 32                    # Adjust: 32 for M4 MPS, 8 for RTX 3050
+  num_workers: 4                    # Match to CPU core count
+  pin_memory: false                 # Set true for CUDA, false for MPS/CPU
+  use_weighted_sampler: true        # Oversample minority classes during training
+
+# ---------------------------------------------------------------------------
+# Model Architecture
+# ---------------------------------------------------------------------------
+model:
+  name: dual_branch                 # dual_branch | resnet50 | densenet201 | efficientnet
+  # --- Dual-Branch Architecture ---
+  dual_branch:
+    shallow_wide:
+      channels: [256, 512, 1024]    # Progressive channel expansion (texture pathway)
+      pretrained_init: true         # Initialise from WideResNet-50-2 weights
+    deep_narrow:
+      base_channels: 64
+      bottleneck_channels: 256
+      num_blocks: [2, 2, 3, 3]      # Residual blocks per stage (structure pathway)
+      pretrained_init: true         # Initialise from DenseNet-121 weights
+    fusion:
+      texture_dim: 1024
+      structure_dim: 256
+      hidden_dim: 512
+      output_dim: 256
+      dropout_1: 0.4
+      dropout_2: 0.3
+  # --- Multi-Task Learning settings ---
+  mtl:
+    enabled: false                  # Set true to use MTLDualBranchNet
+    seg_lambda: 0.5                 # Weight for segmentation auxiliary loss
+    cls_lambda: 1.0                 # Weight for classification loss
+
+# ---------------------------------------------------------------------------
+# Loss Function
+# ---------------------------------------------------------------------------
+loss:
+  type: focal                       # focal | cross_entropy
+  focal:
+    gamma: 2.0
+    alpha: auto                     # 'auto' = compute from inverse class frequency
+    reduction: mean
+  label_smoothing: 0.1
+
+# ---------------------------------------------------------------------------
+# Optimizer
+# ---------------------------------------------------------------------------
+optimizer:
+  type: adamw
+  lr: 1.0e-4
+  weight_decay: 1.0e-4
+  betas: [0.9, 0.999]
+
+# ---------------------------------------------------------------------------
+# Learning Rate Scheduler
+# ---------------------------------------------------------------------------
+scheduler:
+  type: cosine_with_warmup
+  warmup_epochs: 5
+  min_lr: 1.0e-6
+  T_max: 50                         # Total cosine annealing period (epochs)
+
+# ---------------------------------------------------------------------------
+# Training Loop
+# ---------------------------------------------------------------------------
+training:
+  epochs: 60
+  grad_accum_steps: 1              # Increase to 2-4 for RTX 3050 (4 GB VRAM)
+  mixed_precision: false           # true for CUDA; MPS has partial support only
+  early_stopping_patience: 10
+  save_dir: results/
+  log_interval: 10                  # Log metrics every N batches
+
+# ---------------------------------------------------------------------------
+# Evaluation
+# ---------------------------------------------------------------------------
+evaluation:
+  metrics:
+    - auc_macro
+    - f1_macro
+    - balanced_accuracy
+    - recall_per_class
+    - confusion_matrix
+  save_predictions: true
+  output_dir: results/eval/
+
+# ---------------------------------------------------------------------------
+# Paths
+# ---------------------------------------------------------------------------
+paths:
+  checkpoint_dir: checkpoints/
+  log_dir: logs/
+  results_dir: results/
+  best_model: checkpoints/best_model.pth
+
+# ---------------------------------------------------------------------------
+# Logging
+# ---------------------------------------------------------------------------
+logging:
+  level: INFO                       # DEBUG | INFO | WARNING | ERROR | CRITICAL
+  log_to_file: true
+  log_filename: logs/train.log
+  tensorboard: true
+  tensorboard_dir: logs/tensorboard
+
+# ---------------------------------------------------------------------------
+# Explainability — Grad-CAM
+# ---------------------------------------------------------------------------
+gradcam:
+  enabled: true
+  shallow_target_layer: shallow_branch.block3.conv   # Last conv of shallow branch
+  deep_target_layer: deep_branch.stage4.conv_layers  # Last conv of deep branch
+  save_dir: results/gradcam/
+  alpha: 0.4                        # Heatmap overlay opacity
+
+# ---------------------------------------------------------------------------
+# Uncertainty Quantification — Conformal Prediction
+# ---------------------------------------------------------------------------
+conformal:
+  alpha: 0.1                        # Miscoverage rate → 90 % coverage guarantee
+  cal_fraction: 0.2                 # Fraction of val set used for calibration
+  method: raps                      # raps | lac (simple non-conformity score)
+  raps:
+    k_reg: 5
+    lambda_reg: 0.01
+
+# ---------------------------------------------------------------------------
+# Uncertainty Quantification — MC Dropout
+# ---------------------------------------------------------------------------
+mc_dropout:
+  n_samples: 50
+  dropout_p: 0.3                    # Inference-time dropout probability
+
+# ---------------------------------------------------------------------------
+# Federated Learning (future phase, disabled by default)
+# ---------------------------------------------------------------------------
+federated:
+  enabled: false
+  num_clients: 5
+  rounds: 20
+  local_epochs: 5
+  aggregation: fedavg
+  differential_privacy:
+    enabled: false
+    noise_multiplier: 1.0
+    max_grad_norm: 1.0

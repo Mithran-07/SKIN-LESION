@@ -1,0 +1,5 @@
+{
+  "training_time_s": 10869.487223200005,
+  "inference_per_img_ms": 25.539602913904556,
+  "peak_vram_mb": 1516.695552
+}

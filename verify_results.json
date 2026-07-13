@@ -1,0 +1,108 @@
+{
+    "system": {
+        "os": "Windows 11 (v10.0.26200)",
+        "cpu": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+        "ram_total_gb": 15.714714050292969,
+        "ram_available_gb": 6.882408142089844,
+        "disk_free_gb": 72.21279525756836,
+        "disk_total_gb": 460.28026962280273
+    },
+    "gpu": {
+        "cuda_available": true,
+        "cuda_version": "12.4",
+        "cudnn_version": 90100,
+        "device_count": 1,
+        "devices": [
+            {
+                "id": 0,
+                "name": "NVIDIA GeForce RTX 3050 6GB Laptop GPU",
+                "capability": [
+                    8,
+                    6
+                ],
+                "total_memory_gb": 5.99951171875,
+                "multi_processor_count": 20
+            }
+        ]
+    },
+    "packages": {
+        "PyTorch": {
+            "status": "Success",
+            "version": "2.6.0+cu124"
+        },
+        "torchvision": {
+            "status": "Success",
+            "version": "0.21.0+cu124"
+        },
+        "torchaudio": {
+            "status": "Success",
+            "version": "2.6.0+cu124"
+        },
+        "timm": {
+            "status": "Success",
+            "version": "1.0.27"
+        },
+        "albumentations": {
+            "status": "Success",
+            "version": "2.0.8"
+        },
+        "opencv-python (cv2)": {
+            "status": "Success",
+            "version": "5.0.0"
+        },
+        "scikit-learn (sklearn)": {
+            "status": "Success",
+            "version": "1.9.0"
+        },
+        "pandas": {
+            "status": "Success",
+            "version": "3.0.3"
+        },
+        "numpy": {
+            "status": "Success",
+            "version": "2.4.4"
+        },
+        "matplotlib": {
+            "status": "Success",
+            "version": "3.11.0"
+        },
+        "torchmetrics": {
+            "status": "Success",
+            "version": "1.9.0"
+        },
+        "tqdm": {
+            "status": "Success",
+            "version": "4.68.4"
+        },
+        "pyyaml (yaml)": {
+            "status": "Success",
+            "version": "6.0.3"
+        },
+        "pillow (PIL)": {
+            "status": "Success",
+            "version": "12.2.0"
+        },
+        "seaborn": {
+            "status": "Success",
+            "version": "0.13.2"
+        },
+        "jupyterlab": {
+            "status": "Success",
+            "version": "4.6.1"
+        },
+        "tensorboard": {
+            "status": "Success",
+            "version": "2.21.0"
+        },
+        "pytest": {
+            "status": "Success",
+            "version": "9.1.1"
+        },
+        "rich": {
+            "status": "Success",
+            "version": "15.0.0"
+        }
+    },
+    "pytorch_version": "2.6.0+cu124",
+    "python_version": "3.12.13 (main, Jun 23 2026, 15:23:43) [MSC v.1944 64 bit (AMD64)]"
+}
