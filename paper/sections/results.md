@@ -1,199 +1,46 @@
-# Results
+# Results & Empirical Findings
 
-## Quantitative Results
+## 1. Quantitative Benchmark Comparison
 
-### Overall Performance Comparison
+We evaluated the Decoupled Dual-Branch CNN framework and standard single-branch transfer learning baselines on the HAM10000 7-class dermoscopic classification benchmark under identical patient-aware stratified train/val/test splits (70/15/15) and class-weighted Focal Loss ($\gamma=2.0$).
 
-| Model | AUC | Accuracy | Balanced Accuracy | Macro F1 | Params |
-|-------|-----|----------|-------------------|----------|--------|
-| ResNet50 (baseline) | 0.912 | 0.847 | 0.742 | 0.718 | 23.5M |
-| DenseNet201 (baseline) | 0.918 | 0.854 | 0.751 | 0.729 | 18.1M |
-| EfficientNet-B4 (baseline) | 0.925 | 0.861 | 0.768 | 0.744 | 19.3M |
-| **Dual-Branch (ours)** | **0.941** | **0.878** | **0.801** | **0.782** | 21.2M |
-| **Dual-Branch + MTL** | **0.947** | **0.885** | **0.818** | **0.801** | 21.7M |
+### Overall Performance Comparison Table
 
-**Key Findings**:
-- Dual-branch architecture achieves 2.4% AUC improvement over best baseline (EfficientNet)
-- Multi-task learning variant further improves to 2.7% AUC gain
-- Balanced accuracy (0.818) demonstrates effective handling of class imbalance
-- Competitive parameter count (21.7M vs 19.3-23.5M baselines)
+| Architecture | Total Parameters | Macro ROC-AUC | Balanced Accuracy | Top-1 Accuracy | Macro F1 | Inference Latency | Peak VRAM |
+|---|---|---|---|---|---|---|---|
+| **EfficientNet-B4** | **17.56M** | **95.92%** | **79.16%** | **73.64%** | **69.19%** | **8.83 ms** | **677.7 MB** |
+| **DenseNet-121** | 6.96M | 95.31% | 79.14% | 66.36% | 62.42% | 20.37 ms | 393.7 MB |
+| **Dual-Branch V1.1 (Optimized Training)** | 10.67M | 90.06% | 62.18% | 65.76% | 48.14% | 24.56 ms | 1561.1 MB |
+| **Dual-Branch V2 (Refined Architecture)** | 9.03M | 90.15% | 59.48% | 64.24% | 49.50% | 25.54 ms | 1516.7 MB |
+| **Dual-Branch V1 (Seed 123)** | 10.67M | 90.98% | 70.31% | 55.50% | 48.55% | 27.23 ms | 1561.1 MB |
+| **Dual-Branch V1 (Seed 999)** | 10.67M | 89.73% | 66.39% | 54.97% | 45.77% | 26.32 ms | 1561.1 MB |
+| **Dual-Branch V1 (Seed 42)** | 10.67M | 90.54% | 68.62% | 53.91% | 44.90% | 28.47 ms | 1561.1 MB |
+| **ResNet-50** | 23.52M | 93.52% | 75.13% | 56.62% | 53.52% | 20.96 ms | 900.3 MB |
 
-### Per-Class Performance
+---
 
-#### Sensitivity (Recall) by Class
-| Class | ResNet50 | DenseNet201 | EfficientNet-B4 | Dual-Branch | Dual-Branch + MTL |
-|-------|----------|-------------|-----------------|-------------|-------------------|
-| MEL | 0.724 | 0.735 | 0.756 | **0.791** | **0.814** |
-| NV | 0.892 | 0.898 | 0.911 | **0.923** | **0.931** |
-| BCC | 0.758 | 0.769 | 0.781 | **0.803** | **0.821** |
-| AK | 0.614 | 0.628 | 0.642 | **0.698** | **0.726** |
-| BKL | 0.721 | 0.738 | 0.751 | **0.782** | **0.804** |
-| DF | 0.492 | 0.518 | 0.531 | **0.614** | **0.658** |
-| VASC | 0.556 | 0.578 | 0.601 | **0.687** | **0.719** |
+## 2. Multi-Seed Robustness Analysis (Dual-Branch V1)
 
-**Clinical Significance**:
-- Rare classes (DF: +12.7%, VASC: +11.8% recall over EfficientNet) improved substantially
-- Common class (NV) maintained high sensitivity (0.931)
-- Rarest class (DF) now detectable with >65% sensitivity vs 53% baseline
+To evaluate statistical stability, Dual-Branch V1 was trained across three random seeds:
+- **Seed 42**: Accuracy = 53.91%, Balanced Accuracy = 68.62%, Macro F1 = 44.90%, ROC-AUC = 90.54%
+- **Seed 123**: Accuracy = 55.50%, Balanced Accuracy = 70.31%, Macro F1 = 48.55%, ROC-AUC = 90.98%
+- **Seed 999**: Accuracy = 54.97%, Balanced Accuracy = 66.39%, Macro F1 = 45.77%, ROC-AUC = 89.73%
+- **Multi-Seed Mean**: Accuracy = **54.79% ± 0.81%**, Balanced Accuracy = **68.44% ± 1.97%**, ROC-AUC = **90.42% ± 0.63%**
 
-#### Specificity by Class
-| Class | ResNet50 | DenseNet201 | EfficientNet-B4 | Dual-Branch | Dual-Branch + MTL |
-|-------|----------|-------------|-----------------|-------------|-------------------|
-| MEL | 0.978 | 0.981 | 0.985 | **0.988** | **0.990** |
-| NV | 0.795 | 0.812 | 0.834 | **0.851** | **0.864** |
-| BCC | 0.942 | 0.948 | 0.954 | **0.961** | **0.967** |
-| AK | 0.923 | 0.931 | 0.938 | **0.948** | **0.956** |
-| BKL | 0.901 | 0.914 | 0.928 | **0.941** | **0.952** |
-| DF | 0.988 | 0.989 | 0.991 | **0.993** | **0.995** |
-| VASC | 0.983 | 0.985 | 0.987 | **0.990** | **0.992** |
+---
 
-**Interpretation**: Model maintains high specificity across all classes; improves discrimination between classes.
+## 3. Analysis of the Negative Research Finding
 
-## Confusion Matrix Analysis
+### Why EfficientNet-B4 Outperformed Dual-Branch Architectures
+1. **Compound Scaling Superiority**: EfficientNet-B4 utilizes principled joint scaling of depth, width, and input resolution ($224 \times 224$ with MBConv depthwise separable blocks), which preserves hierarchical spatial features across both fine texture and global lesion context without requiring artificial topological decoupling.
+2. **Attention Gate Imbalance**: Empirical gate diagnostics revealed that the attention fusion module consistently assigned over 78% of learned gate weights to the deep structural branch, leaving the high-dimensional shallow texture branch (1024-dim) under-leveraged during gradient backpropagation.
+3. **Inference Latency & Efficiency**: EfficientNet-B4 achieved a 3x faster inference latency (8.83 ms vs 27.23 ms) and 2.3x lower peak VRAM consumption (677.7 MB vs 1561.1 MB) compared to the Dual-Branch network.
 
-### Dual-Branch + MTL (Best Model)
-Rows = True Label, Columns = Predicted Label
+---
 
-```
-        MEL    NV    BCC    AK   BKL    DF   VASC
-MEL  [  98    8     2      1     0      0     0  ]
-NV   [  12   386    8     15     6      1     2  ]
-BCC  [   1    8    64     1     3      0     0  ]
-AK   [   2    9     1    40    10     0     2  ]
-BKL  [   3   14     1    11    89     0     2  ]
-DF   [   0    2     0     0     1     18    2  ]
-VASC [   1    2     0     1     2     1    50  ]
-```
+## 4. Production Deployment Decision
 
-### Main Confusion Patterns
-1. **NV ↔ MEL** (12 errors): Common confusion due to overlapping appearance
-2. **AK ↔ BKL** (10 errors): Both keratotic lesions with similar morphology
-3. **DF ↔ NV** (2 errors): Rare, but related to superficial appearance similarity
-
-**Mitigation**: Attention maps show these are challenging even for expert dermatologists.
-
-## Attention Weight Analysis
-
-### Texture vs Structure Branch Contribution
-
-Query: For correct classifications, which branch contributed more?
-
-**Distribution by Class**:
-| Class | Avg Texture Attention | Avg Structure Attention | Dominant Branch |
-|-------|--------|--------|--------|
-| MEL | 0.621 | 0.379 | Texture |
-| NV | 0.587 | 0.413 | Texture |
-| BCC | 0.543 | 0.457 | Slight Texture |
-| AK | 0.512 | 0.488 | Balanced |
-| BKL | 0.521 | 0.479 | Slight Texture |
-| DF | 0.468 | 0.532 | Structure |
-| VASC | 0.481 | 0.519 | Structure |
-
-**Clinical Interpretation**:
-- **Color-dominant lesions** (MEL: melanin distribution, NV: pigmentation): Texture branch → 58-62% weight
-- **Morphology-dominant lesions** (DF: dermatofibroma texture, VASC: vessel architecture): Structure branch → 51-53% weight
-- **Mixed** (AK, BKL): Balanced attention (~50-50) reflecting clinical reality
-
-### Model Interpretability
-For a single example (misclassified AK as BKL):
-- **Texture attention**: 0.48 → Suggests color patterns ambiguous
-- **Structure attention**: 0.52 → Morphology favored BKL interpretation
-- **Grad-CAM heatmap**: Highlighted border region → Clinician can verify
-
-## Robustness Analysis
-
-### Uncertainty Calibration (MC Dropout)
-
-**Validation Set Results** (N=1,502):
-- **Confidence (max softmax)** vs **Predicted Accuracy**:
-  - Conf > 0.9: Accuracy = 0.941
-  - Conf 0.7-0.9: Accuracy = 0.823
-  - Conf 0.5-0.7: Accuracy = 0.612
-  - Conf < 0.5: Accuracy = 0.384
-
-**ECE (Expected Calibration Error)** = 0.042 (well-calibrated)
-
-### Conformal Prediction Sets
-
-**Coverage at Confidence Level**:
-| Confidence | Avg Set Size | Empirical Coverage |
-|------------|-------------|---|
-| 80% | 1.3 | 82% |
-| 85% | 1.6 | 86% |
-| 90% | 2.1 | 91% |
-| 95% | 2.8 | 95% |
-
-**Example Output**: 
-```
-Test Image 1: Predicted Set = {MEL, BCC} with 90% coverage
-Interpretation: "Likely melanoma or BCC; 90% confidence set includes one of these"
-```
-
-## Interpretability Results
-
-### Grad-CAM Visualizations
-
-**Example 1: Correct Melanoma Classification**
-```
-Input Image: 224×224 dermoscopic image
-Predicted: Melanoma (conf=0.94)
-Grad-CAM: Red heatmap highlighting irregular pigmentation network
-Texture attention: 0.67, Structure attention: 0.33
-Interpretation: Model focused on color patterns (texture branch) as expected
-```
-
-**Example 2: Challenging Case (AK vs BKL)**
-```
-Input Image: Light-colored keratotic lesion
-Predicted: BKL (conf=0.68) [Ground truth: AK]
-Grad-CAM: Moderate activation in central region
-Texture attention: 0.49, Structure attention: 0.51
-Interpretation: Balanced attention reflects clinical difficulty; expert review recommended
-```
-
-### Failure Analysis
-
-**Total Test Errors**: 137/1,503 (91.2% accuracy)
-
-**Error Breakdown**:
-- **Semantic errors** (6%): Model confused visually similar classes (expected)
-- **Difficult cases** (60%): Images with ambiguous features; often hard for experts too
-- **Outliers** (28%): Unusual presentations or poor image quality
-- **Artifacts** (6%): Hairs, air bubbles, ruler marks partially obscuring lesion
-
-**Mitigation Strategies**:
-1. Ensemble predictions for low-confidence cases (conf < 0.7)
-2. Request image re-capture if confidence < 0.5
-3. Flag for dermatologist review if in conformal set size > 2
-
-## Comparison to Literature
-
-### Benchmark vs Published Results
-
-| Work | Dataset | Approach | AUC | Accuracy | Year |
-|------|---------|----------|-----|----------|------|
-| Esteva et al. | Curated | Inception v3 | 0.91 | 0.86 | 2019 |
-| Matsunaga et al. | HAM10000 | Hybrid CNN | 0.927 | 0.862 | 2021 |
-| Gessert et al. | HAM10000 | Ensemble (ResNet) | 0.935 | 0.868 | 2022 |
-| **Our work** | **HAM10000** | **Dual-Branch + MTL** | **0.947** | **0.885** | **2026** |
-
-**Position**: Top-tier performance on HAM10000; exceeds recent published work.
-
-## Computational Efficiency
-
-### Inference Time
-- **Per-image latency** (GPU, batch=1): 47ms
-- **Throughput** (batch=32): 682 images/sec
-- **Suitable for**: Clinical workflow integration (acceptable for real-time application)
-
-### Memory Requirements
-- **Training**: 8GB GPU (batch=32)
-- **Inference**: 2GB GPU
-- **Model size**: 86MB (fp32 weights)
-- **Deployment**: Compatible with edge devices after quantization
-
-### Training Time
-- **1 epoch**: ~285 seconds (7,010 training samples)
-- **100 epochs**: ~47 minutes
-- **Total with validation**: ~2-3 hours for convergence
-
+Based on strict scientific and engineering criteria:
+- **Deployed Inference Engine**: **EfficientNet-B4**
+- **Explainability**: Integrated Grad-CAM attribution overlay on the final convolutional feature head.
+- **Serving Architecture**: FastAPI REST backend paired with Next.js 14 web client.
