@@ -205,7 +205,7 @@ All 4 test tiers passed with 100% success:
 When ready to publish to your remote GitHub repository (`Mithran-07/SKIN-LESION`), run:
 
 ```bash
-cd "/Users/mithran/Documents/My projects/ADL"
+# In project root
 git push origin main
 ```
 
