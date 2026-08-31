@@ -1,0 +1,17 @@
+seed: 42
+device: auto
+dataset:
+  num_classes: 7
+  class_names: [MEL, NV, BCC, AKIEC, BKL, DF, VASC]
+model:
+  name: dual_branch
+  ablation:
+    use_shallow_branch: true
+    use_deep_branch: true
+    use_attention_gate: false
+    use_mtl_decoder: false
+training:
+  epochs: 1
+  batch_size: 32
+loss:
+  type: focal

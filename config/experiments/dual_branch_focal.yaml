@@ -1,0 +1,15 @@
+seed: 42
+device: auto
+dataset:
+  num_classes: 7
+  class_names: [MEL, NV, BCC, AKIEC, BKL, DF, VASC]
+model:
+  name: dual_branch
+training:
+  epochs: 1
+  batch_size: 32
+loss:
+  type: focal
+  focal:
+    gamma: 2.0
+    alpha: auto

@@ -1,0 +1,24 @@
+seed: 42
+device: auto
+dataset:
+  num_classes: 7
+  class_names: [MEL, NV, BCC, AKIEC, BKL, DF, VASC]
+model:
+  name: dual_branch
+  dual_branch:
+    shallow_wide:
+      channels: [256, 512, 1024]
+      pretrained_init: false
+    deep_narrow:
+      base_channels: 64
+      bottleneck_channels: 256
+      num_blocks: [2, 2, 3, 3]
+      pretrained_init: false
+    fusion:
+      hidden_dim: 512
+      output_dim: 256
+training:
+  epochs: 1
+  batch_size: 32
+loss:
+  type: focal

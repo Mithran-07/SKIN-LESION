@@ -1,42 +1,31 @@
 {
     "system": {
-        "os": "Windows 11 (v10.0.26200)",
-        "cpu": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
-        "ram_total_gb": 15.714714050292969,
-        "ram_available_gb": 6.882408142089844,
-        "disk_free_gb": 72.21279525756836,
-        "disk_total_gb": 460.28026962280273
+        "os": "Darwin 25.6.0 (vDarwin Kernel Version 25.6.0: Sat Jul 11 15:26:29 PDT 2026; root:xnu-12377.161.13~4/RELEASE_ARM64_T8132)",
+        "cpu": "arm",
+        "ram_total_gb": 16.0,
+        "ram_available_gb": 4.9478302001953125,
+        "disk_free_gb": 184.74057006835938,
+        "disk_total_gb": 460.4317207336426
     },
     "gpu": {
-        "cuda_available": true,
-        "cuda_version": "12.4",
-        "cudnn_version": 90100,
-        "device_count": 1,
-        "devices": [
-            {
-                "id": 0,
-                "name": "NVIDIA GeForce RTX 3050 6GB Laptop GPU",
-                "capability": [
-                    8,
-                    6
-                ],
-                "total_memory_gb": 5.99951171875,
-                "multi_processor_count": 20
-            }
-        ]
+        "cuda_available": false,
+        "cuda_version": "N/A",
+        "cudnn_version": "N/A",
+        "device_count": 0,
+        "devices": []
     },
     "packages": {
         "PyTorch": {
             "status": "Success",
-            "version": "2.6.0+cu124"
+            "version": "2.13.0"
         },
         "torchvision": {
             "status": "Success",
-            "version": "0.21.0+cu124"
+            "version": "0.28.0"
         },
         "torchaudio": {
-            "status": "Success",
-            "version": "2.6.0+cu124"
+            "status": "Not Found",
+            "version": "N/A"
         },
         "timm": {
             "status": "Success",
@@ -60,7 +49,7 @@
         },
         "numpy": {
             "status": "Success",
-            "version": "2.4.4"
+            "version": "2.5.1"
         },
         "matplotlib": {
             "status": "Success",
@@ -80,7 +69,7 @@
         },
         "pillow (PIL)": {
             "status": "Success",
-            "version": "12.2.0"
+            "version": "12.3.0"
         },
         "seaborn": {
             "status": "Success",
@@ -91,8 +80,8 @@
             "version": "4.6.1"
         },
         "tensorboard": {
-            "status": "Success",
-            "version": "2.21.0"
+            "status": "Not Found",
+            "version": "N/A"
         },
         "pytest": {
             "status": "Success",
@@ -103,6 +92,6 @@
             "version": "15.0.0"
         }
     },
-    "pytorch_version": "2.6.0+cu124",
-    "python_version": "3.12.13 (main, Jun 23 2026, 15:23:43) [MSC v.1944 64 bit (AMD64)]"
+    "pytorch_version": "2.13.0",
+    "python_version": "3.14.3 (main, Feb  3 2026, 15:32:20) [Clang 17.0.0 (clang-1700.6.3.2)]"
 }
