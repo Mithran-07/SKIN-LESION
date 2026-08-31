@@ -1,118 +1,175 @@
-import { Layers, Cpu, Sparkles, AlertTriangle, CheckCircle2, ArrowDown, Network } from "lucide-react";
+import { 
+  Layers, Cpu, Network, GitMerge, ArrowDown, 
+  CheckCircle2, AlertCircle, Sparkles, Box, ShieldCheck, Microscope 
+} from "lucide-react";
 
 export default function ArchitecturePage() {
   return (
-    <div className="space-y-10 max-w-5xl mx-auto">
+    <div className="py-8 px-4 sm:px-6 lg:px-8 space-y-10">
       
       {/* Header */}
-      <div className="border-b border-slate-800 pb-6">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-semibold mb-2">
-          <Layers className="w-3.5 h-3.5" />
-          <span>Research Architecture Deep Dive</span>
+      <header className="border-b border-outline-variant/15 pb-6">
+        <div className="flex items-center gap-2 font-technical-label text-xs text-research-violet uppercase tracking-widest mb-1">
+          <Network className="w-4 h-4 text-research-violet" />
+          <span>NEURAL NETWORK BLUEPRINT & TOPOLOGY DIAGNOSTICS</span>
         </div>
-        <h1 className="text-3xl font-extrabold text-white tracking-tight">
-          Decoupled Dual-Branch CNN Architecture
+        <h1 className="font-headline-lg text-2xl sm:text-4xl font-bold text-on-surface">
+          Decoupled Dual-Branch CNN Topology
         </h1>
-        <p className="text-xs text-slate-400 mt-1">
-          Theoretical motivation, architectural topology, and empirical diagnostic analysis.
+        <p className="font-body-lg text-sm sm:text-base text-on-surface-variant max-w-3xl mt-2 leading-relaxed">
+          Detailed architectural breakdown of the experimental Decoupled Dual-Branch network, outlining the feature decoupling hypothesis, mathematical attention-gated fusion, and comparison with compound scaling in EfficientNet-B4.
         </p>
+      </header>
+
+      {/* Production vs Research Role Distinction Banner */}
+      <div className="bg-surface-container rounded-xl border border-outline-variant/20 p-5 grid grid-cols-1 md:grid-cols-2 gap-6 tech-border">
+        <div className="space-y-2 border-b md:border-b-0 md:border-r border-outline-variant/15 pb-4 md:pb-0 md:pr-6">
+          <div className="flex items-center gap-2 font-technical-label text-xs text-primary uppercase">
+            <span className="w-2 h-2 rounded-full bg-primary pulse-dot-cyan"></span>
+            <span>DEPLOYED CHAMPION ARCHITECTURE</span>
+          </div>
+          <div className="font-headline-md text-xl font-bold text-on-surface">
+            EfficientNet-B4 (Single-Branch Compound Scaling)
+          </div>
+          <p className="font-body-sm text-xs text-on-surface-variant leading-relaxed">
+            Unifies resolution (380×380), depth (d=1.8), and width (w=1.4) scaling. Achieved <strong>95.92% ROC-AUC</strong>, <strong>79.16% Balanced Accuracy</strong>, and <strong>8.83 ms latency</strong> on Apple MPS. Selected as the verified production inference engine.
+          </p>
+        </div>
+
+        <div className="space-y-2">
+          <div className="flex items-center gap-2 font-technical-label text-xs text-research-violet uppercase">
+            <span className="w-2 h-2 rounded-full bg-research-violet"></span>
+            <span>RESEARCH EXPERIMENTAL HYPOTHESIS</span>
+          </div>
+          <div className="font-headline-md text-xl font-bold text-on-surface">
+            Decoupled Dual-Branch CNN (Texture + Morphology)
+          </div>
+          <p className="font-body-sm text-xs text-on-surface-variant leading-relaxed">
+            Designed to prevent spatial downsampling destruction of microvascular features. Attained <strong>90.98% ROC-AUC</strong>, establishing an important empirical negative finding regarding attention gate gradient saturation.
+          </p>
+        </div>
       </div>
 
-      {/* Architecture Topology Breakdown */}
-      <div className="glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-6">
-        <h2 className="text-lg font-bold text-white flex items-center gap-2">
-          <Network className="w-5 h-5 text-purple-400" />
-          <span>Decoupled Branch Design</span>
-        </h2>
+      {/* Topology Blueprint Visualizer */}
+      <section className="bg-surface-container rounded-xl border border-outline-variant/20 p-6 sm:p-8 space-y-8 lab-grid">
+        
+        <div className="flex items-center justify-between border-b border-outline-variant/15 pb-3">
+          <h2 className="font-headline-md text-lg font-bold text-on-surface flex items-center gap-2">
+            <Layers className="w-5 h-5 text-primary" />
+            <span>Dual-Branch Parallel Pipeline & Feature Dimensions</span>
+          </h2>
+          <span className="font-technical-data text-xs text-on-surface-variant">INPUT: (B, 3, 224, 224)</span>
+        </div>
 
+        {/* Parallel Branches Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           
-          {/* Shallow-Wide Branch */}
-          <div className="p-5 rounded-xl bg-slate-900/60 border border-cyan-500/30 space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-cyan-400 uppercase tracking-wide">Branch 1</span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-300">1024-DIM TEXTURE</span>
+          {/* Branch 1: Shallow-Wide */}
+          <div className="bg-surface-container-low rounded-xl border border-primary/30 p-5 space-y-4">
+            <div className="flex items-center justify-between border-b border-outline-variant/15 pb-2">
+              <span className="font-technical-label text-xs font-bold text-primary uppercase">
+                BRANCH 1: SHALLOW-WIDE (TEXTURE)
+              </span>
+              <span className="font-technical-data text-[10px] text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20">
+                1024-DIM VECTOR
+              </span>
             </div>
-            <h3 className="text-base font-bold text-white">Shallow-Wide Texture Branch</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Designed with high channel width (3 → 256 → 512 → 1024) but minimal spatial downsampling. 
-              Maintains high-resolution feature maps to capture fine micro-textures, arborizing telangiectasia (BCC), and surface keratinization (SCC).
+
+            <p className="font-body-sm text-xs text-on-surface-variant leading-relaxed">
+              Acts as a dense unpooled filter bank. Preserves high-frequency spatial gradients, micro-keratin textures, and arborizing telangiectasia in BCC.
             </p>
-            <div className="p-3 rounded-lg bg-slate-950/80 border border-slate-800 text-[11px] font-mono text-slate-300 space-y-1">
-              <div>• Block 1: Conv(3→256) + BN + ReLU</div>
-              <div>• Block 2: Conv(256→512) + MaxPool</div>
-              <div>• Block 3: Conv(512→1024) + BN + ReLU</div>
-              <div>• AdaptiveAvgPool(1,1) → 1024-dim</div>
+
+            <div className="space-y-2 font-technical-data text-xs">
+              <div className="p-2.5 rounded bg-surface-container border border-outline-variant/15 flex justify-between">
+                <span className="text-on-surface">Block 1: Conv(3→256, k=3, s=1)</span>
+                <span className="text-primary">(256, 224, 224)</span>
+              </div>
+              <div className="p-2.5 rounded bg-surface-container border border-outline-variant/15 flex justify-between">
+                <span className="text-on-surface">Block 2: Conv(256→512, k=3) + MaxPool</span>
+                <span className="text-primary">(512, 112, 112)</span>
+              </div>
+              <div className="p-2.5 rounded bg-surface-container border border-outline-variant/15 flex justify-between">
+                <span className="text-on-surface">Block 3: Conv(512→1024, k=3, unpooled)</span>
+                <span className="text-primary">(1024, 112, 112)</span>
+              </div>
+              <div className="p-2.5 rounded bg-surface-container-high border border-primary/30 flex justify-between font-bold">
+                <span className="text-primary">AdaptiveAvgPool2d(1, 1) + Flatten</span>
+                <span className="text-primary">(B, 1024)</span>
+              </div>
             </div>
           </div>
 
-          {/* Deep-Narrow Branch */}
-          <div className="p-5 rounded-xl bg-slate-900/60 border border-blue-500/30 space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-blue-400 uppercase tracking-wide">Branch 2</span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/10 text-blue-300">256-DIM STRUCTURE</span>
+          {/* Branch 2: Deep-Narrow */}
+          <div className="bg-surface-container-low rounded-xl border border-secondary/30 p-5 space-y-4">
+            <div className="flex items-center justify-between border-b border-outline-variant/15 pb-2">
+              <span className="font-technical-label text-xs font-bold text-secondary uppercase">
+                BRANCH 2: DEEP-NARROW (STRUCTURE)
+              </span>
+              <span className="font-technical-data text-[10px] text-secondary bg-secondary/10 px-2 py-0.5 rounded border border-secondary/20">
+                256-DIM VECTOR
+              </span>
             </div>
-            <h3 className="text-base font-bold text-white">Deep-Narrow Structural Branch</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Restricts channel width (base 64 channels) while expanding depth across 4 residual stages. 
-              The large receptive field extracts macroscopic lesion morphology, asymmetry, border irregularity, and global pigment contrast.
+
+            <p className="font-body-sm text-xs text-on-surface-variant leading-relaxed">
+              Acts as a low-pass morphological filter with large receptive fields. Distills global pigment geometry, border asymmetry, and macroscopic lesion contrast.
             </p>
-            <div className="p-3 rounded-lg bg-slate-950/80 border border-slate-800 text-[11px] font-mono text-slate-300 space-y-1">
-              <div>• Stem: Conv(3→64, k=7, s=2) + MaxPool</div>
-              <div>• Stages 1-4: Residual Blocks (64→128)</div>
-              <div>• Bottleneck: Conv(128→256, k=1)</div>
-              <div>• AdaptiveAvgPool(1,1) → 256-dim</div>
+
+            <div className="space-y-2 font-technical-data text-xs">
+              <div className="p-2.5 rounded bg-surface-container border border-outline-variant/15 flex justify-between">
+                <span className="text-on-surface">Stage 1: Conv(3→64) + MaxPool</span>
+                <span className="text-secondary">(64, 112, 112)</span>
+              </div>
+              <div className="p-2.5 rounded bg-surface-container border border-outline-variant/15 flex justify-between">
+                <span className="text-on-surface">Stage 2: 2× Residual Blocks (64→128, s=2)</span>
+                <span className="text-secondary">(128, 56, 56)</span>
+              </div>
+              <div className="p-2.5 rounded bg-surface-container border border-outline-variant/15 flex justify-between">
+                <span className="text-on-surface">Stage 3-4: 6× Residual Blocks (128→256)</span>
+                <span className="text-secondary">(256, 7, 7)</span>
+              </div>
+              <div className="p-2.5 rounded bg-surface-container-high border border-secondary/30 flex justify-between font-bold">
+                <span className="text-secondary">AdaptiveAvgPool2d(1, 1) + Flatten</span>
+                <span className="text-secondary">(B, 256)</span>
+              </div>
             </div>
           </div>
 
         </div>
 
-        {/* Attention Gated Fusion Box */}
-        <div className="p-5 rounded-xl bg-slate-950/80 border border-purple-500/30 space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-purple-400 uppercase tracking-wide">Fusion Module</span>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/10 text-purple-300">1280 → 256-DIM</span>
+        {/* Fusion Mechanism */}
+        <div className="bg-surface-container-low rounded-xl border border-research-violet/30 p-5 space-y-4">
+          <div className="flex items-center justify-between border-b border-outline-variant/15 pb-2">
+            <span className="font-technical-label text-xs font-bold text-research-violet uppercase flex items-center gap-2">
+              <GitMerge className="w-4 h-4 text-research-violet" />
+              <span>Attention-Gated Feature Fusion Mechanism</span>
+            </span>
+            <span className="font-technical-data text-[10px] text-research-violet bg-research-violet/10 px-2 py-0.5 rounded border border-research-violet/20">
+              OUTPUT: (B, 7)
+            </span>
           </div>
-          <h3 className="text-base font-bold text-white">Attention-Gated Feature Fusion</h3>
-          <p className="text-xs text-slate-400 leading-relaxed">
-            Concatenates the texture (1024) and structure (256) vectors. A learned sigmoid attention gate dynamically modulates channel weights before two-stage MLP projection with dropout.
-          </p>
-        </div>
-      </div>
 
-      {/* Empirical Finding: Why EfficientNet Won */}
-      <div className="glass-card rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-4">
-        <h2 className="text-lg font-bold text-white flex items-center gap-2">
-          <AlertTriangle className="w-5 h-5 text-amber-400" />
-          <span>Empirical Diagnostic Findings: Why Single-Branch Won</span>
-        </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 font-technical-data text-xs">
+            <div className="p-3 rounded bg-surface-container border border-outline-variant/15">
+              <div className="text-on-surface-variant text-[10px] uppercase mb-1">Step 1: Concatenation</div>
+              <div className="text-on-surface font-semibold">[f_tex, f_struct]</div>
+              <div className="text-on-surface-variant text-[11px] mt-1">1024 + 256 = 1280-dim</div>
+            </div>
 
-        <div className="space-y-3 text-xs text-slate-400 leading-relaxed">
-          <p>
-            Our systematic benchmarking revealed that while the Dual-Branch CNN reached <strong>90.98% ROC-AUC</strong>, single-branch compound scaling (<strong>EfficientNet-B4 at 95.92% ROC-AUC</strong>) consistently outperformed it across all clinical metrics.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-            <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1.5">
-              <h4 className="font-bold text-slate-200">1. Gate Saliency Imbalance</h4>
-              <p className="text-slate-400 text-[11px]">
-                Fusion gate weights heavily skewed toward the deep structural branch (&gt;78%), under-utilizing high-dimensional texture channels.
-              </p>
+            <div className="p-3 rounded bg-surface-container border border-outline-variant/15">
+              <div className="text-on-surface-variant text-[10px] uppercase mb-1">Step 2: Gate Vector</div>
+              <div className="text-research-violet font-semibold">z = σ(W_a · [f_tex, f_struct])</div>
+              <div className="text-on-surface-variant text-[11px] mt-1">Learned scalar gating in (0, 1)</div>
             </div>
-            <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1.5">
-              <h4 className="font-bold text-slate-200">2. Compound Scaling Balance</h4>
-              <p className="text-slate-400 text-[11px]">
-                EfficientNet-B4 uniformly scales depth, width, and resolution using neural architecture search, preventing branch optimization bottlenecks.
-              </p>
-            </div>
-            <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 space-y-1.5">
-              <h4 className="font-bold text-slate-200">3. Parameter Efficiency</h4>
-              <p className="text-slate-400 text-[11px]">
-                EfficientNet-B4 achieves higher accuracy with lower latency (8.83 ms) compared to the Dual-Branch pipeline (27.23 ms).
-              </p>
+
+            <div className="p-3 rounded bg-surface-container border border-outline-variant/15">
+              <div className="text-on-surface-variant text-[10px] uppercase mb-1">Step 3: Gated Projection</div>
+              <div className="text-primary font-semibold">f_fused = Linear(f_gated, 256)</div>
+              <div className="text-on-surface-variant text-[11px] mt-1">Linear(256→7) + Softmax</div>
             </div>
           </div>
         </div>
-      </div>
+
+      </section>
 
     </div>
   );
