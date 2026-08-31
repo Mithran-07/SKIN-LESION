@@ -8,13 +8,13 @@
 
 | Class Code | Diagnostic Category | Sample File | Predicted Top-1 | Predicted Top-2 | Predicted Top-3 | Prob Sum | Latency | Grad-CAM | API Status |
 |------------|---------------------|-------------|-----------------|-----------------|-----------------|----------|---------|----------|------------|
-| **AKIEC** | Pre-malignant | `akiec_sample.jpg` | BKL (14.30%) | BCC (14.30%) | MEL (14.29%) | 1.0000 | 209.13 ms | PASSED | 200 OK |
-| **BCC** | Malignant (Non-Melanoma) | `bcc_sample.jpg` | BKL (14.30%) | BCC (14.30%) | MEL (14.29%) | 0.9999 | 14.42 ms | PASSED | 200 OK |
-| **BKL** | Benign | `bkl_sample.jpg` | BKL (14.30%) | BCC (14.30%) | AKIEC (14.28%) | 0.9999 | 13.75 ms | PASSED | 200 OK |
-| **DF** | Benign | `df_sample.jpg` | BKL (14.30%) | BCC (14.30%) | MEL (14.28%) | 0.9999 | 13.27 ms | PASSED | 200 OK |
-| **MEL** | Malignant | `mel_sample.jpg` | BKL (14.30%) | BCC (14.30%) | AKIEC (14.29%) | 1.0000 | 13.65 ms | PASSED | 200 OK |
-| **NV** | Benign | `nv_sample.jpg` | BKL (14.30%) | BCC (14.30%) | MEL (14.29%) | 1.0001 | 13.34 ms | PASSED | 200 OK |
-| **VASC** | Benign | `vasc_sample.jpg` | BKL (14.30%) | BCC (14.30%) | MEL (14.29%) | 1.0001 | 13.82 ms | PASSED | 200 OK |
+| **AKIEC** | Pre-malignant | `akiec_sample.jpg` | BCC (14.30%) | VASC (14.29%) | MEL (14.29%) | 1.0000 | 180.04 ms | PASSED | 200 OK |
+| **BCC** | Malignant (Non-Melanoma) | `bcc_sample.jpg` | BCC (14.30%) | MEL (14.29%) | VASC (14.29%) | 1.0000 | 19.4 ms | PASSED | 200 OK |
+| **BKL** | Benign | `bkl_sample.jpg` | BCC (14.29%) | MEL (14.29%) | VASC (14.29%) | 0.9999 | 13.66 ms | PASSED | 200 OK |
+| **DF** | Benign | `df_sample.jpg` | BCC (14.30%) | MEL (14.29%) | VASC (14.29%) | 1.0000 | 13.84 ms | PASSED | 200 OK |
+| **MEL** | Malignant | `mel_sample.jpg` | BCC (14.30%) | MEL (14.29%) | VASC (14.29%) | 1.0001 | 13.67 ms | PASSED | 200 OK |
+| **NV** | Benign | `nv_sample.jpg` | BCC (14.29%) | MEL (14.29%) | VASC (14.29%) | 1.0000 | 13.78 ms | PASSED | 200 OK |
+| **VASC** | Benign | `vasc_sample.jpg` | BCC (14.30%) | VASC (14.29%) | MEL (14.29%) | 1.0000 | 13.84 ms | PASSED | 200 OK |
 
 ## Technical Verification Findings
 

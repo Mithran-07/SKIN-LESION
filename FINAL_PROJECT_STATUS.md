@@ -119,14 +119,14 @@
 
 ### Start Backend (Terminal 1):
 ```bash
-cd "/Users/mithran/Documents/My projects/ADL"
+# In project root
 source .venv/bin/activate
 python -m uvicorn api.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
 ### Start Frontend (Terminal 2):
 ```bash
-cd "/Users/mithran/Documents/My projects/ADL/app/skin-lesion-app"
+cd app/skin-lesion-app
 npm run dev
 ```
 

@@ -1,9 +1,9 @@
-# Project Launch & Execution Manual (MacBook M4)
+# Project Launch & Execution Manual
 
-**Project Root**: `/Users/mithran/Documents/My projects/ADL`  
-**Operating System**: macOS (Apple Silicon M4, MPS Hardware Acceleration)  
-**Python Environment**: `/Users/mithran/Documents/My projects/ADL/.venv`  
-**Node.js**: v24.19.0 / npm 11.17.0  
+**Project**: Dual-Branch CNN Framework for Non-Melanoma Dermoscopic Classification  
+**Operating System**: macOS (Apple Silicon MPS), Linux (CUDA), or Windows  
+**Python Environment**: Python 3.11+ / Virtualenv  
+**Node.js**: v18+ / npm  
 
 ---
 
@@ -12,7 +12,7 @@
 ### Step 1: Start the FastAPI Backend Server
 Open **Terminal Tab 1** and run:
 ```bash
-cd "/Users/mithran/Documents/My projects/ADL"
+# Navigate to project root
 source .venv/bin/activate
 python -m uvicorn api.main:app --host 127.0.0.1 --port 8000 --reload
 ```
@@ -24,7 +24,7 @@ python -m uvicorn api.main:app --host 127.0.0.1 --port 8000 --reload
 ### Step 2: Start the Next.js Frontend
 Open **Terminal Tab 2** and run:
 ```bash
-cd "/Users/mithran/Documents/My projects/ADL/app/skin-lesion-app"
+cd app/skin-lesion-app
 npm run dev
 ```
 *Frontend application will be accessible at*: `http://localhost:3000`
@@ -35,20 +35,17 @@ npm run dev
 
 ### Run Full PyTorch Deep Learning Test Suite:
 ```bash
-cd "/Users/mithran/Documents/My projects/ADL"
-.venv/bin/python -m pytest tests/test_model_shapes.py tests/test_focal_loss.py tests/test_conformal.py -v
+python -m pytest tests/test_model_shapes.py tests/test_focal_loss.py tests/test_conformal.py -v
 ```
 
 ### Run FastAPI Backend Test Suite (30 Assertions):
 ```bash
-cd "/Users/mithran/Documents/My projects/ADL"
-.venv/bin/python scripts/test_api_suite.py
+python scripts/test_api_suite.py
 ```
 
 ### Run Real HAM10000 7-Class Image Validation Matrix:
 ```bash
-cd "/Users/mithran/Documents/My projects/ADL"
-.venv/bin/python scripts/validate_real_images.py
+python scripts/validate_real_images.py
 ```
 
 ---
@@ -57,7 +54,7 @@ cd "/Users/mithran/Documents/My projects/ADL"
 
 To verify or run the optimized Next.js production build:
 ```bash
-cd "/Users/mithran/Documents/My projects/ADL/app/skin-lesion-app"
+cd app/skin-lesion-app
 npm run build
 npm run start
 ```
@@ -76,6 +73,5 @@ npm run start
   ```
 - **Installing / Re-installing Backend Dependencies**:
   ```bash
-  cd "/Users/mithran/Documents/My projects/ADL"
-  .venv/bin/pip install fastapi uvicorn python-multipart timm pytest requests pydantic torch torchvision
+  pip install -r requirements.txt
   ```
