@@ -2,61 +2,81 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Sparkles, LayoutDashboard, BookOpen, Layers, Microscope, ShieldAlert, Cpu, Terminal, Radio } from "lucide-react";
+import { Microscope, ShieldAlert, Cpu, CheckCircle2, XCircle, Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
+
+interface HealthStatus {
+  model_loaded: boolean;
+  hardware_device: string;
+  model_name: string;
+}
+
+const NAV_ITEMS = [
+  { href: "/",             label: "Research"      },
+  { href: "/classify",     label: "Workstation"   },
+  { href: "/dashboard",    label: "Benchmarks"    },
+  { href: "/research",     label: "Dataset"       },
+  { href: "/architecture", label: "Architecture"  },
+];
 
 export function Navigation() {
   const pathname = usePathname();
+  const [health, setHealth] = useState<HealthStatus | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const navItems = [
-    { href: "/", label: "Home" },
-    { href: "/classify", label: "Workstation" },
-    { href: "/dashboard", label: "Dashboard" },
-    { href: "/research", label: "Dataset & Story" },
-    { href: "/architecture", label: "Architecture" },
-  ];
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/health")
+      .then((r) => r.json())
+      .then((d: HealthStatus) => setHealth(d))
+      .catch(() => setHealth(null))
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <>
-      {/* Strict Medical Disclaimer Header Banner */}
-      <div className="bg-surface-container-lowest border-b border-status-warning/20 px-4 py-1.5 text-xs text-status-warning flex items-center justify-center gap-2 text-center sticky top-0 z-50">
+      {/* Medical Disclaimer Banner */}
+      <div className="bg-surface-container-lowest border-b border-status-warning/20 px-4 py-1.5 flex items-center justify-center gap-2 text-center sticky top-0 z-50">
         <ShieldAlert className="w-3.5 h-3.5 text-status-warning shrink-0" />
-        <span className="font-technical-label tracking-wide text-[11px]">
-          <strong>ACADEMIC RESEARCH PROTOTYPE ONLY:</strong> Not intended for clinical diagnosis. Consult a board-certified dermatologist for medical evaluation.
+        <span className="font-technical-label tracking-wide text-[11px] text-status-warning">
+          <strong>ACADEMIC RESEARCH PROTOTYPE ONLY:</strong> Not for clinical diagnosis. Consult a board-certified dermatologist for medical evaluation.
         </span>
       </div>
 
-      {/* Stitch TopNavBar */}
+      {/* Top Navigation Bar */}
       <header className="bg-background/85 backdrop-blur-xl w-full border-b border-outline-variant/15 sticky top-[31px] z-40">
-        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
-          
-          {/* Brand */}
-          <div className="flex items-center gap-4 sm:gap-6">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+
+          {/* Brand + Links */}
+          <div className="flex items-center gap-6">
             <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="w-8 h-8 rounded bg-surface-container-high border border-primary/30 flex items-center justify-center text-primary group-hover:border-primary transition-all">
+              <div className="w-8 h-8 rounded bg-surface-container-high border border-primary/30 flex items-center justify-center group-hover:border-primary transition-colors">
                 <Microscope className="w-4 h-4 text-primary" />
               </div>
-              <div className="font-headline-md text-base sm:text-lg font-bold tracking-tight text-primary">
-                DermAI <span className="text-on-surface-variant font-normal text-xs sm:text-sm hidden md:inline">| Dermal Intelligence Lab</span>
+              <div>
+                <span className="font-headline-md text-base font-bold text-primary tracking-tight">DermAI</span>
+                <span className="hidden md:inline text-on-surface-variant font-technical-label text-[11px] ml-2 opacity-70 uppercase tracking-widest">
+                  Dermal Intelligence Lab
+                </span>
               </div>
             </Link>
 
-            {/* Navigation Links */}
-            <nav className="hidden md:flex items-center gap-6 ml-4">
-              {navItems.map((item) => {
-                const isActive = pathname === item.href;
+            {/* Desktop Links */}
+            <nav className="hidden md:flex items-center gap-5" aria-label="Main navigation">
+              {NAV_ITEMS.map((item) => {
+                const active = pathname === item.href;
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`font-technical-label text-[13px] tracking-wider transition-all relative py-1 ${
-                      isActive
-                        ? "text-primary font-bold opacity-100"
-                        : "text-on-surface-variant font-medium hover:text-primary opacity-80"
+                    className={`font-technical-label text-[12px] tracking-wider py-1 relative transition-colors ${
+                      active
+                        ? "text-primary font-bold"
+                        : "text-on-surface-variant hover:text-on-surface"
                     }`}
                   >
                     {item.label}
-                    {isActive && (
-                      <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary rounded-full" />
+                    {active && (
+                      <span className="absolute -bottom-px left-0 right-0 h-[2px] bg-primary rounded-full" />
                     )}
                   </Link>
                 );
@@ -64,38 +84,40 @@ export function Navigation() {
             </nav>
           </div>
 
-          {/* Right Telemetry Indicators */}
-          <div className="flex items-center gap-3 text-on-surface-variant">
-            <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded bg-surface-container border border-outline-variant/20 font-technical-data text-[11px] text-on-surface-variant">
-              <span className="w-1.5 h-1.5 rounded-full bg-status-benign pulse-dot-emerald"></span>
-              <span>MPS ACCELERATED</span>
-            </div>
-
-            <div className="flex items-center gap-1.5 text-primary">
-              <span title="Apple Silicon MPS Active" className="p-1.5 rounded hover:bg-surface-variant transition-colors">
-                <Cpu className="w-4 h-4 text-primary/80 hover:text-primary" />
+          {/* System Status */}
+          <div className="flex items-center gap-2" role="status" aria-live="polite">
+            {loading ? (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded border border-outline-variant/20 bg-surface-container font-technical-data text-[11px] text-on-surface-variant">
+                <Loader2 className="w-3 h-3 animate-spin" /> CHECKING…
               </span>
-              <span title="FastAPI 0.115 Connected" className="p-1.5 rounded hover:bg-surface-variant transition-colors">
-                <Terminal className="w-4 h-4 text-primary/80 hover:text-primary" />
+            ) : health?.model_loaded ? (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded border border-status-benign/30 bg-status-benign/10 font-technical-data text-[11px] text-status-benign">
+                <CheckCircle2 className="w-3 h-3" /> MODEL READY
               </span>
-              <span title="Inference Engine Ready" className="p-1.5 rounded hover:bg-surface-variant transition-colors">
-                <Radio className="w-4 h-4 text-primary/80 hover:text-primary" />
+            ) : (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded border border-status-critical/30 bg-status-critical/10 font-technical-data text-[11px] text-status-critical">
+                <XCircle className="w-3 h-3" /> MODEL UNAVAILABLE
               </span>
-            </div>
+            )}
+            {health && (
+              <span className="hidden sm:inline-flex items-center gap-1 px-2 py-1 rounded border border-outline-variant/15 bg-surface-container font-technical-data text-[11px] text-on-surface-variant">
+                <Cpu className="w-3 h-3" />
+                {health.hardware_device.toUpperCase()}
+              </span>
+            )}
           </div>
-
         </div>
 
-        {/* Mobile Navigation Row */}
-        <div className="md:hidden flex items-center justify-around px-2 py-2 border-t border-outline-variant/10 bg-surface-container-lowest">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href;
+        {/* Mobile Nav Row */}
+        <div className="md:hidden flex items-center justify-around px-2 py-1.5 border-t border-outline-variant/10 bg-surface-container-lowest">
+          {NAV_ITEMS.map((item) => {
+            const active = pathname === item.href;
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`font-technical-label text-[11px] py-1 px-2 rounded ${
-                  isActive ? "text-primary bg-primary/10 font-bold" : "text-on-surface-variant hover:text-primary"
+                className={`font-technical-label text-[11px] py-1 px-2 rounded transition-colors ${
+                  active ? "text-primary bg-primary/10 font-bold" : "text-on-surface-variant hover:text-primary"
                 }`}
               >
                 {item.label}

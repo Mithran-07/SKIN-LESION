@@ -1,176 +1,241 @@
-import { 
-  Layers, Cpu, Network, GitMerge, ArrowDown, 
-  CheckCircle2, AlertCircle, Sparkles, Box, ShieldCheck, Microscope 
-} from "lucide-react";
+import { Cpu, GitMerge, FlaskConical, Award, HelpCircle } from "lucide-react";
+import { BENCHMARK_DATA } from "@/lib/constants";
+
+const champion  = BENCHMARK_DATA.find((m) => m.isChampion)!;
+const dualBranch = BENCHMARK_DATA.filter((m) => m.name.includes("Dual-Branch"));
+const bestDB     = dualBranch.reduce((a, b) => (a.auc > b.auc ? a : b), dualBranch[0]);
 
 export default function ArchitecturePage() {
   return (
-    <div className="py-8 px-4 sm:px-6 lg:px-8 space-y-10">
-      
+    <div className="px-4 sm:px-6 lg:px-8 py-6 max-w-5xl mx-auto space-y-8">
+
       {/* Header */}
-      <header className="border-b border-outline-variant/15 pb-6">
-        <div className="flex items-center gap-2 font-technical-label text-xs text-research-violet uppercase tracking-widest mb-1">
-          <Network className="w-4 h-4 text-research-violet" />
-          <span>NEURAL NETWORK BLUEPRINT & TOPOLOGY DIAGNOSTICS</span>
-        </div>
-        <h1 className="font-headline-lg text-2xl sm:text-4xl font-bold text-on-surface">
-          Decoupled Dual-Branch CNN Topology
-        </h1>
-        <p className="font-body-lg text-sm sm:text-base text-on-surface-variant max-w-3xl mt-2 leading-relaxed">
-          Detailed architectural breakdown of the experimental Decoupled Dual-Branch network, outlining the feature decoupling hypothesis, mathematical attention-gated fusion, and comparison with compound scaling in EfficientNet-B4.
+      <div>
+        <h1 className="font-headline-md text-xl font-bold text-on-surface">Architecture Deep Dive</h1>
+        <p className="font-body-sm text-sm text-on-surface-variant mt-0.5">
+          Baseline models, the proposed Dual-Branch architecture, and empirical findings.
         </p>
-      </header>
-
-      {/* Production vs Research Role Distinction Banner */}
-      <div className="bg-surface-container rounded-xl border border-outline-variant/20 p-5 grid grid-cols-1 md:grid-cols-2 gap-6 tech-border">
-        <div className="space-y-2 border-b md:border-b-0 md:border-r border-outline-variant/15 pb-4 md:pb-0 md:pr-6">
-          <div className="flex items-center gap-2 font-technical-label text-xs text-primary uppercase">
-            <span className="w-2 h-2 rounded-full bg-primary pulse-dot-cyan"></span>
-            <span>DEPLOYED CHAMPION ARCHITECTURE</span>
-          </div>
-          <div className="font-headline-md text-xl font-bold text-on-surface">
-            EfficientNet-B4 (Single-Branch Compound Scaling)
-          </div>
-          <p className="font-body-sm text-xs text-on-surface-variant leading-relaxed">
-            Unifies resolution (380×380), depth (d=1.8), and width (w=1.4) scaling. Achieved <strong>95.92% ROC-AUC</strong>, <strong>79.16% Balanced Accuracy</strong>, and <strong>8.83 ms latency</strong> on Apple MPS. Selected as the verified production inference engine.
-          </p>
-        </div>
-
-        <div className="space-y-2">
-          <div className="flex items-center gap-2 font-technical-label text-xs text-research-violet uppercase">
-            <span className="w-2 h-2 rounded-full bg-research-violet"></span>
-            <span>RESEARCH EXPERIMENTAL HYPOTHESIS</span>
-          </div>
-          <div className="font-headline-md text-xl font-bold text-on-surface">
-            Decoupled Dual-Branch CNN (Texture + Morphology)
-          </div>
-          <p className="font-body-sm text-xs text-on-surface-variant leading-relaxed">
-            Designed to prevent spatial downsampling destruction of microvascular features. Attained <strong>90.98% ROC-AUC</strong>, establishing an important empirical negative finding regarding attention gate gradient saturation.
-          </p>
-        </div>
       </div>
 
-      {/* Topology Blueprint Visualizer */}
-      <section className="bg-surface-container rounded-xl border border-outline-variant/20 p-6 sm:p-8 space-y-8 lab-grid">
-        
-        <div className="flex items-center justify-between border-b border-outline-variant/15 pb-3">
-          <h2 className="font-headline-md text-lg font-bold text-on-surface flex items-center gap-2">
-            <Layers className="w-5 h-5 text-primary" />
-            <span>Dual-Branch Parallel Pipeline & Feature Dimensions</span>
-          </h2>
-          <span className="font-technical-data text-xs text-on-surface-variant">INPUT: (B, 3, 224, 224)</span>
+      {/* Research Question */}
+      <div className="p-5 rounded-xl bg-research-violet/5 border border-research-violet/20 space-y-2">
+        <div className="font-technical-label text-xs text-research-violet uppercase tracking-wider flex items-center gap-1.5">
+          <HelpCircle className="w-4 h-4" aria-hidden="true" /> Research Question
         </div>
+        <p className="font-body-lg text-base text-on-surface leading-relaxed">
+          Can separating local <em>texture representation</em> from macroscopic{" "}
+          <em>structural representation</em> improve multi-class dermoscopic classification over
+          compound-scaled single-branch networks?
+        </p>
+      </div>
 
-        {/* Parallel Branches Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          
-          {/* Branch 1: Shallow-Wide */}
-          <div className="bg-surface-container-low rounded-xl border border-primary/30 p-5 space-y-4">
-            <div className="flex items-center justify-between border-b border-outline-variant/15 pb-2">
-              <span className="font-technical-label text-xs font-bold text-primary uppercase">
-                BRANCH 1: SHALLOW-WIDE (TEXTURE)
-              </span>
-              <span className="font-technical-data text-[10px] text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20">
-                1024-DIM VECTOR
-              </span>
-            </div>
-
-            <p className="font-body-sm text-xs text-on-surface-variant leading-relaxed">
-              Acts as a dense unpooled filter bank. Preserves high-frequency spatial gradients, micro-keratin textures, and arborizing telangiectasia in BCC.
-            </p>
-
-            <div className="space-y-2 font-technical-data text-xs">
-              <div className="p-2.5 rounded bg-surface-container border border-outline-variant/15 flex justify-between">
-                <span className="text-on-surface">Block 1: Conv(3→256, k=3, s=1)</span>
-                <span className="text-primary">(256, 224, 224)</span>
-              </div>
-              <div className="p-2.5 rounded bg-surface-container border border-outline-variant/15 flex justify-between">
-                <span className="text-on-surface">Block 2: Conv(256→512, k=3) + MaxPool</span>
-                <span className="text-primary">(512, 112, 112)</span>
-              </div>
-              <div className="p-2.5 rounded bg-surface-container border border-outline-variant/15 flex justify-between">
-                <span className="text-on-surface">Block 3: Conv(512→1024, k=3, unpooled)</span>
-                <span className="text-primary">(1024, 112, 112)</span>
-              </div>
-              <div className="p-2.5 rounded bg-surface-container-high border border-primary/30 flex justify-between font-bold">
-                <span className="text-primary">AdaptiveAvgPool2d(1, 1) + Flatten</span>
-                <span className="text-primary">(B, 1024)</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Branch 2: Deep-Narrow */}
-          <div className="bg-surface-container-low rounded-xl border border-secondary/30 p-5 space-y-4">
-            <div className="flex items-center justify-between border-b border-outline-variant/15 pb-2">
-              <span className="font-technical-label text-xs font-bold text-secondary uppercase">
-                BRANCH 2: DEEP-NARROW (STRUCTURE)
-              </span>
-              <span className="font-technical-data text-[10px] text-secondary bg-secondary/10 px-2 py-0.5 rounded border border-secondary/20">
-                256-DIM VECTOR
-              </span>
-            </div>
-
-            <p className="font-body-sm text-xs text-on-surface-variant leading-relaxed">
-              Acts as a low-pass morphological filter with large receptive fields. Distills global pigment geometry, border asymmetry, and macroscopic lesion contrast.
-            </p>
-
-            <div className="space-y-2 font-technical-data text-xs">
-              <div className="p-2.5 rounded bg-surface-container border border-outline-variant/15 flex justify-between">
-                <span className="text-on-surface">Stage 1: Conv(3→64) + MaxPool</span>
-                <span className="text-secondary">(64, 112, 112)</span>
-              </div>
-              <div className="p-2.5 rounded bg-surface-container border border-outline-variant/15 flex justify-between">
-                <span className="text-on-surface">Stage 2: 2× Residual Blocks (64→128, s=2)</span>
-                <span className="text-secondary">(128, 56, 56)</span>
-              </div>
-              <div className="p-2.5 rounded bg-surface-container border border-outline-variant/15 flex justify-between">
-                <span className="text-on-surface">Stage 3-4: 6× Residual Blocks (128→256)</span>
-                <span className="text-secondary">(256, 7, 7)</span>
-              </div>
-              <div className="p-2.5 rounded bg-surface-container-high border border-secondary/30 flex justify-between font-bold">
-                <span className="text-secondary">AdaptiveAvgPool2d(1, 1) + Flatten</span>
-                <span className="text-secondary">(B, 256)</span>
-              </div>
-            </div>
-          </div>
-
+      {/* Baseline Architectures */}
+      <section className="space-y-4">
+        <div className="font-technical-label text-xs text-on-surface uppercase tracking-wider flex items-center gap-2">
+          <Cpu className="w-4 h-4 text-primary" aria-hidden="true" /> Baseline Architectures
         </div>
-
-        {/* Fusion Mechanism */}
-        <div className="bg-surface-container-low rounded-xl border border-research-violet/30 p-5 space-y-4">
-          <div className="flex items-center justify-between border-b border-outline-variant/15 pb-2">
-            <span className="font-technical-label text-xs font-bold text-research-violet uppercase flex items-center gap-2">
-              <GitMerge className="w-4 h-4 text-research-violet" />
-              <span>Attention-Gated Feature Fusion Mechanism</span>
-            </span>
-            <span className="font-technical-data text-[10px] text-research-violet bg-research-violet/10 px-2 py-0.5 rounded border border-research-violet/20">
-              OUTPUT: (B, 7)
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 font-technical-data text-xs">
-            <div className="p-3 rounded bg-surface-container border border-outline-variant/15">
-              <div className="text-on-surface-variant text-[10px] uppercase mb-1">Step 1: Concatenation</div>
-              <div className="text-on-surface font-semibold">[f_tex, f_struct]</div>
-              <div className="text-on-surface-variant text-[11px] mt-1">1024 + 256 = 1280-dim</div>
+        <div className="grid sm:grid-cols-3 gap-4">
+          {[
+            {
+              name: "ResNet-50",
+              params: "23.52M",
+              auc: 93.52,
+              desc: "Residual skip connections enabling deep network training without vanishing gradients. 50 layers.",
+              champion: false,
+            },
+            {
+              name: "DenseNet-121",
+              params: "6.96M",
+              auc: 95.31,
+              desc: "Dense feature reuse — each layer receives feature maps from all preceding layers.",
+              champion: false,
+            },
+            {
+              name: "EfficientNet-B4",
+              params: "17.56M",
+              auc: 95.92,
+              desc: "Compound scaling of depth, width, and resolution via neural architecture search (NAS).",
+              champion: true,
+            },
+          ].map((b) => (
+            <div
+              key={b.name}
+              className={`p-4 rounded-xl border space-y-2 ${
+                b.champion
+                  ? "border-primary/40 bg-primary/5"
+                  : "border-outline-variant/20 bg-surface-container"
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <span className="font-technical-label text-sm font-bold text-on-surface">{b.name}</span>
+                {b.champion && (
+                  <Award className="w-3.5 h-3.5 text-primary" aria-label="Best evaluated" />
+                )}
+              </div>
+              <div className="font-technical-data text-[10px] text-on-surface-variant">
+                {b.params} params · {b.auc}% ROC-AUC
+              </div>
+              <p className="font-body-sm text-xs text-on-surface-variant leading-relaxed">{b.desc}</p>
+              {b.champion && (
+                <div className="font-technical-data text-[11px] text-primary mt-1">
+                  ✓ Selected as deployed inference model
+                </div>
+              )}
             </div>
-
-            <div className="p-3 rounded bg-surface-container border border-outline-variant/15">
-              <div className="text-on-surface-variant text-[10px] uppercase mb-1">Step 2: Gate Vector</div>
-              <div className="text-research-violet font-semibold">z = σ(W_a · [f_tex, f_struct])</div>
-              <div className="text-on-surface-variant text-[11px] mt-1">Learned scalar gating in (0, 1)</div>
-            </div>
-
-            <div className="p-3 rounded bg-surface-container border border-outline-variant/15">
-              <div className="text-on-surface-variant text-[10px] uppercase mb-1">Step 3: Gated Projection</div>
-              <div className="text-primary font-semibold">f_fused = Linear(f_gated, 256)</div>
-              <div className="text-on-surface-variant text-[11px] mt-1">Linear(256→7) + Softmax</div>
-            </div>
-          </div>
+          ))}
         </div>
-
       </section>
 
+      {/* Dual-Branch Architecture */}
+      <section className="space-y-4">
+        <div className="font-technical-label text-xs text-on-surface uppercase tracking-wider flex items-center gap-2">
+          <GitMerge className="w-4 h-4 text-research-violet" aria-hidden="true" /> Proposed: Decoupled Dual-Branch CNN
+        </div>
+
+        {/* ASCII diagram */}
+        <div className="bg-surface-container rounded-xl border border-outline-variant/20 p-5">
+          <pre className="font-technical-data text-[11px] text-on-surface-variant leading-relaxed overflow-x-auto">{`
+Dermoscopic Image (224×224 RGB)
+          │
+  Preprocessing
+(Resize 256 → CenterCrop 224)
+          │
+  ┌───────┴───────┐
+  │               │
+Texture        Structure
+ Branch          Branch
+(Shallow/Wide)  (Deep/Narrow)
+  1024-dim        256-dim
+  │               │
+  └───────┬───────┘
+          │
+  Attention-Gated
+    Feature Fusion
+          │
+   Classifier Head
+          │
+  7-Class Softmax
+(AKIEC/BCC/BKL/DF/MEL/NV/VASC)
+`.trim()}</pre>
+        </div>
+
+        <div className="grid sm:grid-cols-2 gap-4">
+          <div className="p-4 rounded-xl bg-surface-container border border-outline-variant/20 space-y-2">
+            <div className="font-technical-label text-xs text-on-surface">Texture Branch (Shallow / Wide)</div>
+            <p className="font-body-sm text-xs text-on-surface-variant leading-relaxed">
+              Captures high-frequency local patterns — dermoscopic texture, pigmentation
+              microstructure, and hair artifacts. Shallower layers preserve fine spatial detail.
+              Output: 1,024-dimensional embedding.
+            </p>
+          </div>
+          <div className="p-4 rounded-xl bg-surface-container border border-outline-variant/20 space-y-2">
+            <div className="font-technical-label text-xs text-on-surface">Structure Branch (Deep / Narrow)</div>
+            <p className="font-body-sm text-xs text-on-surface-variant leading-relaxed">
+              Captures macroscopic morphological representations — lesion boundary regularity,
+              symmetry, and global shape characteristics. Deeper layers with reduced channel width.
+              Output: 256-dimensional embedding.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Empirical Finding */}
+      <section className="p-5 rounded-xl bg-surface-container border border-outline-variant/15 space-y-4">
+        <div className="font-technical-label text-xs text-on-surface uppercase tracking-wider flex items-center gap-2">
+          <FlaskConical className="w-4 h-4 text-primary" aria-hidden="true" /> Empirical Finding
+        </div>
+
+        <div className="grid sm:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <div className="font-technical-label text-sm font-bold text-research-violet">
+              Dual-Branch CNN (Best Seed)
+            </div>
+            <div className="font-technical-data text-xs text-on-surface-variant space-y-0.5">
+              <div>ROC-AUC: {bestDB?.auc}%</div>
+              <div>Balanced Accuracy: {bestDB?.balAcc}%</div>
+              <div>Test Accuracy: {bestDB?.acc}%</div>
+              <div>Macro F1: {bestDB?.f1}%</div>
+              <div>Latency (LOQ CUDA): {bestDB?.latency} ms</div>
+              <div>VRAM: {bestDB?.vram}</div>
+            </div>
+          </div>
+          <div className="space-y-2">
+            <div className="font-technical-label text-sm font-bold text-primary">
+              EfficientNet-B4 (Best Evaluated)
+            </div>
+            <div className="font-technical-data text-xs text-on-surface-variant space-y-0.5">
+              <div>ROC-AUC: {champion.auc}%</div>
+              <div>Balanced Accuracy: {champion.balAcc}%</div>
+              <div>Test Accuracy: {champion.acc}%</div>
+              <div>Macro F1: {champion.f1}%</div>
+              <div>Latency (LOQ CUDA): {champion.latency} ms</div>
+              <div>VRAM: {champion.vram}</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="border-t border-outline-variant/15 pt-4 font-body-sm text-xs text-on-surface-variant leading-relaxed space-y-2">
+          <p>
+            The Dual-Branch architecture achieved competitive AUC (~{bestDB?.auc}%) but did not
+            surpass EfficientNet-B4 (95.92%). Fusion gate diagnostics revealed the attention
+            mechanism predominantly weighted the structural branch, with texture branch gradients
+            showing higher variance — suggesting the two-branch decoupling did not produce
+            independently complementary representations under this training regime.
+          </p>
+          <p>
+            The pre-trained ImageNet compound scaling in EfficientNet-B4 provided richer
+            dermoscopic feature representations out-of-the-box. This is a legitimate,
+            documented research outcome — <strong className="text-on-surface">not a software failure</strong>.
+          </p>
+          <p className="text-research-violet">
+            The Dual-Branch CNN remains the core research hypothesis investigated in this project.
+            Its results provide directional insights into feature decoupling strategies for
+            dermoscopic classification.
+          </p>
+        </div>
+      </section>
+
+      {/* Findings summary */}
+      <section className="space-y-3">
+        <div className="font-technical-label text-xs text-on-surface uppercase tracking-wider">
+          Research Findings Summary
+        </div>
+        <div className="grid sm:grid-cols-2 gap-4">
+          {[
+            {
+              color: "border-status-benign/30 bg-status-benign/5",
+              label: "Confirmed",
+              items: [
+                "EfficientNet-B4 compound scaling effectively captures multi-scale dermoscopic patterns.",
+                "Patient-level stratified splitting is essential for honest evaluation on HAM10000.",
+                "Class imbalance correction (WeightedRandomSampler + focal loss) improves rare-class recall.",
+                "Grad-CAM attribution is clinically interpretable for the dominant lesion region.",
+              ],
+            },
+            {
+              color: "border-research-violet/30 bg-research-violet/5",
+              label: "Open Questions",
+              items: [
+                "Whether explicit texture–structure decoupling can outperform compound scaling with more training data or different fusion designs.",
+                "Whether OOD detection via feature-space similarity is robust to non-dermoscopic skin photographs (close-up macro shots).",
+                "Rare class (DF, VASC) performance — larger datasets or specific augmentation strategies may help.",
+              ],
+            },
+          ].map(({ color, label, items }) => (
+            <div key={label} className={`p-4 rounded-xl border ${color} space-y-2`}>
+              <div className="font-technical-label text-xs text-on-surface">{label}</div>
+              <ul className="space-y-1.5">
+                {items.map((item, i) => (
+                  <li key={i} className="font-body-sm text-xs text-on-surface-variant flex gap-2">
+                    <span className="mt-0.5 shrink-0">·</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
