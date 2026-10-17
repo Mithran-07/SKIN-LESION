@@ -1,11 +1,18 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 authors:
-  - family-names: "Researcher"
-    given-names: "Lenovo"
-title: "Dual-Branch CNN for Non-Melanoma Dermoscopic Classification"
+  - family-names: "Mithran"
+    given-names: "A."
+title: "DermAI V2: Calibrated Dermoscopic AI and Empirical Dual-Branch CNN Research Platform"
 version: 2.0.0
-date-released: 2026-07-13
+date-released: 2026-10-17
+url: "https://skin-lesion-xi.vercel.app"
+repository-code: "https://github.com/Mithran-07/SKIN-LESION"
 keywords:
   - Deep Learning
   - Dermoscopy
+  - HAM10000
+  - Dual-Branch CNN
+  - EfficientNet-B4
+  - Out-of-Distribution Detection
+  - Grad-CAM

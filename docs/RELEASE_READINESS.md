@@ -1,7 +1,9 @@
 # DermAI Research Platform V2 — Release Readiness & Acceptance Checklist
 
 **Release Version:** `2.0.0`  
-**Branch:** `feat-dermai-platform-v2`  
+**Branch:** `main` (`feat-dermai-platform-v2`)  
+**Live Production URL:** [`https://skin-lesion-xi.vercel.app`](https://skin-lesion-xi.vercel.app)  
+**GitHub Repository:** [`https://github.com/Mithran-07/SKIN-LESION`](https://github.com/Mithran-07/SKIN-LESION)  
 **Date:** October 17, 2026  
 
 ---
