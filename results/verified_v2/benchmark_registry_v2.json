@@ -1,0 +1,1310 @@
+{
+  "registry_version": "2.0.0",
+  "generated_at_utc": "2026-10-17T05:29:24.308385+00:00",
+  "canonical_class_order": [
+    "akiec",
+    "bcc",
+    "bkl",
+    "df",
+    "mel",
+    "nv",
+    "vasc"
+  ],
+  "canonical_preprocessing": {
+    "version": "eval_v1_resize256_crop224_imagenet",
+    "steps": [
+      "Resize(256, 256, interpolation=BILINEAR)",
+      "CenterCrop(224, 224)",
+      "ToTensor() -> [0.0, 1.0]",
+      "Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])"
+    ]
+  },
+  "deployed_model_summary": {
+    "model_id": "efficientnet_b4",
+    "checkpoint_sha256": "125340ffa59ca4a18fb0cd0bdca024eae9ca2fe3ce54d1f230b465bd9ad9658e",
+    "selection_rationale": "EfficientNet-B4 achieved the highest held-out test Balanced Accuracy (79.23%), Accuracy (73.51%), Macro F1 (69.24%), Macro ROC-AUC (95.91%), and Macro PR-AUC (77.52%) among all evaluated models while requiring 5.2x lower inference latency on Apple Silicon MPS than the custom Dual-Branch CNN trained from scratch."
+  },
+  "dataset_integrity": {
+    "dataset_name": "HAM10000 (Human Against Machine with 10000 training images)",
+    "citation": "Tschandl, P., Rosendahl, C. & Kittler, H. Sci. Data 5, 180161 (2018)",
+    "total_images": 10015,
+    "unique_lesions": 7470,
+    "image_resolution": "600x450 RGB",
+    "imbalance_ratio_nv_to_df": 58.3,
+    "class_counts": {
+      "nv": 6705,
+      "mel": 1113,
+      "bkl": 1099,
+      "bcc": 514,
+      "akiec": 327,
+      "vasc": 142,
+      "df": 115
+    },
+    "class_percentages": {
+      "nv": 66.95,
+      "mel": 11.11,
+      "bkl": 10.97,
+      "bcc": 5.13,
+      "akiec": 3.27,
+      "vasc": 1.42,
+      "df": 1.15
+    },
+    "dx_type_verification_methods": {
+      "histo": 5340,
+      "follow_up": 3704,
+      "consensus": 902,
+      "confocal": 69
+    },
+    "splits": {
+      "strategy": "Lesion-grouped stratified split (zero lesion_id overlap across splits)",
+      "train": {
+        "images": 7002,
+        "unique_lesions": 5229,
+        "class_counts": {
+          "akiec": 207,
+          "bcc": 381,
+          "bkl": 741,
+          "df": 89,
+          "mel": 770,
+          "nv": 4718,
+          "vasc": 96
+        }
+      },
+      "val": {
+        "images": 1503,
+        "unique_lesions": 1120,
+        "class_counts": {
+          "akiec": 67,
+          "bcc": 74,
+          "bkl": 172,
+          "df": 18,
+          "mel": 162,
+          "nv": 988,
+          "vasc": 22
+        }
+      },
+      "test": {
+        "images": 1510,
+        "unique_lesions": 1121,
+        "class_counts": {
+          "akiec": 53,
+          "bcc": 59,
+          "bkl": 186,
+          "df": 8,
+          "mel": 181,
+          "nv": 999,
+          "vasc": 24
+        }
+      },
+      "lesion_overlap": {
+        "train_val": 0,
+        "train_test": 0,
+        "val_test": 0
+      },
+      "image_overlap": {
+        "train_val": 0,
+        "train_test": 0,
+        "val_test": 0
+      },
+      "audit_notes": [
+        "0 lesion_id overlap and 0 image_id overlap between train, val, and test splits.",
+        "2 image pairs in upstream HAM10000 have identical MD5 hashes assigned to different lesion_ids by dataset authors.",
+        "6 duplicate '- Copy.jpg' files found on disk outside HAM10000_metadata.csv are ignored by split manifests."
+      ]
+    }
+  },
+  "models": [
+    {
+      "id": "efficientnet_b4",
+      "display_name": "EfficientNet-B4 (Deployed)",
+      "family": "Compound-Scaled CNN (timm)",
+      "architecture_version": "timm/efficientnet_b4",
+      "fusion_version": null,
+      "is_deployed": true,
+      "seed": 42,
+      "historical_claimed_metric": {
+        "value": 0.7364,
+        "metric_name": "Accuracy (on N=1,502 legacy split)",
+        "reconciled_explanation": "Verified held-out test accuracy on N=1,510 split is 73.51%, Balanced Accuracy is 79.23%, Macro ROC-AUC is 95.91%."
+      },
+      "checkpoint": {
+        "sha256": "125340ffa59ca4a18fb0cd0bdca024eae9ca2fe3ce54d1f230b465bd9ad9658e",
+        "sha256_short": "125340ffa59ca4a1",
+        "size_mb": 202.05,
+        "epoch": 34,
+        "best_val_balanced_accuracy": 0.7458,
+        "num_tensors": 706,
+        "total_parameters": 17561167
+      },
+      "test_metrics": {
+        "split": "splits/test.csv",
+        "n_samples": 1510,
+        "accuracy": 0.7351,
+        "balanced_accuracy": 0.7923,
+        "macro_precision": 0.6405,
+        "macro_recall": 0.7923,
+        "macro_f1": 0.6924,
+        "macro_roc_auc": 0.9591,
+        "macro_pr_auc": 0.7752,
+        "weighted_f1": 0.7562
+      },
+      "hardware_benchmark": {
+        "mps_m4_latency_ms_per_img": 25.86,
+        "cuda_rtx3050_historical_latency_ms": 8.83,
+        "evaluation_device": "Apple Silicon M4 (MPS)"
+      },
+      "per_class_metrics": {
+        "akiec": {
+          "precision": 0.6481,
+          "recall": 0.6604,
+          "f1_score": 0.6542,
+          "support": 53
+        },
+        "bcc": {
+          "precision": 0.6353,
+          "recall": 0.9153,
+          "f1_score": 0.75,
+          "support": 59
+        },
+        "bkl": {
+          "precision": 0.5068,
+          "recall": 0.7957,
+          "f1_score": 0.6192,
+          "support": 186
+        },
+        "df": {
+          "precision": 0.5385,
+          "recall": 0.875,
+          "f1_score": 0.6667,
+          "support": 8
+        },
+        "mel": {
+          "precision": 0.4281,
+          "recall": 0.7569,
+          "f1_score": 0.5469,
+          "support": 181
+        },
+        "nv": {
+          "precision": 0.9861,
+          "recall": 0.7097,
+          "f1_score": 0.8254,
+          "support": 999
+        },
+        "vasc": {
+          "precision": 0.7407,
+          "recall": 0.8333,
+          "f1_score": 0.7843,
+          "support": 24
+        }
+      },
+      "confusion_matrix": [
+        [
+          35,
+          5,
+          10,
+          0,
+          3,
+          0,
+          0
+        ],
+        [
+          1,
+          54,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          10,
+          7,
+          148,
+          0,
+          18,
+          3,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          7,
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          5,
+          29,
+          1,
+          137,
+          6,
+          1
+        ],
+        [
+          5,
+          14,
+          103,
+          4,
+          158,
+          709,
+          6
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          3,
+          0,
+          20
+        ]
+      ]
+    },
+    {
+      "id": "densenet121",
+      "display_name": "DenseNet-121",
+      "family": "Dense Convolutional Network (timm)",
+      "architecture_version": "timm/densenet121",
+      "fusion_version": null,
+      "is_deployed": false,
+      "seed": 42,
+      "historical_claimed_metric": {
+        "value": 0.7883,
+        "metric_name": "Balanced Accuracy",
+        "reconciled_explanation": "Matches verified held-out test Balanced Accuracy (78.83%) and Macro ROC-AUC (95.32%)."
+      },
+      "checkpoint": {
+        "sha256": "d6eae64e2065e0970abb3a9ce9ff09e23e6090480afdb50a0b988a3d7d6531d7",
+        "sha256_short": "d6eae64e2065e097",
+        "size_mb": 80.57,
+        "epoch": 18,
+        "best_val_balanced_accuracy": 0.7367,
+        "num_tensors": 727,
+        "total_parameters": 6961031
+      },
+      "test_metrics": {
+        "split": "splits/test.csv",
+        "n_samples": 1510,
+        "accuracy": 0.6642,
+        "balanced_accuracy": 0.7883,
+        "macro_precision": 0.5552,
+        "macro_recall": 0.7883,
+        "macro_f1": 0.6199,
+        "macro_roc_auc": 0.9532,
+        "macro_pr_auc": 0.7523,
+        "weighted_f1": 0.6922
+      },
+      "hardware_benchmark": {
+        "mps_m4_latency_ms_per_img": 27.55,
+        "cuda_rtx3050_historical_latency_ms": null,
+        "evaluation_device": "Apple Silicon M4 (MPS)"
+      },
+      "per_class_metrics": {
+        "akiec": {
+          "precision": 0.5333,
+          "recall": 0.6038,
+          "f1_score": 0.5664,
+          "support": 53
+        },
+        "bcc": {
+          "precision": 0.5306,
+          "recall": 0.8814,
+          "f1_score": 0.6624,
+          "support": 59
+        },
+        "bkl": {
+          "precision": 0.5119,
+          "recall": 0.8065,
+          "f1_score": 0.6263,
+          "support": 186
+        },
+        "df": {
+          "precision": 0.3636,
+          "recall": 1.0,
+          "f1_score": 0.5333,
+          "support": 8
+        },
+        "mel": {
+          "precision": 0.3298,
+          "recall": 0.6961,
+          "f1_score": 0.4476,
+          "support": 181
+        },
+        "nv": {
+          "precision": 0.9887,
+          "recall": 0.6136,
+          "f1_score": 0.7573,
+          "support": 999
+        },
+        "vasc": {
+          "precision": 0.6286,
+          "recall": 0.9167,
+          "f1_score": 0.7458,
+          "support": 24
+        }
+      },
+      "confusion_matrix": [
+        [
+          32,
+          9,
+          6,
+          0,
+          6,
+          0,
+          0
+        ],
+        [
+          3,
+          52,
+          1,
+          0,
+          2,
+          1,
+          0
+        ],
+        [
+          12,
+          8,
+          150,
+          1,
+          13,
+          0,
+          2
+        ],
+        [
+          0,
+          0,
+          0,
+          8,
+          0,
+          0,
+          0
+        ],
+        [
+          5,
+          5,
+          28,
+          7,
+          126,
+          6,
+          4
+        ],
+        [
+          8,
+          23,
+          108,
+          6,
+          234,
+          613,
+          7
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          1,
+          0,
+          22
+        ]
+      ]
+    },
+    {
+      "id": "resnet50",
+      "display_name": "ResNet-50",
+      "family": "Deep Residual Network (timm)",
+      "architecture_version": "timm/resnet50",
+      "fusion_version": null,
+      "is_deployed": false,
+      "seed": 42,
+      "historical_claimed_metric": {
+        "value": 0.7512,
+        "metric_name": "Balanced Accuracy",
+        "reconciled_explanation": "Matches verified held-out test Balanced Accuracy (75.12%) and Macro ROC-AUC (93.58%)."
+      },
+      "checkpoint": {
+        "sha256": "d65e1189eaff712a9f092c0396b189a3289f6095fc965c5ac5697a5b65782380",
+        "sha256_short": "d65e1189eaff712a",
+        "size_mb": 269.64,
+        "epoch": 29,
+        "best_val_balanced_accuracy": 0.7453,
+        "num_tensors": 320,
+        "total_parameters": 23522375
+      },
+      "test_metrics": {
+        "split": "splits/test.csv",
+        "n_samples": 1510,
+        "accuracy": 0.5656,
+        "balanced_accuracy": 0.7512,
+        "macro_precision": 0.4954,
+        "macro_recall": 0.7512,
+        "macro_f1": 0.5383,
+        "macro_roc_auc": 0.9358,
+        "macro_pr_auc": 0.7364,
+        "weighted_f1": 0.5952
+      },
+      "hardware_benchmark": {
+        "mps_m4_latency_ms_per_img": 16.09,
+        "cuda_rtx3050_historical_latency_ms": null,
+        "evaluation_device": "Apple Silicon M4 (MPS)"
+      },
+      "per_class_metrics": {
+        "akiec": {
+          "precision": 0.4935,
+          "recall": 0.717,
+          "f1_score": 0.5846,
+          "support": 53
+        },
+        "bcc": {
+          "precision": 0.4352,
+          "recall": 0.7966,
+          "f1_score": 0.5629,
+          "support": 59
+        },
+        "bkl": {
+          "precision": 0.4309,
+          "recall": 0.7204,
+          "f1_score": 0.5392,
+          "support": 186
+        },
+        "df": {
+          "precision": 0.186,
+          "recall": 1.0,
+          "f1_score": 0.3137,
+          "support": 8
+        },
+        "mel": {
+          "precision": 0.2949,
+          "recall": 0.7624,
+          "f1_score": 0.4253,
+          "support": 181
+        },
+        "nv": {
+          "precision": 0.9937,
+          "recall": 0.4705,
+          "f1_score": 0.6386,
+          "support": 999
+        },
+        "vasc": {
+          "precision": 0.6333,
+          "recall": 0.7917,
+          "f1_score": 0.7037,
+          "support": 24
+        }
+      },
+      "confusion_matrix": [
+        [
+          38,
+          7,
+          3,
+          0,
+          5,
+          0,
+          0
+        ],
+        [
+          5,
+          47,
+          3,
+          2,
+          0,
+          1,
+          1
+        ],
+        [
+          18,
+          10,
+          134,
+          1,
+          22,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          8,
+          0,
+          0,
+          0
+        ],
+        [
+          8,
+          6,
+          21,
+          4,
+          138,
+          1,
+          3
+        ],
+        [
+          8,
+          35,
+          150,
+          28,
+          301,
+          470,
+          7
+        ],
+        [
+          0,
+          3,
+          0,
+          0,
+          2,
+          0,
+          19
+        ]
+      ]
+    },
+    {
+      "id": "dual_branch_seed123",
+      "display_name": "Dual-Branch CNN (Seed 123)",
+      "family": "Custom Dual-Branch Texture+Structure CNN",
+      "architecture_version": "DualBranchNet(v1_matrix)",
+      "fusion_version": "v1_matrix",
+      "is_deployed": false,
+      "seed": 123,
+      "historical_claimed_metric": {
+        "value": 0.9098,
+        "metric_name": "Mislabelled as Accuracy in legacy UI (Actually Macro ROC-AUC = 90.98%)",
+        "reconciled_explanation": "Legacy UI table conflated Macro ROC-AUC (0.9098) with Accuracy. True held-out test Balanced Accuracy is 70.28% and Accuracy is 55.50%."
+      },
+      "checkpoint": {
+        "sha256": "bcece2501c91947e253e792e6ff5b82a49e9a4b90bd0f15185e0229fd28170e4",
+        "sha256_short": "bcece2501c91947e",
+        "size_mb": 122.23,
+        "epoch": 48,
+        "best_val_balanced_accuracy": 0.6212,
+        "num_tensors": 117,
+        "total_parameters": 17496391
+      },
+      "test_metrics": {
+        "split": "splits/test.csv",
+        "n_samples": 1510,
+        "accuracy": 0.555,
+        "balanced_accuracy": 0.7028,
+        "macro_precision": 0.44,
+        "macro_recall": 0.7028,
+        "macro_f1": 0.4845,
+        "macro_roc_auc": 0.9098,
+        "macro_pr_auc": 0.6045,
+        "weighted_f1": 0.5945
+      },
+      "hardware_benchmark": {
+        "mps_m4_latency_ms_per_img": 135.33,
+        "cuda_rtx3050_historical_latency_ms": null,
+        "evaluation_device": "Apple Silicon M4 (MPS)"
+      },
+      "per_class_metrics": {
+        "akiec": {
+          "precision": 0.3626,
+          "recall": 0.6226,
+          "f1_score": 0.4583,
+          "support": 53
+        },
+        "bcc": {
+          "precision": 0.4811,
+          "recall": 0.8644,
+          "f1_score": 0.6182,
+          "support": 59
+        },
+        "bkl": {
+          "precision": 0.433,
+          "recall": 0.6075,
+          "f1_score": 0.5056,
+          "support": 186
+        },
+        "df": {
+          "precision": 0.1186,
+          "recall": 0.875,
+          "f1_score": 0.209,
+          "support": 8
+        },
+        "mel": {
+          "precision": 0.2691,
+          "recall": 0.663,
+          "f1_score": 0.3828,
+          "support": 181
+        },
+        "nv": {
+          "precision": 0.9841,
+          "recall": 0.4955,
+          "f1_score": 0.6591,
+          "support": 999
+        },
+        "vasc": {
+          "precision": 0.4318,
+          "recall": 0.7917,
+          "f1_score": 0.5588,
+          "support": 24
+        }
+      },
+      "confusion_matrix": [
+        [
+          33,
+          12,
+          4,
+          0,
+          4,
+          0,
+          0
+        ],
+        [
+          2,
+          51,
+          1,
+          4,
+          0,
+          0,
+          1
+        ],
+        [
+          18,
+          6,
+          113,
+          2,
+          37,
+          6,
+          4
+        ],
+        [
+          0,
+          0,
+          1,
+          7,
+          0,
+          0,
+          0
+        ],
+        [
+          11,
+          6,
+          39,
+          1,
+          120,
+          2,
+          2
+        ],
+        [
+          27,
+          28,
+          103,
+          44,
+          284,
+          495,
+          18
+        ],
+        [
+          0,
+          3,
+          0,
+          1,
+          1,
+          0,
+          19
+        ]
+      ]
+    },
+    {
+      "id": "dual_branch_seed999",
+      "display_name": "Dual-Branch CNN (Seed 999)",
+      "family": "Custom Dual-Branch Texture+Structure CNN",
+      "architecture_version": "DualBranchNet(v1_matrix)",
+      "fusion_version": "v1_matrix",
+      "is_deployed": false,
+      "seed": 999,
+      "historical_claimed_metric": {
+        "value": 0.8973,
+        "metric_name": "Mislabelled as Accuracy in legacy UI (Actually Macro ROC-AUC = 89.75%)",
+        "reconciled_explanation": "Legacy UI table conflated Macro ROC-AUC (0.8975) with Accuracy. True held-out test Balanced Accuracy is 66.42% and Accuracy is 55.10%."
+      },
+      "checkpoint": {
+        "sha256": "dd1e8ac62e11ada17a081361cb4fc1d642f0be73cb6fae6a4a6c033ce0788413",
+        "sha256_short": "dd1e8ac62e11ada1",
+        "size_mb": 122.23,
+        "epoch": 28,
+        "best_val_balanced_accuracy": 0.6376,
+        "num_tensors": 117,
+        "total_parameters": 17496391
+      },
+      "test_metrics": {
+        "split": "splits/test.csv",
+        "n_samples": 1510,
+        "accuracy": 0.551,
+        "balanced_accuracy": 0.6642,
+        "macro_precision": 0.4047,
+        "macro_recall": 0.6642,
+        "macro_f1": 0.4572,
+        "macro_roc_auc": 0.8975,
+        "macro_pr_auc": 0.5837,
+        "weighted_f1": 0.5896
+      },
+      "hardware_benchmark": {
+        "mps_m4_latency_ms_per_img": 145.71,
+        "cuda_rtx3050_historical_latency_ms": null,
+        "evaluation_device": "Apple Silicon M4 (MPS)"
+      },
+      "per_class_metrics": {
+        "akiec": {
+          "precision": 0.2712,
+          "recall": 0.6038,
+          "f1_score": 0.3743,
+          "support": 53
+        },
+        "bcc": {
+          "precision": 0.3478,
+          "recall": 0.8136,
+          "f1_score": 0.4873,
+          "support": 59
+        },
+        "bkl": {
+          "precision": 0.3766,
+          "recall": 0.6237,
+          "f1_score": 0.4696,
+          "support": 186
+        },
+        "df": {
+          "precision": 0.1613,
+          "recall": 0.625,
+          "f1_score": 0.2564,
+          "support": 8
+        },
+        "mel": {
+          "precision": 0.2953,
+          "recall": 0.558,
+          "f1_score": 0.3862,
+          "support": 181
+        },
+        "nv": {
+          "precision": 0.9807,
+          "recall": 0.5085,
+          "f1_score": 0.6697,
+          "support": 999
+        },
+        "vasc": {
+          "precision": 0.4,
+          "recall": 0.9167,
+          "f1_score": 0.557,
+          "support": 24
+        }
+      },
+      "confusion_matrix": [
+        [
+          32,
+          16,
+          2,
+          0,
+          3,
+          0,
+          0
+        ],
+        [
+          2,
+          48,
+          4,
+          1,
+          0,
+          1,
+          3
+        ],
+        [
+          25,
+          16,
+          116,
+          2,
+          19,
+          7,
+          1
+        ],
+        [
+          0,
+          1,
+          2,
+          5,
+          0,
+          0,
+          0
+        ],
+        [
+          20,
+          18,
+          37,
+          2,
+          101,
+          2,
+          1
+        ],
+        [
+          39,
+          37,
+          147,
+          21,
+          219,
+          508,
+          28
+        ],
+        [
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          22
+        ]
+      ]
+    },
+    {
+      "id": "dual_branch_seed42",
+      "display_name": "Dual-Branch CNN (Seed 42)",
+      "family": "Custom Dual-Branch Texture+Structure CNN",
+      "architecture_version": "DualBranchNet(v2_scalar)",
+      "fusion_version": "v2_scalar",
+      "is_deployed": false,
+      "seed": 42,
+      "historical_claimed_metric": {
+        "value": 0.9054,
+        "metric_name": "Mislabelled as Accuracy in legacy UI (Actually Macro ROC-AUC = 90.13%)",
+        "reconciled_explanation": "Legacy UI table conflated Macro ROC-AUC (0.9013) with Accuracy. Uses v2_scalar (1280->1) fusion gate; true Balanced Accuracy is 59.49% and Accuracy is 64.30%."
+      },
+      "checkpoint": {
+        "sha256": "ebf6b1253b24669f5152ea1d7bd8bee366072c2d359a5aaf475872e69e8b0c1d",
+        "sha256_short": "ebf6b1253b24669f",
+        "size_mb": 103.48,
+        "epoch": 16,
+        "best_val_balanced_accuracy": 0.6244,
+        "num_tensors": 119,
+        "total_parameters": 15857993
+      },
+      "test_metrics": {
+        "split": "splits/test.csv",
+        "n_samples": 1510,
+        "accuracy": 0.643,
+        "balanced_accuracy": 0.5949,
+        "macro_precision": 0.4668,
+        "macro_recall": 0.5949,
+        "macro_f1": 0.4958,
+        "macro_roc_auc": 0.9013,
+        "macro_pr_auc": 0.5701,
+        "weighted_f1": 0.6841
+      },
+      "hardware_benchmark": {
+        "mps_m4_latency_ms_per_img": 145.13,
+        "cuda_rtx3050_historical_latency_ms": null,
+        "evaluation_device": "Apple Silicon M4 (MPS)"
+      },
+      "per_class_metrics": {
+        "akiec": {
+          "precision": 0.4,
+          "recall": 0.4528,
+          "f1_score": 0.4248,
+          "support": 53
+        },
+        "bcc": {
+          "precision": 0.3922,
+          "recall": 0.678,
+          "f1_score": 0.4969,
+          "support": 59
+        },
+        "bkl": {
+          "precision": 0.4562,
+          "recall": 0.672,
+          "f1_score": 0.5435,
+          "support": 186
+        },
+        "df": {
+          "precision": 0.0353,
+          "recall": 0.375,
+          "f1_score": 0.0645,
+          "support": 8
+        },
+        "mel": {
+          "precision": 0.3359,
+          "recall": 0.4807,
+          "f1_score": 0.3955,
+          "support": 181
+        },
+        "nv": {
+          "precision": 0.9586,
+          "recall": 0.6727,
+          "f1_score": 0.7906,
+          "support": 999
+        },
+        "vasc": {
+          "precision": 0.6897,
+          "recall": 0.8333,
+          "f1_score": 0.7547,
+          "support": 24
+        }
+      },
+      "confusion_matrix": [
+        [
+          24,
+          10,
+          10,
+          7,
+          2,
+          0,
+          0
+        ],
+        [
+          8,
+          40,
+          1,
+          6,
+          0,
+          1,
+          3
+        ],
+        [
+          5,
+          14,
+          125,
+          16,
+          15,
+          11,
+          0
+        ],
+        [
+          1,
+          2,
+          0,
+          3,
+          0,
+          2,
+          0
+        ],
+        [
+          8,
+          7,
+          54,
+          10,
+          87,
+          14,
+          1
+        ],
+        [
+          14,
+          28,
+          84,
+          43,
+          153,
+          672,
+          5
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          2,
+          1,
+          20
+        ]
+      ]
+    }
+  ],
+  "ood_gate_v2": {
+    "ood_gate_version": "2.0.0",
+    "calibration_artifact": "checkpoints/ood/efficientnet_b4_ood_calibration_v2.pt",
+    "historical_v1_artifact_preserved": "checkpoints/ood/mobilenet_v2_derm_prototypes.pt",
+    "methodology": {
+      "backbone": "Trained EfficientNet-B4 (1,792-dim penultimate L2-normalized features + logit free energy) + Photometric Acquisition Gate",
+      "fitting_split": "splits/train.csv (N=2123 stratified training images; 49 class/sub-cluster prototypes)",
+      "calibration_split": "splits/val.csv (N=1503 validation images) + Validation OOD set (N=100 across 10 categories)",
+      "evaluation_split": "Untouched splits/test.csv (N=1510 held-out test images) + Independent Test OOD Suite (N=200 across 10 categories)",
+      "selected_threshold": 0.25,
+      "threshold_selection_criterion": "Calibrated strictly on splits/val.csv (N=1,503) + disjoint validation OOD set (N=100 across 10 categories) by maximizing Youden's J statistic within the [97.0%, 98.5%] validation in-domain acceptance band."
+    },
+    "validation_split_metrics": {
+      "in_domain_count": 1503,
+      "in_domain_acceptance_rate": 0.9834,
+      "false_rejection_rate": 0.0166,
+      "val_ood_count": 100,
+      "val_ood_rejection_rate": 1.0
+    },
+    "held_out_test_metrics": {
+      "total_evaluated": 1710,
+      "in_domain_test_count": 1510,
+      "ood_test_count": 200,
+      "in_domain_acceptance_rate": 0.9808,
+      "false_rejection_rate_frr": 0.0192,
+      "ood_rejection_rate": 1.0,
+      "false_acceptance_rate_far": 0.0,
+      "auroc": 0.9985,
+      "auprc": 0.9998,
+      "precision": 1.0,
+      "recall": 0.9808,
+      "f1_score": 0.9903,
+      "bootstrap_95_ci": {
+        "auroc_95ci": [
+          0.9972,
+          0.9994
+        ],
+        "in_domain_acceptance_95ci": [
+          0.9729,
+          0.9868
+        ],
+        "ood_rejection_95ci": [
+          1.0,
+          1.0
+        ]
+      },
+      "score_distributions": {
+        "in_domain_test_mean": 0.4893,
+        "in_domain_test_median": 0.4949,
+        "in_domain_test_p05": 0.2981,
+        "in_domain_test_p95": 0.6607,
+        "ood_test_mean": 0.0746,
+        "ood_test_median": 0.0462,
+        "ood_test_p05": 0.0172,
+        "ood_test_p95": 0.1863
+      }
+    },
+    "before_vs_after_remediation": {
+      "v1_prototype_gate_on_unseen_test": {
+        "threshold": 0.55,
+        "in_domain_acceptance_rate": 0.0,
+        "false_rejection_rate_frr": 1.0,
+        "office_document_falsely_accepted": true,
+        "office_document_score": 0.5817
+      },
+      "v2_calibrated_gate_on_unseen_test": {
+        "threshold": 0.25,
+        "in_domain_acceptance_rate": 0.9808,
+        "false_rejection_rate_frr": 0.0192,
+        "ood_rejection_rate": 1.0,
+        "auroc": 0.9985
+      }
+    },
+    "per_class_in_domain_test_acceptance": {
+      "akiec": {
+        "count": 53,
+        "accepted_count": 50,
+        "acceptance_rate": 0.9434,
+        "mean_score": 0.414,
+        "min_score": 0.2275
+      },
+      "bcc": {
+        "count": 59,
+        "accepted_count": 58,
+        "acceptance_rate": 0.9831,
+        "mean_score": 0.4292,
+        "min_score": 0.2263
+      },
+      "bkl": {
+        "count": 186,
+        "accepted_count": 179,
+        "acceptance_rate": 0.9624,
+        "mean_score": 0.4266,
+        "min_score": 0.2074
+      },
+      "df": {
+        "count": 8,
+        "accepted_count": 8,
+        "acceptance_rate": 1.0,
+        "mean_score": 0.4407,
+        "min_score": 0.2982
+      },
+      "mel": {
+        "count": 181,
+        "accepted_count": 175,
+        "acceptance_rate": 0.9669,
+        "mean_score": 0.4706,
+        "min_score": 0.1634
+      },
+      "nv": {
+        "count": 999,
+        "accepted_count": 987,
+        "acceptance_rate": 0.988,
+        "mean_score": 0.5123,
+        "min_score": 0.0531
+      },
+      "vasc": {
+        "count": 24,
+        "accepted_count": 24,
+        "acceptance_rate": 1.0,
+        "mean_score": 0.4863,
+        "min_score": 0.2527
+      }
+    },
+    "per_category_ood_test_rejection": {
+      "everyday_objects_and_geometric": {
+        "count": 20,
+        "rejected_count": 20,
+        "rejection_rate": 1.0,
+        "mean_score": 0.0759,
+        "max_score": 0.1802
+      },
+      "grayscale_radiograph_ultrasound_sim": {
+        "count": 20,
+        "rejected_count": 20,
+        "rejection_rate": 1.0,
+        "mean_score": 0.0449,
+        "max_score": 0.0633
+      },
+      "natural_landscapes_and_sky": {
+        "count": 20,
+        "rejected_count": 20,
+        "rejection_rate": 1.0,
+        "mean_score": 0.0465,
+        "max_score": 0.0519
+      },
+      "non_dermoscopic_clinical_photo_sim": {
+        "count": 20,
+        "rejected_count": 20,
+        "rejection_rate": 1.0,
+        "mean_score": 0.1855,
+        "max_score": 0.1965
+      },
+      "non_dermoscopic_macro_textures": {
+        "count": 20,
+        "rejected_count": 20,
+        "rejection_rate": 1.0,
+        "mean_score": 0.0998,
+        "max_score": 0.1908
+      },
+      "non_lesion_color_gradients_and_art": {
+        "count": 20,
+        "rejected_count": 20,
+        "rejection_rate": 1.0,
+        "mean_score": 0.0477,
+        "max_score": 0.0484
+      },
+      "office_documents_and_screenshots": {
+        "count": 20,
+        "rejected_count": 20,
+        "rejection_rate": 1.0,
+        "mean_score": 0.0339,
+        "max_score": 0.0387
+      },
+      "solid_and_blank_frames": {
+        "count": 20,
+        "rejected_count": 20,
+        "rejection_rate": 1.0,
+        "mean_score": 0.0167,
+        "max_score": 0.0205
+      },
+      "synthetic_gaussian_and_impulse_noise": {
+        "count": 20,
+        "rejected_count": 20,
+        "rejection_rate": 1.0,
+        "mean_score": 0.0572,
+        "max_score": 0.1495
+      },
+      "warm_brown_organic_and_wood_leather": {
+        "count": 20,
+        "rejected_count": 20,
+        "rejection_rate": 1.0,
+        "mean_score": 0.1383,
+        "max_score": 0.1782
+      }
+    },
+    "demo_samples_verification": {
+      "akiec_sample.jpg": {
+        "isic_image_id": "ISIC_0026149",
+        "true_class": "akiec",
+        "predicted_class": "akiec",
+        "confidence": 1.0,
+        "ood_domain_score": 0.6295,
+        "accepted": true
+      },
+      "bcc_sample.jpg": {
+        "isic_image_id": "ISIC_0024590",
+        "true_class": "bcc",
+        "predicted_class": "bcc",
+        "confidence": 1.0,
+        "ood_domain_score": 0.6163,
+        "accepted": true
+      },
+      "bkl_sample.jpg": {
+        "isic_image_id": "ISIC_0032417",
+        "true_class": "bkl",
+        "predicted_class": "bkl",
+        "confidence": 1.0,
+        "ood_domain_score": 0.5662,
+        "accepted": true
+      },
+      "df_sample.jpg": {
+        "isic_image_id": "ISIC_0033695",
+        "true_class": "df",
+        "predicted_class": "df",
+        "confidence": 0.9989,
+        "ood_domain_score": 0.5603,
+        "accepted": true
+      },
+      "mel_sample.jpg": {
+        "isic_image_id": "ISIC_0025751",
+        "true_class": "mel",
+        "predicted_class": "mel",
+        "confidence": 0.9935,
+        "ood_domain_score": 0.6577,
+        "accepted": true
+      },
+      "nv_sample.jpg": {
+        "isic_image_id": "ISIC_0027411",
+        "true_class": "nv",
+        "predicted_class": "nv",
+        "confidence": 1.0,
+        "ood_domain_score": 0.7197,
+        "accepted": true
+      },
+      "vasc_sample.jpg": {
+        "isic_image_id": "ISIC_0031215",
+        "true_class": "vasc",
+        "predicted_class": "vasc",
+        "confidence": 1.0,
+        "ood_domain_score": 0.6735,
+        "accepted": true
+      }
+    },
+    "remaining_limitations": [
+      "Close-up macroscopic clinical skin photographs (taken with smartphone cameras rather than polarized/immersion dermatoscopes) that fill 100% of the frame with cutaneous tissue share RGB chromaticity and lesion geometry with dermoscopy and may achieve borderline domain scores.",
+      "Heavily occluded dermoscopic images with extreme black corner vignetting (>65% of frame) or severe surgical ink markings may fall into the bottom 2.5% tail of the in-domain distribution and trigger conservative rejection.",
+      "The OOD gate is a statistical input-domain filter, not a clinical diagnostic safety guarantee."
+    ],
+    "elapsed_seconds": 105.87
+  },
+  "gradcam_verification": {
+    "efficientnet_gradcam": {
+      "target_layer": "conv_head",
+      "heatmap_shape": [
+        224,
+        224
+      ],
+      "heatmap_min": 0.0,
+      "heatmap_max": 1.0,
+      "heatmap_has_nan": false,
+      "heatmap_has_inf": false,
+      "overlay_size": [
+        224,
+        224
+      ],
+      "weights_remained_unmodified": true,
+      "model_eval_mode_preserved": true
+    },
+    "dual_branch_gradcam": {
+      "shallow_target_layer": "shallow_branch.block3.conv",
+      "deep_target_layer": "deep_branch.stage4.conv_layers[-2]",
+      "texture_cam_shape": [
+        112,
+        112
+      ],
+      "structure_cam_shape": [
+        14,
+        14
+      ],
+      "texture_cam_min": 0.0,
+      "texture_cam_max": 1.0,
+      "structure_cam_min": 0.0,
+      "structure_cam_max": 1.0,
+      "weights_remained_unmodified": true,
+      "model_eval_mode_preserved": true
+    }
+  }
+}

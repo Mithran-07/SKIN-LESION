@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HAM10000 Dataset & Clinical Context</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #3b494b; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #849395; }
+    </style>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#422c00", "on-secondary": "#002e6a", "on-primary": "#00363a",
+                        "secondary-container": "#0361d1", "primary-fixed-dim": "#00dbe9",
+                        "on-secondary-fixed-variant": "#004396", "on-secondary-container": "#dbe4ff",
+                        "surface-bright": "#37393e", "inverse-primary": "#006970",
+                        "tertiary-fixed-dim": "#fdbb3a", "research-violet": "#9B5CFF",
+                        "status-critical": "#FF4354", "status-warning": "#FFB800",
+                        "secondary-fixed": "#d8e2ff", "error": "#ffb4ab",
+                        "on-tertiary-container": "#6f4d00", "error-container": "#93000a",
+                        "on-background": "#e2e2e8", "secondary-fixed-dim": "#aec6ff",
+                        "on-error-container": "#ffdad6", "outline-variant": "#3b494b",
+                        "surface-container": "#1e2024", "inverse-surface": "#e2e2e8",
+                        "on-tertiary-fixed-variant": "#5f4100", "on-primary-fixed": "#002022",
+                        "surface-container-highest": "#333539", "primary": "#88f5ff",
+                        "on-primary-container": "#005d63", "primary-fixed": "#7df4ff",
+                        "on-primary-fixed-variant": "#004f54", "background": "#111318",
+                        "on-secondary-fixed": "#001a42", "secondary": "#aec6ff",
+                        "tertiary": "#ffdfb0", "surface": "#111318",
+                        "primary-container": "#00ddeb", "surface-default": "#11151C",
+                        "surface-deep": "#0D1015", "surface-container-lowest": "#0c0e12",
+                        "surface-container-high": "#282a2e", "on-surface": "#e2e2e8",
+                        "surface-container-low": "#1a1c20", "on-surface-variant": "#bac9cb",
+                        "surface-tint": "#00dbe9", "tertiary-fixed": "#ffdeab",
+                        "on-error": "#690005", "tertiary-container": "#ffbc3b",
+                        "surface-dim": "#111318", "status-benign": "#00D99A",
+                        "surface-elevated": "#151A22", "inverse-on-surface": "#2f3035",
+                        "surface-variant": "#333539", "outline": "#849395",
+                        "on-tertiary-fixed": "#271900", "surface-high": "#1A2029"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "unit": "4px", "max-width": "1440px", "panel-gap": "16px",
+                        "gutter": "24px", "margin-desktop": "32px", "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Geist"], "body-sm": ["Inter"], "body-lg": ["Inter"],
+                        "body-md": ["Inter"], "headline-lg": ["Geist"], "technical-label": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Geist"], "technical-data": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "technical-label": ["13px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "technical-data": ["12px", { "lineHeight": "1.0", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased overflow-hidden flex flex-col h-screen">
+<!-- TopNavBar -->
+<nav class="bg-background/80 backdrop-blur-xl docked full-width top-0 sticky border-b border-outline-variant/10 z-50">
+<div class="flex justify-between items-center w-full px-gutter max-w-max-width mx-auto h-16">
+<!-- Brand -->
+<div class="font-headline-md text-headline-md font-bold tracking-tight text-primary truncate">
+                DermAI | Dermal Intelligence Lab
+            </div>
+<!-- Navigation Links (Web) -->
+<div class="hidden md:flex space-x-6 items-center h-full">
+<a class="text-on-surface-variant font-medium font-technical-label text-technical-label hover:text-primary transition-colors duration-200" href="#">Home</a>
+<a class="text-on-surface-variant font-medium font-technical-label text-technical-label hover:text-primary transition-colors duration-200" href="#">Workstation</a>
+<a class="text-on-surface-variant font-medium font-technical-label text-technical-label hover:text-primary transition-colors duration-200" href="#">Research</a>
+<!-- Active Item -->
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-technical-label text-technical-label h-full flex items-center opacity-80 transition-opacity" href="#">Dataset</a>
+<a class="text-on-surface-variant font-medium font-technical-label text-technical-label hover:text-primary transition-colors duration-200" href="#">Architecture</a>
+<a class="text-on-surface-variant font-medium font-technical-label text-technical-label hover:text-primary transition-colors duration-200" href="#">Explainability</a>
+</div>
+<!-- Trailing Icons -->
+<div class="flex space-x-4 items-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="memory">memory</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="sensors">sensors</span>
+</button>
+</div>
+</div>
+</nav>
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar -->
+<aside class="hidden md:flex bg-surface-container-low border-r border-outline-variant/10 w-64 flex-col p-unit flex-shrink-0">
+<!-- Header -->
+<div class="p-4 mb-6">
+<div class="font-headline-md text-headline-md text-primary mb-1">Dermal Intelligence</div>
+<div class="font-technical-label text-technical-label text-on-surface-variant">Clinical Research v4.2</div>
+</div>
+<!-- CTA -->
+<div class="px-2 mb-6">
+<button class="w-full bg-primary/10 text-primary border border-primary/30 rounded-DEFAULT py-2 font-technical-label text-technical-label hover:bg-primary/20 transition-all">
+                    New Analysis
+                </button>
+</div>
+<!-- Tabs -->
+<nav class="flex-1 space-y-1 px-2">
+<a class="flex items-center space-x-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant rounded-xl font-technical-label text-technical-label hover:bg-surface-variant/50 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span>Model Metrics</span>
+</a>
+<a class="flex items-center space-x-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant rounded-xl font-technical-label text-technical-label hover:bg-surface-variant/50 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="developer_board">developer_board</span>
+<span>Hardware Trace</span>
+</a>
+<a class="flex items-center space-x-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant rounded-xl font-technical-label text-technical-label hover:bg-surface-variant/50 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="biotech">biotech</span>
+<span>Diagnostics</span>
+</a>
+<a class="flex items-center space-x-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant rounded-xl font-technical-label text-technical-label hover:bg-surface-variant/50 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+<span>Data Flow</span>
+</a>
+</nav>
+<!-- Footer Tabs -->
+<div class="mt-auto px-2 space-y-1 pb-4">
+<a class="flex items-center space-x-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant rounded-xl font-technical-label text-technical-label hover:bg-surface-variant/50 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center space-x-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant rounded-xl font-technical-label text-technical-label hover:bg-surface-variant/50 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span>Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto scroll-smooth">
+<div class="max-w-max-width mx-auto p-margin-mobile md:p-margin-desktop pb-24">
+<!-- Page Header -->
+<header class="mb-12 border-b border-outline-variant/10 pb-8">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-on-surface mb-4">
+                        HAM10000 Dataset & Clinical Context
+                    </h1>
+<p class="font-body-lg text-on-surface-variant max-w-3xl">
+                        Comprehensive analysis of the Human Against Machine dermatoscopy dataset. This workstation outlines the intrinsic class imbalances, our patient-aware splitting methodology, and the focal loss strategies employed to stabilize training gradients across underrepresented diagnostic classes.
+                    </p>
+</header>
+<!-- Metrics Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-panel-gap mb-12">
+<!-- Metric Card 1 -->
+<div class="bg-surface-container-low border border-outline-variant/10 rounded-xl p-6 relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="font-technical-label text-technical-label text-on-surface-variant uppercase tracking-widest mb-2 flex items-center justify-between">
+                            Total Images
+                            <span class="material-symbols-outlined text-primary/50 text-[18px]">imagesmode</span>
+</div>
+<div class="font-headline-md text-headline-md text-primary mt-4">
+                            10,015
+                        </div>
+<div class="font-technical-data text-technical-data text-on-surface-variant mt-2 border-t border-outline-variant/10 pt-2">
+                            High-resolution dermoscopic captures
+                        </div>
+</div>
+<!-- Metric Card 2 -->
+<div class="bg-surface-container-low border border-outline-variant/10 rounded-xl p-6 relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-research-violet/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="font-technical-label text-technical-label text-on-surface-variant uppercase tracking-widest mb-2 flex items-center justify-between">
+                            Diagnostic Classes
+                            <span class="material-symbols-outlined text-research-violet/50 text-[18px]">category</span>
+</div>
+<div class="font-headline-md text-headline-md text-research-violet mt-4">
+                            7
+                        </div>
+<div class="font-technical-data text-technical-data text-on-surface-variant mt-2 border-t border-outline-variant/10 pt-2">
+                            Distinct pathological categories
+                        </div>
+</div>
+<!-- Metric Card 3 -->
+<div class="bg-surface-container-low border border-outline-variant/10 rounded-xl p-6 relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-status-critical/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="font-technical-label text-technical-label text-on-surface-variant uppercase tracking-widest mb-2 flex items-center justify-between">
+                            Max Imbalance Ratio
+                            <span class="material-symbols-outlined text-status-critical/50 text-[18px]">balance</span>
+</div>
+<div class="font-headline-md text-headline-md text-status-critical mt-4">
+                            58.3 : 1
+                        </div>
+<div class="font-technical-data text-technical-data text-on-surface-variant mt-2 border-t border-outline-variant/10 pt-2">
+                            NV (Majority) vs DF (Minority)
+                        </div>
+</div>
+<!-- Metric Card 4 -->
+<div class="bg-surface-container-low border border-outline-variant/10 rounded-xl p-6 relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-status-benign/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+<div class="font-technical-label text-technical-label text-on-surface-variant uppercase tracking-widest mb-2 flex items-center justify-between">
+                            Patient Split (Tr/Va/Te)
+                            <span class="material-symbols-outlined text-status-benign/50 text-[18px]">splitscreen</span>
+</div>
+<div class="font-headline-md text-headline-md text-status-benign mt-4">
+                            70 / 15 / 15
+                        </div>
+<div class="font-technical-data text-technical-data text-on-surface-variant mt-2 border-t border-outline-variant/10 pt-2">
+                            Strict patient-level isolation enforced
+                        </div>
+</div>
+</section>
+<!-- Class Taxonomy Visualization -->
+<section class="mb-12 bg-surface-container border border-outline-variant/10 rounded-xl p-6 md:p-8">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-6 flex items-center">
+<span class="material-symbols-outlined mr-3 text-primary">data_usage</span>
+                        Segmented Class Distribution
+                    </h2>
+<div class="space-y-6">
+<!-- NV -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<div class="flex items-center space-x-3">
+<span class="px-2 py-1 bg-surface-variant text-on-surface font-technical-label text-technical-label rounded-DEFAULT">NV</span>
+<span class="font-body-sm text-on-surface-variant">Melanocytic Nevi</span>
+</div>
+<span class="font-technical-data text-technical-data text-primary">6,705 (67.0%)</span>
+</div>
+<div class="w-full bg-surface-deep rounded-full h-1.5 overflow-hidden">
+<div class="bg-primary h-1.5 rounded-full" style="width: 67%"></div>
+</div>
+</div>
+<!-- MEL -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<div class="flex items-center space-x-3">
+<span class="px-2 py-1 bg-surface-variant text-status-critical font-technical-label text-technical-label rounded-DEFAULT">MEL</span>
+<span class="font-body-sm text-on-surface-variant">Melanoma</span>
+</div>
+<span class="font-technical-data text-technical-data text-status-critical">1,113 (11.1%)</span>
+</div>
+<div class="w-full bg-surface-deep rounded-full h-1.5 overflow-hidden">
+<div class="bg-status-critical h-1.5 rounded-full" style="width: 11.1%"></div>
+</div>
+</div>
+<!-- BKL -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<div class="flex items-center space-x-3">
+<span class="px-2 py-1 bg-surface-variant text-on-surface font-technical-label text-technical-label rounded-DEFAULT">BKL</span>
+<span class="font-body-sm text-on-surface-variant">Benign Keratosis-like Lesions</span>
+</div>
+<span class="font-technical-data text-technical-data text-on-surface-variant">1,099 (11.0%)</span>
+</div>
+<div class="w-full bg-surface-deep rounded-full h-1.5 overflow-hidden">
+<div class="bg-outline h-1.5 rounded-full" style="width: 11.0%"></div>
+</div>
+</div>
+<!-- BCC -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<div class="flex items-center space-x-3">
+<span class="px-2 py-1 bg-surface-variant text-on-surface font-technical-label text-technical-label rounded-DEFAULT">BCC</span>
+<span class="font-body-sm text-on-surface-variant">Basal Cell Carcinoma</span>
+</div>
+<span class="font-technical-data text-technical-data text-on-surface-variant">514 (5.1%)</span>
+</div>
+<div class="w-full bg-surface-deep rounded-full h-1.5 overflow-hidden">
+<div class="bg-outline h-1.5 rounded-full" style="width: 5.1%"></div>
+</div>
+</div>
+<!-- Others collapsed for brevity -->
+<div class="pt-4 border-t border-outline-variant/10">
+<p class="font-technical-data text-technical-data text-on-surface-variant italic">
+                                 Remaining 5.8% distributed across AKIEC, VASC, and DF classes.
+                             </p>
+</div>
+</div>
+</section>
+<!-- Methodology Section -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-panel-gap">
+<!-- Patient-Aware Splitting -->
+<div class="bg-surface-container border border-outline-variant/10 rounded-xl p-6">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4 border-b border-outline-variant/10 pb-4">
+                            Patient-Aware Splitting
+                        </h3>
+<p class="font-body-sm text-on-surface-variant mb-6">
+                            To prevent data leakage, images are grouped by `lesion_id` before splitting. A model evaluating an image of a lesion it has seen from a different angle during training produces artificially inflated accuracy metrics.
+                        </p>
+<div class="bg-surface-deep rounded-lg p-4 border border-outline-variant/10 flex flex-col space-y-4">
+<div class="flex items-center justify-between bg-surface p-3 rounded border border-outline-variant/20">
+<span class="font-technical-label text-technical-label text-primary">Lesion_1294</span>
+<div class="flex space-x-2">
+<span class="w-2 h-2 rounded-full bg-status-benign shadow-[0_0_4px_rgba(0,217,154,0.8)]"></span>
+<span class="w-2 h-2 rounded-full bg-status-benign shadow-[0_0_4px_rgba(0,217,154,0.8)]"></span>
+</div>
+<span class="font-technical-data text-technical-data text-on-surface-variant">→ Assigned to TRAIN</span>
+</div>
+<div class="flex items-center justify-between bg-surface p-3 rounded border border-outline-variant/20">
+<span class="font-technical-label text-technical-label text-status-warning">Lesion_8831</span>
+<div class="flex space-x-2">
+<span class="w-2 h-2 rounded-full bg-status-warning shadow-[0_0_4px_rgba(255,184,0,0.8)]"></span>
+</div>
+<span class="font-technical-data text-technical-data text-on-surface-variant">→ Assigned to VALID</span>
+</div>
+<div class="flex items-center justify-between bg-surface p-3 rounded border border-outline-variant/20">
+<span class="font-technical-label text-technical-label text-status-critical">Lesion_0452</span>
+<div class="flex space-x-2">
+<span class="w-2 h-2 rounded-full bg-status-critical shadow-[0_0_4px_rgba(255,67,84,0.8)]"></span>
+<span class="w-2 h-2 rounded-full bg-status-critical shadow-[0_0_4px_rgba(255,67,84,0.8)]"></span>
+<span class="w-2 h-2 rounded-full bg-status-critical shadow-[0_0_4px_rgba(255,67,84,0.8)]"></span>
+</div>
+<span class="font-technical-data text-technical-data text-on-surface-variant">→ Assigned to TEST</span>
+</div>
+</div>
+</div>
+<!-- Focal Loss Weights -->
+<div class="bg-surface-container border border-outline-variant/10 rounded-xl p-6">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4 border-b border-outline-variant/10 pb-4">
+                            Focal Loss Integration
+                        </h3>
+<p class="font-body-sm text-on-surface-variant mb-6">
+                            Standard Cross-Entropy is overwhelmed by the NV class. We apply Focal Loss (\(\gamma = 2.0\)) dynamically weighted by inverse class frequencies to force the network to prioritize hard-to-classify minority examples.
+                        </p>
+<div class="bg-surface-deep rounded-lg p-4 border border-outline-variant/10 font-technical-data text-technical-data text-on-surface-variant overflow-x-auto">
+<pre><code><span class="text-research-violet">def</span> <span class="text-primary">compute_class_weights</span>(labels):
+    counts = np.bincount(labels)
+    total = <span class="text-primary">len</span>(labels)
+    <span class="text-outline-variant"># Inverse frequency weighting</span>
+    weights = total / (<span class="text-status-benign">len</span>(counts) * counts)
+    
+    <span class="text-outline-variant"># Normalize for stability</span>
+    weights = weights / np.<span class="text-primary">sum</span>(weights)
+    <span class="text-research-violet">return</span> torch.FloatTensor(weights)
+
+<span class="text-outline-variant"># Applied to Criterion</span>
+criterion = FocalLoss(gamma=<span class="text-status-warning">2.0</span>, alpha=class_weights)
+</code></pre>
+</div>
+</div>
+</section>
+<!-- Footer (Rendered within main scroll area per workstation aesthetic) -->
+<footer class="mt-24 border-t border-outline-variant/10 pt-8 w-full">
+<div class="flex flex-col md:flex-row justify-between items-center bg-background w-full py-8 px-gutter max-w-max-width mx-auto">
+<div class="font-headline-md text-headline-md text-on-surface mb-4 md:mb-0">
+                            © 2024 Dermal Intelligence Lab. For research use only. Not for diagnostic use.
+                        </div>
+<div class="flex space-x-6">
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-technical-data text-technical-data focus:ring-1 focus:ring-primary" href="#">Methodology</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-technical-data text-technical-data focus:ring-1 focus:ring-primary" href="#">GitHub</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-technical-data text-technical-data focus:ring-1 focus:ring-primary" href="#">Contact</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-technical-data text-technical-data focus:ring-1 focus:ring-primary" href="#">Privacy Policy</a>
+</div>
+</div>
+</footer>
+</div>
+</main>
+</div>
+</body></html>

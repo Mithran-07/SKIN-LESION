@@ -1,0 +1,37 @@
+{
+  "efficientnet_gradcam": {
+    "target_layer": "conv_head",
+    "heatmap_shape": [
+      224,
+      224
+    ],
+    "heatmap_min": 0.0,
+    "heatmap_max": 1.0,
+    "heatmap_has_nan": false,
+    "heatmap_has_inf": false,
+    "overlay_size": [
+      224,
+      224
+    ],
+    "weights_remained_unmodified": true,
+    "model_eval_mode_preserved": true
+  },
+  "dual_branch_gradcam": {
+    "shallow_target_layer": "shallow_branch.block3.conv",
+    "deep_target_layer": "deep_branch.stage4.conv_layers[-2]",
+    "texture_cam_shape": [
+      112,
+      112
+    ],
+    "structure_cam_shape": [
+      14,
+      14
+    ],
+    "texture_cam_min": 0.0,
+    "texture_cam_max": 1.0,
+    "structure_cam_min": 0.0,
+    "structure_cam_max": 1.0,
+    "weights_remained_unmodified": true,
+    "model_eval_mode_preserved": true
+  }
+}

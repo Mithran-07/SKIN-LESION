@@ -1,29 +1,25 @@
 """
 Dual-Branch CNN: Full classifier combining shallow-wide and deep-narrow branches.
 
-This is the core architectural innovation: by physically instantiating two
-topologically distinct CNN branches, the network is forced to maintain
-separate high-frequency (texture) and low-frequency (structure) representations
-rather than collapsing both into a single abstract feature vector.
-
-The dual forward returns both the classification logits AND the raw feature
-maps from the last conv layer of each branch. These feature maps are
-required by the Grad-CAM explainability pipeline.
+Supports explicit architecture versioning:
+- "v1_matrix" (`dual_branch_v1_matrix`): 10,669,639 parameters (used by `dual_branch_seed123` and `dual_branch_seed999`).
+- "v2_scalar" (`dual_branch_v2_scalar`): 9,031,241 parameters (used by `dual_branch_seed42`).
 """
 
-from typing import Tuple, Optional
+from pathlib import Path
+from typing import Tuple, Optional, Dict, Any, Union
 
 import torch
 import torch.nn as nn
 
 from models.shallow_wide_branch import ShallowWideBranch
 from models.deep_narrow_branch import DeepNarrowBranch
-from models.fusion import AttentionFusionHead
+from models.fusion import AttentionFusionHead, FusionVersion, SUPPORTED_FUSION_VERSIONS
 
 
 class DualBranchNet(nn.Module):
     """
-    Full Dual-Branch Dermoscopic Classifier.
+    Full Dual-Branch Dermoscopic Classifier with Explicit Architecture Versioning.
 
     Args:
         num_classes: Number of diagnostic classes (7 for HAM10000, 8 for ISIC2019).
@@ -35,6 +31,7 @@ class DualBranchNet(nn.Module):
         fusion_output_dim: Output dim of fusion head (256).
         pretrained_init: Initialize branch stems from pretrained weights.
         dropout_cls: Dropout before the final classification layer.
+        fusion_version: Explicit fusion architecture version ("v1_matrix" or "v2_scalar").
     """
 
     def __init__(
@@ -48,10 +45,20 @@ class DualBranchNet(nn.Module):
         fusion_output_dim: int = 256,
         pretrained_init: bool = True,
         dropout_cls: float = 0.3,
+        fusion_version: FusionVersion = "v2_scalar",
     ):
         super().__init__()
+        if fusion_version not in SUPPORTED_FUSION_VERSIONS:
+            raise ValueError(
+                f"Unsupported fusion_version '{fusion_version}'. "
+                f"Expected one of {SUPPORTED_FUSION_VERSIONS}."
+            )
+
         shallow_channels = shallow_channels or [256, 512, 1024]
         deep_num_blocks = deep_num_blocks or [2, 2, 3, 3]
+
+        self.fusion_version: FusionVersion = fusion_version
+        self.architecture_version: str = f"dual_branch_{fusion_version}"
 
         # ── Branch instantiation ────────────────────────────────────────────
         self.shallow_branch = ShallowWideBranch(
@@ -71,6 +78,7 @@ class DualBranchNet(nn.Module):
             structure_dim=self.deep_branch.output_dim,
             hidden_dim=fusion_hidden_dim,
             output_dim=fusion_output_dim,
+            fusion_version=fusion_version,
         )
 
         # ── Classification head ─────────────────────────────────────────────
@@ -107,6 +115,64 @@ class DualBranchNet(nn.Module):
         """Return total number of trainable parameters."""
         return sum(p.numel() for p in self.parameters() if p.requires_grad)
 
+    @staticmethod
+    def inspect_checkpoint_version(state_dict: Dict[str, torch.Tensor]) -> str:
+        """
+        Inspect a state_dict's fusion keys to report its declared fusion version.
+        Does NOT silently mutate the model; used to provide clear diagnostics.
+        """
+        keys = set(state_dict.keys())
+        if "fusion.gate.0.weight" in keys:
+            return "v1_matrix"
+        if "fusion.gate_t.0.weight" in keys and "fusion.gate_s.0.weight" in keys:
+            return "v2_scalar"
+        return "unknown"
+
+    def load_verified_state_dict(self, state_dict: Dict[str, torch.Tensor]) -> None:
+        """
+        Strictly load a checkpoint state_dict (`strict=True`), raising a clear
+        diagnostic error if the checkpoint's fusion version does not match
+        `self.fusion_version`. Never uses `strict=False`.
+        """
+        ckpt_version = self.inspect_checkpoint_version(state_dict)
+        if ckpt_version != "unknown" and ckpt_version != self.fusion_version:
+            raise ValueError(
+                f"Architecture version mismatch: DualBranchNet was instantiated with "
+                f"fusion_version='{self.fusion_version}' ({self.get_num_params():,} params), "
+                f"but the checkpoint state_dict uses fusion_version='{ckpt_version}'. "
+                f"Instantiate DualBranchNet(fusion_version='{ckpt_version}') to load this checkpoint strictly."
+            )
+        self.load_state_dict(state_dict, strict=True)
+
+    @classmethod
+    def from_checkpoint(
+        cls,
+        checkpoint_path: Union[str, Path],
+        fusion_version: FusionVersion,
+        device: Union[str, torch.device] = "cpu",
+        num_classes: int = 7,
+        pretrained_init: bool = False,
+    ) -> "DualBranchNet":
+        """
+        Instantiate DualBranchNet with an explicit `fusion_version` and load
+        a checkpoint with `strict=True` verification.
+        """
+        ckpt_obj = torch.load(str(checkpoint_path), map_location=device)
+        if isinstance(ckpt_obj, dict):
+            state_dict = ckpt_obj.get("model_state_dict") or ckpt_obj.get("state_dict") or ckpt_obj
+        else:
+            state_dict = ckpt_obj
+
+        model = cls(
+            num_classes=num_classes,
+            pretrained_init=pretrained_init,
+            fusion_version=fusion_version,
+        )
+        model.load_verified_state_dict(state_dict)
+        model.to(device)
+        model.eval()
+        return model
+
     def freeze_branch(self, branch: str = "deep") -> None:
         """
         Freeze a branch for stage-wise fine-tuning.
@@ -141,6 +207,7 @@ def build_model_from_config(cfg: dict) -> DualBranchNet:
     sw_cfg = model_cfg["shallow_wide"]
     dn_cfg = model_cfg["deep_narrow"]
     fu_cfg = model_cfg["fusion"]
+    fusion_version = fu_cfg.get("fusion_version", "v2_scalar")
 
     return DualBranchNet(
         num_classes=cfg["dataset"]["num_classes"],
@@ -151,4 +218,5 @@ def build_model_from_config(cfg: dict) -> DualBranchNet:
         fusion_hidden_dim=fu_cfg["hidden_dim"],
         fusion_output_dim=fu_cfg["output_dim"],
         pretrained_init=sw_cfg.get("pretrained_init", True),
+        fusion_version=fusion_version,
     )

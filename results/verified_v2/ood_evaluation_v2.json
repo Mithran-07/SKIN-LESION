@@ -1,0 +1,261 @@
+{
+  "ood_gate_version": "2.0.0",
+  "calibration_artifact": "checkpoints/ood/efficientnet_b4_ood_calibration_v2.pt",
+  "historical_v1_artifact_preserved": "checkpoints/ood/mobilenet_v2_derm_prototypes.pt",
+  "methodology": {
+    "backbone": "Trained EfficientNet-B4 (1,792-dim penultimate L2-normalized features + logit free energy) + Photometric Acquisition Gate",
+    "fitting_split": "splits/train.csv (N=2123 stratified training images; 49 class/sub-cluster prototypes)",
+    "calibration_split": "splits/val.csv (N=1503 validation images) + Validation OOD set (N=100 across 10 categories)",
+    "evaluation_split": "Untouched splits/test.csv (N=1510 held-out test images) + Independent Test OOD Suite (N=200 across 10 categories)",
+    "selected_threshold": 0.25,
+    "threshold_selection_criterion": "Calibrated strictly on splits/val.csv (N=1,503) + disjoint validation OOD set (N=100 across 10 categories) by maximizing Youden's J statistic within the [97.0%, 98.5%] validation in-domain acceptance band."
+  },
+  "validation_split_metrics": {
+    "in_domain_count": 1503,
+    "in_domain_acceptance_rate": 0.9834,
+    "false_rejection_rate": 0.0166,
+    "val_ood_count": 100,
+    "val_ood_rejection_rate": 1.0
+  },
+  "held_out_test_metrics": {
+    "total_evaluated": 1710,
+    "in_domain_test_count": 1510,
+    "ood_test_count": 200,
+    "in_domain_acceptance_rate": 0.9808,
+    "false_rejection_rate_frr": 0.0192,
+    "ood_rejection_rate": 1.0,
+    "false_acceptance_rate_far": 0.0,
+    "auroc": 0.9985,
+    "auprc": 0.9998,
+    "precision": 1.0,
+    "recall": 0.9808,
+    "f1_score": 0.9903,
+    "bootstrap_95_ci": {
+      "auroc_95ci": [
+        0.9972,
+        0.9994
+      ],
+      "in_domain_acceptance_95ci": [
+        0.9729,
+        0.9868
+      ],
+      "ood_rejection_95ci": [
+        1.0,
+        1.0
+      ]
+    },
+    "score_distributions": {
+      "in_domain_test_mean": 0.4893,
+      "in_domain_test_median": 0.4949,
+      "in_domain_test_p05": 0.2981,
+      "in_domain_test_p95": 0.6607,
+      "ood_test_mean": 0.0746,
+      "ood_test_median": 0.0462,
+      "ood_test_p05": 0.0172,
+      "ood_test_p95": 0.1863
+    }
+  },
+  "before_vs_after_remediation": {
+    "v1_prototype_gate_on_unseen_test": {
+      "threshold": 0.55,
+      "in_domain_acceptance_rate": 0.0,
+      "false_rejection_rate_frr": 1.0,
+      "office_document_falsely_accepted": true,
+      "office_document_score": 0.5817
+    },
+    "v2_calibrated_gate_on_unseen_test": {
+      "threshold": 0.25,
+      "in_domain_acceptance_rate": 0.9808,
+      "false_rejection_rate_frr": 0.0192,
+      "ood_rejection_rate": 1.0,
+      "auroc": 0.9985
+    }
+  },
+  "per_class_in_domain_test_acceptance": {
+    "akiec": {
+      "count": 53,
+      "accepted_count": 50,
+      "acceptance_rate": 0.9434,
+      "mean_score": 0.414,
+      "min_score": 0.2275
+    },
+    "bcc": {
+      "count": 59,
+      "accepted_count": 58,
+      "acceptance_rate": 0.9831,
+      "mean_score": 0.4292,
+      "min_score": 0.2263
+    },
+    "bkl": {
+      "count": 186,
+      "accepted_count": 179,
+      "acceptance_rate": 0.9624,
+      "mean_score": 0.4266,
+      "min_score": 0.2074
+    },
+    "df": {
+      "count": 8,
+      "accepted_count": 8,
+      "acceptance_rate": 1.0,
+      "mean_score": 0.4407,
+      "min_score": 0.2982
+    },
+    "mel": {
+      "count": 181,
+      "accepted_count": 175,
+      "acceptance_rate": 0.9669,
+      "mean_score": 0.4706,
+      "min_score": 0.1634
+    },
+    "nv": {
+      "count": 999,
+      "accepted_count": 987,
+      "acceptance_rate": 0.988,
+      "mean_score": 0.5123,
+      "min_score": 0.0531
+    },
+    "vasc": {
+      "count": 24,
+      "accepted_count": 24,
+      "acceptance_rate": 1.0,
+      "mean_score": 0.4863,
+      "min_score": 0.2527
+    }
+  },
+  "per_category_ood_test_rejection": {
+    "everyday_objects_and_geometric": {
+      "count": 20,
+      "rejected_count": 20,
+      "rejection_rate": 1.0,
+      "mean_score": 0.0759,
+      "max_score": 0.1802
+    },
+    "grayscale_radiograph_ultrasound_sim": {
+      "count": 20,
+      "rejected_count": 20,
+      "rejection_rate": 1.0,
+      "mean_score": 0.0449,
+      "max_score": 0.0633
+    },
+    "natural_landscapes_and_sky": {
+      "count": 20,
+      "rejected_count": 20,
+      "rejection_rate": 1.0,
+      "mean_score": 0.0465,
+      "max_score": 0.0519
+    },
+    "non_dermoscopic_clinical_photo_sim": {
+      "count": 20,
+      "rejected_count": 20,
+      "rejection_rate": 1.0,
+      "mean_score": 0.1855,
+      "max_score": 0.1965
+    },
+    "non_dermoscopic_macro_textures": {
+      "count": 20,
+      "rejected_count": 20,
+      "rejection_rate": 1.0,
+      "mean_score": 0.0998,
+      "max_score": 0.1908
+    },
+    "non_lesion_color_gradients_and_art": {
+      "count": 20,
+      "rejected_count": 20,
+      "rejection_rate": 1.0,
+      "mean_score": 0.0477,
+      "max_score": 0.0484
+    },
+    "office_documents_and_screenshots": {
+      "count": 20,
+      "rejected_count": 20,
+      "rejection_rate": 1.0,
+      "mean_score": 0.0339,
+      "max_score": 0.0387
+    },
+    "solid_and_blank_frames": {
+      "count": 20,
+      "rejected_count": 20,
+      "rejection_rate": 1.0,
+      "mean_score": 0.0167,
+      "max_score": 0.0205
+    },
+    "synthetic_gaussian_and_impulse_noise": {
+      "count": 20,
+      "rejected_count": 20,
+      "rejection_rate": 1.0,
+      "mean_score": 0.0572,
+      "max_score": 0.1495
+    },
+    "warm_brown_organic_and_wood_leather": {
+      "count": 20,
+      "rejected_count": 20,
+      "rejection_rate": 1.0,
+      "mean_score": 0.1383,
+      "max_score": 0.1782
+    }
+  },
+  "demo_samples_verification": {
+    "akiec_sample.jpg": {
+      "isic_image_id": "ISIC_0026149",
+      "true_class": "akiec",
+      "predicted_class": "akiec",
+      "confidence": 1.0,
+      "ood_domain_score": 0.6295,
+      "accepted": true
+    },
+    "bcc_sample.jpg": {
+      "isic_image_id": "ISIC_0024590",
+      "true_class": "bcc",
+      "predicted_class": "bcc",
+      "confidence": 1.0,
+      "ood_domain_score": 0.6163,
+      "accepted": true
+    },
+    "bkl_sample.jpg": {
+      "isic_image_id": "ISIC_0032417",
+      "true_class": "bkl",
+      "predicted_class": "bkl",
+      "confidence": 1.0,
+      "ood_domain_score": 0.5662,
+      "accepted": true
+    },
+    "df_sample.jpg": {
+      "isic_image_id": "ISIC_0033695",
+      "true_class": "df",
+      "predicted_class": "df",
+      "confidence": 0.9989,
+      "ood_domain_score": 0.5603,
+      "accepted": true
+    },
+    "mel_sample.jpg": {
+      "isic_image_id": "ISIC_0025751",
+      "true_class": "mel",
+      "predicted_class": "mel",
+      "confidence": 0.9935,
+      "ood_domain_score": 0.6577,
+      "accepted": true
+    },
+    "nv_sample.jpg": {
+      "isic_image_id": "ISIC_0027411",
+      "true_class": "nv",
+      "predicted_class": "nv",
+      "confidence": 1.0,
+      "ood_domain_score": 0.7197,
+      "accepted": true
+    },
+    "vasc_sample.jpg": {
+      "isic_image_id": "ISIC_0031215",
+      "true_class": "vasc",
+      "predicted_class": "vasc",
+      "confidence": 1.0,
+      "ood_domain_score": 0.6735,
+      "accepted": true
+    }
+  },
+  "remaining_limitations": [
+    "Close-up macroscopic clinical skin photographs (taken with smartphone cameras rather than polarized/immersion dermatoscopes) that fill 100% of the frame with cutaneous tissue share RGB chromaticity and lesion geometry with dermoscopy and may achieve borderline domain scores.",
+    "Heavily occluded dermoscopic images with extreme black corner vignetting (>65% of frame) or severe surgical ink markings may fall into the bottom 2.5% tail of the in-domain distribution and trigger conservative rejection.",
+    "The OOD gate is a statistical input-domain filter, not a clinical diagnostic safety guarantee."
+  ],
+  "elapsed_seconds": 105.87
+}

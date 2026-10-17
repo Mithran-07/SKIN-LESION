@@ -1,0 +1,71 @@
+import torch
+import torch.nn.functional as F
+import torchvision.models as models
+import torchvision.transforms as transforms
+from PIL import Image
+from pathlib import Path
+import logging
+
+logger = logging.getLogger("DermAI.OODGate")
+
+class OODDomainGate:
+    """
+    Feature-space distance / prototype-based rejection gate using MobileNetV2.
+    Computes cosine similarity of the input image against dermoscopic prototypes.
+    """
+    def __init__(self, device: torch.device, threshold: float = 0.55):
+        self.device = device
+        self.threshold = threshold
+        
+        # We load MobileNetV2 without triggering a download if possible, 
+        # or rely on the cached weights we just downloaded.
+        self.model = models.mobilenet_v2(weights=models.MobileNet_V2_Weights.DEFAULT)
+        self.model.eval()
+        self.model.to(self.device)
+
+        self.transform = transforms.Compose([
+            transforms.Resize((224, 224)),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+        ])
+
+        # Load prototypes
+        proto_path = Path(__file__).resolve().parent.parent / "checkpoints/ood/mobilenet_v2_derm_prototypes.pt"
+        if proto_path.exists():
+            self.prototypes = torch.load(proto_path, map_location=self.device)
+            logger.info("OOD Domain Gate initialized successfully.")
+        else:
+            self.prototypes = None
+            logger.warning("OOD prototypes not found. Domain validation will be bypassed.")
+
+    def validate_image(self, image: Image.Image) -> dict:
+        if self.prototypes is None:
+            return {"valid": True, "domain": "unknown", "score": 1.0, "reason": "Gate bypassed (no prototypes)"}
+
+        rgb_image = image.convert("RGB")
+        tensor = self.transform(rgb_image).unsqueeze(0).to(self.device)
+        
+        with torch.no_grad():
+            feat = self.model.features(tensor)
+            feat = F.adaptive_avg_pool2d(feat, (1, 1)).view(1, -1)
+            feat_norm = F.normalize(feat, p=2, dim=1)
+
+        sim_matrix = torch.matmul(feat_norm, self.prototypes.T)
+        max_sim = sim_matrix.max().item()
+
+        is_valid = max_sim >= self.threshold
+        
+        if is_valid:
+            return {
+                "valid": True,
+                "domain": "dermoscopic",
+                "score": round(max_sim, 4),
+                "reason": "Feature similarity within expected dermoscopic domain."
+            }
+        else:
+            return {
+                "valid": False,
+                "domain": "non_dermoscopic",
+                "score": round(max_sim, 4),
+                "reason": f"Input image deviates significantly from dermoscopic domain (Similarity: {max_sim:.4f} < {self.threshold})."
+            }

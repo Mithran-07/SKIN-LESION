@@ -1,0 +1,285 @@
+{
+  "metadata_rows": 10015,
+  "metadata_columns": [
+    "lesion_id",
+    "image_id",
+    "dx",
+    "dx_type",
+    "age",
+    "sex",
+    "localization"
+  ],
+  "unique_image_id": 10015,
+  "unique_lesion_id": 7470,
+  "missing_values_per_column": {
+    "lesion_id": 0,
+    "image_id": 0,
+    "dx": 0,
+    "dx_type": 0,
+    "age": 57,
+    "sex": 0,
+    "localization": 0
+  },
+  "sex_unknown": 57,
+  "dx_values": {
+    "nv": 6705,
+    "mel": 1113,
+    "bkl": 1099,
+    "bcc": 514,
+    "akiec": 327,
+    "vasc": 142,
+    "df": 115
+  },
+  "dx_type_values": {
+    "histo": 5340,
+    "follow_up": 3704,
+    "consensus": 902,
+    "confocal": 69
+  },
+  "images_per_lesion_distribution": {
+    "1": 5514,
+    "2": 1423,
+    "3": 490,
+    "4": 34,
+    "5": 5,
+    "6": 4
+  },
+  "lesions_with_multiple_dx": 0,
+  "class_counts": {
+    "nv": 6705,
+    "mel": 1113,
+    "bkl": 1099,
+    "bcc": 514,
+    "akiec": 327,
+    "vasc": 142,
+    "df": 115
+  },
+  "class_pct": {
+    "nv": 66.95,
+    "mel": 11.11,
+    "bkl": 10.97,
+    "bcc": 5.13,
+    "akiec": 3.27,
+    "vasc": 1.42,
+    "df": 1.15
+  },
+  "image_files_found": 10021,
+  "metadata_ids_without_file": [],
+  "files_without_metadata": [
+    "ISIC_0024306 - Copy",
+    "ISIC_0024306 - Copy - Copy",
+    "ISIC_0024307 - Copy",
+    "ISIC_0024307 - Copy - Copy",
+    "ISIC_0028585 - Copy",
+    "ISIC_0029258 - Copy"
+  ],
+  "unreadable_images": [],
+  "image_dimensions": {
+    "600x450": 10021
+  },
+  "image_modes": {
+    "RGB": 10021
+  },
+  "exact_duplicate_groups": 6,
+  "exact_duplicate_examples": [
+    [
+      "ISIC_0024306",
+      "ISIC_0024306 - Copy",
+      "ISIC_0024306 - Copy - Copy"
+    ],
+    [
+      "ISIC_0024307",
+      "ISIC_0024307 - Copy",
+      "ISIC_0024307 - Copy - Copy"
+    ],
+    [
+      "ISIC_0024366",
+      "ISIC_0029861"
+    ],
+    [
+      "ISIC_0024777",
+      "ISIC_0029938"
+    ],
+    [
+      "ISIC_0028585",
+      "ISIC_0028585 - Copy"
+    ],
+    [
+      "ISIC_0029258",
+      "ISIC_0029258 - Copy"
+    ]
+  ],
+  "near_duplicate_pairs_hamming_le4": 29876,
+  "split_sizes": {
+    "train": 7002,
+    "val": 1503,
+    "test": 1510
+  },
+  "split_lesions": {
+    "train": 5229,
+    "val": 1120,
+    "test": 1121
+  },
+  "split_class_counts": {
+    "train": {
+      "akiec": 207,
+      "bcc": 381,
+      "bkl": 741,
+      "df": 89,
+      "mel": 770,
+      "nv": 4718,
+      "vasc": 96
+    },
+    "val": {
+      "akiec": 67,
+      "bcc": 74,
+      "bkl": 172,
+      "df": 18,
+      "mel": 162,
+      "nv": 988,
+      "vasc": 22
+    },
+    "test": {
+      "akiec": 53,
+      "bcc": 59,
+      "bkl": 186,
+      "df": 8,
+      "mel": 181,
+      "nv": 999,
+      "vasc": 24
+    }
+  },
+  "split_class_pct": {
+    "train": {
+      "akiec": 2.96,
+      "bcc": 5.44,
+      "bkl": 10.58,
+      "df": 1.27,
+      "mel": 11.0,
+      "nv": 67.38,
+      "vasc": 1.37
+    },
+    "val": {
+      "akiec": 4.46,
+      "bcc": 4.92,
+      "bkl": 11.44,
+      "df": 1.2,
+      "mel": 10.78,
+      "nv": 65.74,
+      "vasc": 1.46
+    },
+    "test": {
+      "akiec": 3.51,
+      "bcc": 3.91,
+      "bkl": 12.32,
+      "df": 0.53,
+      "mel": 11.99,
+      "nv": 66.16,
+      "vasc": 1.59
+    }
+  },
+  "lesion_overlap": {
+    "train_val": 0,
+    "train_test": 0,
+    "val_test": 0
+  },
+  "image_overlap": {
+    "train_val": 0,
+    "train_test": 0,
+    "val_test": 0
+  },
+  "all_metadata_images_assigned": true,
+  "label_column_matches_HAM_LABEL_MAP": true,
+  "split_dx_matches_metadata": true,
+  "exact_duplicates_crossing_splits": 4,
+  "near_duplicates_crossing_splits": 13365,
+  "near_duplicates_crossing_splits_examples": [
+    [
+      "ISIC_0024306",
+      "ISIC_0024306 - Copy",
+      0
+    ],
+    [
+      "ISIC_0024306",
+      "ISIC_0024306 - Copy - Copy",
+      0
+    ],
+    [
+      "ISIC_0024306",
+      "ISIC_0026259",
+      4
+    ],
+    [
+      "ISIC_0024306",
+      "ISIC_0031920",
+      4
+    ],
+    [
+      "ISIC_0024306 - Copy",
+      "ISIC_0026259",
+      4
+    ],
+    [
+      "ISIC_0024306 - Copy",
+      "ISIC_0031920",
+      4
+    ],
+    [
+      "ISIC_0024306 - Copy - Copy",
+      "ISIC_0026259",
+      4
+    ],
+    [
+      "ISIC_0024306 - Copy - Copy",
+      "ISIC_0031920",
+      4
+    ],
+    [
+      "ISIC_0024307",
+      "ISIC_0024307 - Copy",
+      0
+    ],
+    [
+      "ISIC_0024307",
+      "ISIC_0024307 - Copy - Copy",
+      0
+    ],
+    [
+      "ISIC_0024313",
+      "ISIC_0028635",
+      3
+    ],
+    [
+      "ISIC_0024313",
+      "ISIC_0028947",
+      4
+    ],
+    [
+      "ISIC_0024313",
+      "ISIC_0033160",
+      4
+    ],
+    [
+      "ISIC_0024313",
+      "ISIC_0033530",
+      3
+    ],
+    [
+      "ISIC_0024315",
+      "ISIC_0026150",
+      4
+    ]
+  ],
+  "near_dup_pairs_same_lesion": 106,
+  "near_dup_pairs_different_lesion": 29747,
+  "regenerated_split_sizes": {
+    "train": 7002,
+    "val": 1503,
+    "test": 1510
+  },
+  "regenerated_matches_manifest": {
+    "train": true,
+    "val": true,
+    "test": true
+  }
+}

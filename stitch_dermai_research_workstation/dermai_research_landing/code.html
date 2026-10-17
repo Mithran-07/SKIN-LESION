@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DermAI Research | Dermal Intelligence Lab</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#422c00",
+                        "on-secondary": "#002e6a",
+                        "on-primary": "#00363a",
+                        "secondary-container": "#0361d1",
+                        "primary-fixed-dim": "#00dbe9",
+                        "on-secondary-fixed-variant": "#004396",
+                        "on-secondary-container": "#dbe4ff",
+                        "surface-bright": "#37393e",
+                        "inverse-primary": "#006970",
+                        "tertiary-fixed-dim": "#fdbb3a",
+                        "research-violet": "#9B5CFF",
+                        "status-critical": "#FF4354",
+                        "status-warning": "#FFB800",
+                        "secondary-fixed": "#d8e2ff",
+                        "error": "#ffb4ab",
+                        "on-tertiary-container": "#6f4d00",
+                        "error-container": "#93000a",
+                        "on-background": "#e2e2e8",
+                        "secondary-fixed-dim": "#aec6ff",
+                        "on-error-container": "#ffdad6",
+                        "outline-variant": "#3b494b",
+                        "surface-container": "#1e2024",
+                        "inverse-surface": "#e2e2e8",
+                        "on-tertiary-fixed-variant": "#5f4100",
+                        "on-primary-fixed": "#002022",
+                        "surface-container-highest": "#333539",
+                        "primary": "#88f5ff",
+                        "on-primary-container": "#005d63",
+                        "primary-fixed": "#7df4ff",
+                        "on-primary-fixed-variant": "#004f54",
+                        "background": "#111318",
+                        "on-secondary-fixed": "#001a42",
+                        "secondary": "#aec6ff",
+                        "tertiary": "#ffdfb0",
+                        "surface": "#111318",
+                        "primary-container": "#00ddeb",
+                        "surface-default": "#11151C",
+                        "surface-deep": "#0D1015",
+                        "surface-container-lowest": "#0c0e12",
+                        "surface-container-high": "#282a2e",
+                        "on-surface": "#e2e2e8",
+                        "surface-container-low": "#1a1c20",
+                        "on-surface-variant": "#bac9cb",
+                        "surface-tint": "#00dbe9",
+                        "tertiary-fixed": "#ffdeab",
+                        "on-error": "#690005",
+                        "tertiary-container": "#ffbc3b",
+                        "surface-dim": "#111318",
+                        "status-benign": "#00D99A",
+                        "surface-elevated": "#151A22",
+                        "inverse-on-surface": "#2f3035",
+                        "surface-variant": "#333539",
+                        "outline": "#849395",
+                        "on-tertiary-fixed": "#271900",
+                        "surface-high": "#1A2029"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "max-width": "1440px",
+                        "panel-gap": "16px",
+                        "gutter": "24px",
+                        "margin-desktop": "32px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Geist"],
+                        "body-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Geist"],
+                        "technical-label": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Geist"],
+                        "technical-data": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "technical-label": ["13px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "technical-data": ["12px", { "lineHeight": "1.0", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #111318;
+            color: #e2e2e8;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            opacity: 0.8;
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+        }
+
+        .glass-panel {
+            background: rgba(17, 19, 24, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(132, 147, 149, 0.12);
+        }
+
+        .tech-border {
+            position: relative;
+        }
+        
+        .tech-border::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 1px solid rgba(136, 245, 255, 0.15);
+            pointer-events: none;
+            border-radius: inherit;
+        }
+        
+        .tech-border::after {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            width: 8px;
+            height: 8px;
+            border-top: 2px solid rgba(136, 245, 255, 0.8);
+            border-left: 2px solid rgba(136, 245, 255, 0.8);
+            pointer-events: none;
+        }
+
+        .workflow-node {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .workflow-node:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(136, 245, 255, 0.1);
+        }
+
+        .workflow-line {
+            position: absolute;
+            top: 50%;
+            right: -100%;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(136, 245, 255, 0.4) 0%, rgba(136, 245, 255, 0) 100%);
+            transform: translateY(-50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        @media (max-width: 768px) {
+            .workflow-line {
+                top: 100%;
+                right: auto;
+                left: 50%;
+                width: 1px;
+                height: 100%;
+                background: linear-gradient(180deg, rgba(136, 245, 255, 0.4) 0%, rgba(136, 245, 255, 0) 100%);
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md antialiased selection:bg-primary/30 selection:text-primary">
+<!-- Top Navigation Bar -->
+<nav class="bg-background/80 backdrop-blur-xl border-b border-outline-variant/10 docked full-width top-0 sticky z-50">
+<div class="flex justify-between items-center w-full px-gutter max-w-max-width mx-auto h-16">
+<div class="flex items-center gap-6">
+<a class="font-headline-md text-headline-md font-bold tracking-tight text-primary hover:opacity-80 transition-opacity" href="#">
+                    DermAI | Dermal Intelligence Lab
+                </a>
+<!-- Desktop Nav Links -->
+<div class="hidden md:flex items-center gap-6 ml-4">
+<a class="font-technical-label text-technical-label text-primary font-bold border-b-2 border-primary pb-1 active" href="#">Home</a>
+<a class="font-technical-label text-technical-label text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Workstation</a>
+<a class="font-technical-label text-technical-label text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Research</a>
+<a class="font-technical-label text-technical-label text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Dataset</a>
+<a class="font-technical-label text-technical-label text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Architecture</a>
+<a class="font-technical-label text-technical-label text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Explainability</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button aria-label="Memory" class="text-on-surface-variant hover:text-primary transition-colors duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">memory</span>
+</button>
+<button aria-label="Terminal" class="text-on-surface-variant hover:text-primary transition-colors duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">terminal</span>
+</button>
+<button aria-label="Sensors" class="text-on-surface-variant hover:text-primary transition-colors duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">sensors</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="relative min-h-screen">
+<!-- Background Shader -->
+<div class="hero-bg">
+<!-- STITCH_SHADER_START:ANIMATION_14 class="absolute inset-0 w-full h-full" -->
+<div class="absolute inset-0 w-full h-full" style="display:block;">
+<canvas id="shader-canvas-ANIMATION_14" style="display:block;width:100%;height:100%"></canvas>
+<script>
+(function() {
+  const canvas = document.getElementById('shader-canvas-ANIMATION_14');
+
+  // Sync the WebGL drawing-buffer size with the CSS-driven layout size.
+  // This fires on initial layout and whenever the element is resized.
+  function syncSize() {
+    const w = canvas.clientWidth  || 1280;
+    const h = canvas.clientHeight || 720;
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width  = w;
+      canvas.height = h;
+    }
+  }
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(syncSize).observe(canvas);
+  }
+  syncSize();
+
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+  const vs = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+  v_texCoord = a_position * 0.5 + 0.5;
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+  const fs = `precision highp float;
+varying vec2 v_texCoord;
+uniform float u_time;
+uniform vec2 u_resolution;
+
+float noise(vec2 p) {
+    return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+void main() {
+    vec2 uv = v_texCoord;
+    vec2 p = (uv - 0.5) * 2.0;
+    p.x *= u_resolution.x / u_resolution.y;
+
+    // Deep graphite base matching #090B0F
+    vec3 color = vec3(0.035, 0.043, 0.059);
+
+    // Subtle ambient glow (Cyan and Violet)
+    float cyanGlow = 1.0 - length(p - vec2(-0.8, 0.8));
+    float violetGlow = 1.0 - length(p - vec2(0.8, -0.8));
+    
+    color += vec3(0.0, 0.866, 0.921) * max(0.0, cyanGlow) * 0.04;
+    color += vec3(0.608, 0.361, 1.0) * max(0.0, violetGlow) * 0.03;
+
+    // Scanning line effect (Scientific precision)
+    float scan = sin(uv.y * 120.0 + u_time * 1.5) * 0.005;
+    color += scan * 0.1;
+
+    // Cellular/Morphological patterns (Subtle)
+    float cells = 0.0;
+    vec2 cellUv = uv * 4.0;
+    for(int i=0; i<2; i++) {
+        vec2 grid = floor(cellUv);
+        vec2 f = fract(cellUv);
+        float d = length(f - 0.5 + 0.2 * sin(u_time * 0.3 + noise(grid) * 6.28));
+        cells += smoothstep(0.45, 0.43, d) * 0.015;
+        cellUv *= 1.8;
+    }
+    color += vec3(0.0, 0.866, 0.921) * cells;
+
+    gl_FragColor = vec4(color, 1.0);
+}`;
+  function cs(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+  gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  const pos = gl.getAttribLocation(prog, 'a_position');
+  gl.enableVertexAttribArray(pos);
+  gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+  const uTime = gl.getUniformLocation(prog, 'u_time');
+  const uRes = gl.getUniformLocation(prog, 'u_resolution');
+  const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+  // u_mouse is in pixel coordinates matching u_resolution (ShaderToy convention).
+  // Shaders that need normalized coords should use: u_mouse / u_resolution.
+  let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+  window.addEventListener('mousemove', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width && rect.height) {
+      const nx = (event.clientX - rect.left) / rect.width;
+      const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+      mouse.x = nx * canvas.width;
+      mouse.y = ny * canvas.height;
+    }
+  });
+
+  function render(t) {
+    if (typeof ResizeObserver === 'undefined') syncSize();
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    if (uTime) gl.uniform1f(uTime, t * 0.001);
+    if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+    if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(render);
+  }
+  render(0);
+})();
+</script>
+</div>
+<!-- STITCH_SHADER_END:ANIMATION_14 -->
+</div>
+<!-- Hero Section -->
+<section class="relative pt-24 pb-16 px-gutter md:pt-32 md:pb-24 max-w-max-width mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
+<!-- Left Content -->
+<div class="flex-1 flex flex-col gap-8 z-10 w-full">
+<!-- Metadata Strip -->
+<div class="flex flex-wrap items-center gap-4 font-technical-label text-technical-label text-primary">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-status-benign shadow-[0_0_4px_rgba(0,217,154,0.8)]"></span>
+                        AI RESEARCH WORKSTATION
+                    </div>
+<div class="w-px h-3 bg-outline-variant/30 hidden sm:block"></div>
+<div class="text-on-surface-variant">HAM10000</div>
+<div class="w-px h-3 bg-outline-variant/30 hidden sm:block"></div>
+<div class="text-on-surface-variant">7 CLASSES</div>
+</div>
+<!-- Headline & Copy -->
+<div class="flex flex-col gap-6">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">
+                        Understanding Skin Lesions<br/>Through Deep Learning
+                    </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                        A clinical-grade environment for the analysis and classification of pigmented skin lesions. Engineered to bridge the gap between abstract neural network representations and interpretable dermatological diagnostics.
+                    </p>
+</div>
+<!-- CTAs -->
+<div class="flex flex-col sm:flex-row gap-4 mt-4">
+<button class="bg-primary text-background font-technical-label text-technical-label px-6 py-3 rounded flex items-center justify-center gap-2 hover:bg-primary-fixed transition-colors">
+                        Launch Workstation
+                        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+<button class="bg-transparent border border-primary/30 text-primary font-technical-label text-technical-label px-6 py-3 rounded flex items-center justify-center gap-2 hover:bg-primary/5 transition-colors">
+                        Explore Research
+                        <span class="material-symbols-outlined text-[18px]">science</span>
+</button>
+</div>
+</div>
+<!-- Right Content (3D Scene) -->
+<div class="flex-1 w-full lg:w-auto h-[400px] lg:h-[600px] relative z-10">
+<div class="glass-panel tech-border w-full h-full rounded-xl overflow-hidden relative">
+<!-- Overlay grid/HUD elements to make it feel like a workstation -->
+<div class="absolute inset-0 pointer-events-none z-20 border border-outline-variant/20 rounded-xl"></div>
+<div class="absolute top-4 left-4 font-technical-data text-technical-data text-primary/70 z-20">VIEWPORT_01 :: 3D_TENSOR_REP</div>
+<!-- The 3D Component -->
+<!-- STITCH_THREEJS_START:ANIMATION_15 class="absolute inset-0 w-full h-full z-10" -->
+<div class="absolute inset-0 w-full h-full z-10" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_15" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_15');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  (function() {
+  const container = document.getElementById('threejs-container-DermAI-Hero');
+  const width = container.clientWidth || window.innerWidth;
+  const height = container.clientHeight || window.innerHeight;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  const group = new THREE.Group();
+  scene.add(group);
+
+  // Volumetric Lesion Core (Layered translucent geometry)
+  const coreGeo = new THREE.IcosahedronGeometry(2, 2);
+  const coreMat = new THREE.MeshPhongMaterial({
+    color: 0x00DDEB,
+    transparent: true,
+    opacity: 0.1,
+    wireframe: true,
+    side: THREE.DoubleSide
+  });
+  const core = new THREE.Mesh(coreGeo, coreMat);
+  group.add(core);
+
+  // Neural Feature Nodes (Point Cloud)
+  const pointsCount = 1500;
+  const pointsGeo = new THREE.BufferGeometry();
+  const positions = new Float32Array(pointsCount * 3);
+  for(let i=0; i<pointsCount * 3; i++) {
+    positions[i] = (Math.random() - 0.5) * 5;
+  }
+  pointsGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const pointsMat = new THREE.PointsMaterial({
+    color: 0x4D8DFF,
+    size: 0.02,
+    transparent: true,
+    opacity: 0.6
+  });
+  const points = new THREE.Points(pointsGeo, pointsMat);
+  group.add(points);
+
+  // Contour Rings (Scientific Scanning)
+  const ringGeo = new THREE.TorusGeometry(2.8, 0.005, 16, 100);
+  const ringMat = new THREE.MeshBasicMaterial({ color: 0x9B5CFF, transparent: true, opacity: 0.4 });
+  const ring = new THREE.Mesh(ringGeo, ringMat);
+  ring.rotation.x = Math.PI / 2;
+  group.add(ring);
+
+  // Lights
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+  scene.add(ambientLight);
+  const pointLight = new THREE.PointLight(0x00DDEB, 1);
+  pointLight.position.set(5, 5, 5);
+  scene.add(pointLight);
+
+  camera.position.z = 7;
+
+  let mouseX = 0, mouseY = 0;
+  window.addEventListener('mousemove', (e) => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 0.4;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 0.4;
+  });
+
+  const animate = () => {
+    requestAnimationFrame(animate);
+    group.rotation.y += 0.0015;
+    group.rotation.x += 0.0008;
+    
+    // Parallax
+    group.position.x += (mouseX - group.position.x) * 0.05;
+    group.position.y += (-mouseY - group.position.y) * 0.05;
+    
+    // Pulse ring
+    ring.scale.setScalar(1 + Math.sin(Date.now() * 0.0005) * 0.05);
+    
+    renderer.render(scene, camera);
+  };
+
+  window.addEventListener('resize', () => {
+    const w = container.clientWidth || window.innerWidth;
+    const h = container.clientHeight || window.innerHeight;
+    renderer.setSize(w, h);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  });
+
+  animate();
+})();
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_15 -->
+</div>
+</div>
+</section>
+<!-- Metrics Strip (Research Snapshot) -->
+<section class="border-y border-outline-variant/10 bg-surface/50 backdrop-blur-md relative z-20">
+<div class="max-w-max-width mx-auto px-gutter py-4">
+<div class="flex flex-col md:flex-row items-center justify-between gap-6">
+<div class="font-technical-label text-technical-label text-on-surface-variant tracking-widest shrink-0">
+                        EXPERIMENTAL BENCHMARK
+                    </div>
+<div class="flex flex-wrap justify-center md:justify-end gap-x-12 gap-y-4 w-full">
+<div class="flex flex-col gap-1">
+<span class="font-technical-label text-technical-label text-on-surface-variant">DATASET SIZE</span>
+<span class="font-technical-data text-technical-data text-on-surface text-lg">10,015</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-technical-label text-technical-label text-on-surface-variant">TAXONOMY</span>
+<span class="font-technical-data text-technical-data text-on-surface text-lg">7 CLASSES</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-technical-label text-technical-label text-on-surface-variant">ROC-AUC</span>
+<span class="font-technical-data text-technical-data text-primary text-lg">95.92%</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="font-technical-label text-technical-label text-on-surface-variant">INF. LATENCY</span>
+<span class="font-technical-data text-technical-data text-status-benign text-lg">8.83ms</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Research Journey Visualization -->
+<section class="py-24 px-gutter max-w-max-width mx-auto relative z-20">
+<div class="flex flex-col gap-12">
+<div class="flex flex-col gap-4">
+<h2 class="font-headline-md text-headline-md text-on-surface flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">account_tree</span>
+                        Research Pipeline
+                    </h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-2xl">
+                        A systematic approach to developing robust diagnostic tools, moving from raw pixel data to clinical deployment through rigorous validation layers.
+                    </p>
+</div>
+<!-- Workflow Diagram -->
+<div class="mt-8">
+<div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-8 md:gap-4 relative">
+<!-- Node 1 -->
+<div class="workflow-node glass-panel p-6 rounded-lg flex-1 border border-outline-variant/20 relative z-10">
+<div class="flex items-center gap-3 mb-4 text-primary">
+<span class="material-symbols-outlined">dataset</span>
+<span class="font-technical-label text-technical-label">DATASET</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">HAM10000 preprocessing, artifact removal, and balanced augmentation.</p>
+<div class="workflow-line hidden md:block"></div>
+</div>
+<!-- Node 2 -->
+<div class="workflow-node glass-panel p-6 rounded-lg flex-1 border border-outline-variant/20 relative z-10">
+<div class="flex items-center gap-3 mb-4 text-primary">
+<span class="material-symbols-outlined">architecture</span>
+<span class="font-technical-label text-technical-label">MODEL DEV</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Custom CNN architecture optimized for spatial resolution preservation.</p>
+<div class="workflow-line hidden md:block"></div>
+</div>
+<!-- Node 3 -->
+<div class="workflow-node glass-panel p-6 rounded-lg flex-1 border border-primary/30 relative z-10 shadow-[0_0_20px_rgba(136,245,255,0.05)]">
+<div class="flex items-center gap-3 mb-4 text-primary">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-technical-label text-technical-label">BENCHMARKING</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Rigorous evaluation against clinical baselines using stratified k-fold.</p>
+<div class="workflow-line hidden md:block"></div>
+</div>
+<!-- Node 4 -->
+<div class="workflow-node glass-panel p-6 rounded-lg flex-1 border border-outline-variant/20 relative z-10">
+<div class="flex items-center gap-3 mb-4 text-primary">
+<span class="material-symbols-outlined">visibility</span>
+<span class="font-technical-label text-technical-label">EXPLAINABILITY</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Grad-CAM visualization to ensure model focuses on lesion structures.</p>
+<div class="workflow-line hidden md:block"></div>
+</div>
+<!-- Node 5 -->
+<div class="workflow-node glass-panel p-6 rounded-lg flex-1 border border-outline-variant/20 relative z-10">
+<div class="flex items-center gap-3 mb-4 text-primary">
+<span class="material-symbols-outlined">cloud_done</span>
+<span class="font-technical-label text-technical-label">DEPLOYMENT</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Optimized ONNX runtime integration for sub-10ms inference.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom spacing before footer -->
+<div class="h-24"></div>
+</main>
+<!-- Footer -->
+<footer class="bg-background border-t border-outline-variant/10 full-width bottom-0 z-50">
+<div class="w-full py-8 px-gutter flex flex-col md:flex-row justify-between items-center max-w-max-width mx-auto gap-6 md:gap-0">
+<div class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">biotech</span>
+                Dermal Intelligence
+            </div>
+<div class="flex flex-wrap justify-center items-center gap-6">
+<a class="font-technical-data text-technical-data text-on-surface-variant hover:text-on-surface transition-colors focus:ring-1 focus:ring-primary rounded px-1" href="#">Methodology</a>
+<a class="font-technical-data text-technical-data text-on-surface-variant hover:text-on-surface transition-colors focus:ring-1 focus:ring-primary rounded px-1" href="#">GitHub</a>
+<a class="font-technical-data text-technical-data text-on-surface-variant hover:text-on-surface transition-colors focus:ring-1 focus:ring-primary rounded px-1" href="#">Contact</a>
+<a class="font-technical-data text-technical-data text-on-surface-variant hover:text-on-surface transition-colors focus:ring-1 focus:ring-primary rounded px-1" href="#">Privacy Policy</a>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant text-center md:text-right max-w-xs">
+                © 2024 Dermal Intelligence Lab. For research use only. Not for diagnostic use.
+            </div>
+</div>
+</footer>
+</body></html>

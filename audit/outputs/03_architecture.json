@@ -1,0 +1,66 @@
+{
+  "resnet50": {
+    "timm_id": "resnet50",
+    "total_parameters": 23522375,
+    "trainable_parameters": 23522375,
+    "output_shape": [
+      2,
+      7
+    ],
+    "classifier_type": "<class 'torch.nn.modules.linear.Linear'>"
+  },
+  "densenet121": {
+    "timm_id": "densenet121",
+    "total_parameters": 6961031,
+    "trainable_parameters": 6961031,
+    "output_shape": [
+      2,
+      7
+    ],
+    "classifier_type": "<class 'torch.nn.modules.linear.Linear'>"
+  },
+  "efficientnet_b4": {
+    "timm_id": "efficientnet_b4",
+    "total_parameters": 17561167,
+    "trainable_parameters": 17561167,
+    "output_shape": [
+      2,
+      7
+    ],
+    "classifier_type": "<class 'torch.nn.modules.linear.Linear'>"
+  },
+  "dual_branch_current_code": {
+    "total_parameters": 9031241,
+    "trainable_parameters": 9031241,
+    "shallow_branch_parameters": 5908736,
+    "deep_branch_parameters": 2332224,
+    "fusion_parameters": 788482,
+    "classifier_parameters": 1799,
+    "output_logits_shape": [
+      2,
+      7
+    ],
+    "texture_fmap_shape": [
+      2,
+      1024,
+      112,
+      112
+    ],
+    "structure_fmap_shape": [
+      2,
+      256,
+      14,
+      14
+    ],
+    "fusion_type": "scalar_gates (gate_t: Linear(1024, 1), gate_s: Linear(256, 1))"
+  },
+  "dual_branch_v1_matrix_gate": {
+    "total_parameters": 10669639,
+    "fusion_parameters": 2426880,
+    "gate_type": "Linear(1280, 1280) -> Sigmoid()"
+  },
+  "focal_loss_test": {
+    "loss_scalar": 2.400731086730957,
+    "is_nan": false
+  }
+}

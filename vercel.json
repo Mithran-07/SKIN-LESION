@@ -1,0 +1,7 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "installCommand": "cd app/skin-lesion-app && npm install",
+  "buildCommand": "cd app/skin-lesion-app && npm run build",
+  "outputDirectory": "app/skin-lesion-app/.next"
+}

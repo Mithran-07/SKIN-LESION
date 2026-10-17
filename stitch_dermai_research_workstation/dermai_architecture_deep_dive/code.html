@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DermAI | Architecture Deep Dive</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@500;600&amp;family=Inter:wght@400&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary": "#422c00",
+                    "on-secondary": "#002e6a",
+                    "on-primary": "#00363a",
+                    "secondary-container": "#0361d1",
+                    "primary-fixed-dim": "#00dbe9",
+                    "on-secondary-fixed-variant": "#004396",
+                    "on-secondary-container": "#dbe4ff",
+                    "surface-bright": "#37393e",
+                    "inverse-primary": "#006970",
+                    "tertiary-fixed-dim": "#fdbb3a",
+                    "research-violet": "#9B5CFF",
+                    "status-critical": "#FF4354",
+                    "status-warning": "#FFB800",
+                    "secondary-fixed": "#d8e2ff",
+                    "error": "#ffb4ab",
+                    "on-tertiary-container": "#6f4d00",
+                    "error-container": "#93000a",
+                    "on-background": "#e2e2e8",
+                    "secondary-fixed-dim": "#aec6ff",
+                    "on-error-container": "#ffdad6",
+                    "outline-variant": "#3b494b",
+                    "surface-container": "#1e2024",
+                    "inverse-surface": "#e2e2e8",
+                    "on-tertiary-fixed-variant": "#5f4100",
+                    "on-primary-fixed": "#002022",
+                    "surface-container-highest": "#333539",
+                    "primary": "#88f5ff",
+                    "on-primary-container": "#005d63",
+                    "primary-fixed": "#7df4ff",
+                    "on-primary-fixed-variant": "#004f54",
+                    "background": "#111318",
+                    "on-secondary-fixed": "#001a42",
+                    "secondary": "#aec6ff",
+                    "tertiary": "#ffdfb0",
+                    "surface": "#111318",
+                    "primary-container": "#00ddeb",
+                    "surface-default": "#11151C",
+                    "surface-deep": "#0D1015",
+                    "surface-container-lowest": "#0c0e12",
+                    "surface-container-high": "#282a2e",
+                    "on-surface": "#e2e2e8",
+                    "surface-container-low": "#1a1c20",
+                    "on-surface-variant": "#bac9cb",
+                    "surface-tint": "#00dbe9",
+                    "tertiary-fixed": "#ffdeab",
+                    "on-error": "#690005",
+                    "tertiary-container": "#ffbc3b",
+                    "surface-dim": "#111318",
+                    "status-benign": "#00D99A",
+                    "surface-elevated": "#151A22",
+                    "inverse-on-surface": "#2f3035",
+                    "surface-variant": "#333539",
+                    "outline": "#849395",
+                    "on-tertiary-fixed": "#271900",
+                    "surface-high": "#1A2029"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "max-width": "1440px",
+                    "panel-gap": "16px",
+                    "gutter": "24px",
+                    "margin-desktop": "32px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "headline-md": [
+                            "Geist"
+                    ],
+                    "body-sm": [
+                            "Inter"
+                    ],
+                    "body-lg": [
+                            "Inter"
+                    ],
+                    "body-md": [
+                            "Inter"
+                    ],
+                    "headline-lg": [
+                            "Geist"
+                    ],
+                    "technical-label": [
+                            "JetBrains Mono"
+                    ],
+                    "headline-lg-mobile": [
+                            "Geist"
+                    ],
+                    "technical-data": [
+                            "JetBrains Mono"
+                    ]
+            },
+            "fontSize": {
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "1.3",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "body-sm": [
+                            "14px",
+                            {
+                                    "lineHeight": "1.5",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "1.6",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "1.5",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "technical-label": [
+                            "13px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "headline-lg-mobile": [
+                            "32px",
+                            {
+                                    "lineHeight": "1.2",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "technical-data": [
+                            "12px",
+                            {
+                                    "lineHeight": "1.0",
+                                    "fontWeight": "400"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+        }
+        
+        .scanner-marquee {
+            position: relative;
+            overflow: hidden;
+            border: 1px dashed theme('colors.primary');
+        }
+        
+        .scanner-marquee::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(136, 245, 255, 0.2), transparent);
+            animation: scan 2s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .glass-panel {
+            background: rgba(17, 19, 24, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(59, 73, 75, 0.1);
+        }
+
+        .status-dot-primary {
+            box-shadow: 0 0 4px theme('colors.primary');
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-body-md text-body-md">
+<!-- TopNavBar (Shared Component) -->
+<nav class="hidden md:flex bg-background/80 backdrop-blur-xl border-b border-outline-variant/10 docked full-width top-0 sticky z-50">
+<div class="flex justify-between items-center w-full px-gutter max-w-max-width mx-auto h-16">
+<div class="font-headline-md text-headline-md font-bold tracking-tight text-primary">
+                DermAI | Dermal Intelligence Lab
+            </div>
+<div class="flex items-center gap-6">
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Home</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Workstation</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Research</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Dataset</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 opacity-80 transition-opacity" href="#">Architecture</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Explainability</a>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<span class="material-symbols-outlined hover:text-primary cursor-pointer transition-colors" data-icon="memory">memory</span>
+<span class="material-symbols-outlined hover:text-primary cursor-pointer transition-colors" data-icon="terminal">terminal</span>
+<span class="material-symbols-outlined hover:text-primary cursor-pointer transition-colors" data-icon="sensors">sensors</span>
+</div>
+</div>
+</nav>
+<div class="flex flex-1 max-w-max-width mx-auto w-full">
+<!-- SideNavBar (Shared Component - rendered for context but often hidden on deep dive, keeping as requested unified shell) -->
+<aside class="hidden lg:flex fixed left-0 top-16 h-[calc(100vh-64px)] flex-col p-unit w-64 bg-surface-container-low border-r border-outline-variant/10 z-40">
+<div class="p-4 mb-6 border-b border-outline-variant/10">
+<div class="font-headline-md text-headline-md text-primary mb-1">Dermal Intelligence</div>
+<div class="font-technical-label text-technical-label text-on-surface-variant">Clinical Research v4.2</div>
+</div>
+<nav class="flex-1 space-y-2 px-2">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/50 rounded-xl transition-all font-technical-label text-technical-label" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+                    Model Metrics
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/50 rounded-xl transition-all font-technical-label text-technical-label" href="#">
+<span class="material-symbols-outlined" data-icon="developer_board">developer_board</span>
+                    Hardware Trace
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/50 rounded-xl transition-all font-technical-label text-technical-label" href="#">
+<span class="material-symbols-outlined" data-icon="biotech">biotech</span>
+                    Diagnostics
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 bg-primary-container text-on-primary-container rounded-xl transition-all font-technical-label text-technical-label scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+                    Data Flow
+                </a>
+</nav>
+<div class="px-4 py-4">
+<button class="w-full py-2 bg-primary/10 border border-primary/30 text-primary rounded font-technical-label text-technical-label hover:bg-primary/20 transition-colors">
+                    New Analysis
+                </button>
+</div>
+<div class="mt-auto border-t border-outline-variant/10 p-2 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/50 rounded-xl transition-all font-technical-label text-technical-label" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                    Settings
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/50 rounded-xl transition-all font-technical-label text-technical-label" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+                    Support
+                </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 lg:ml-64 p-margin-mobile md:p-margin-desktop bg-surface-deep relative overflow-y-auto">
+<!-- Page Header -->
+<header class="mb-8 border-b border-outline-variant/10 pb-6">
+<div class="flex items-center gap-2 mb-2">
+<span class="w-2 h-2 rounded-full bg-primary status-dot-primary"></span>
+<span class="font-technical-label text-technical-label text-primary uppercase">Deep Dive Module</span>
+</div>
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Decoupled Dual-Branch CNN</h1>
+<p class="mt-2 font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Visualizing the structural and texture feature extraction pipeline leading to attention-gated fusion.</p>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-panel-gap">
+<!-- Main Architecture Visualization (Spans 2 columns on XL) -->
+<div class="xl:col-span-2 glass-panel rounded-xl p-6 flex flex-col h-[600px] relative">
+<div class="flex justify-between items-center mb-4 border-b border-outline-variant/10 pb-2">
+<h2 class="font-headline-md text-headline-md text-on-surface">Architecture Graph</h2>
+<span class="font-technical-label text-technical-label text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="account_tree">account_tree</span> Live Topology
+                        </span>
+</div>
+<!-- Graph Canvas Placeholder -->
+<div class="flex-1 bg-surface-container-low rounded-lg border border-outline-variant/10 relative overflow-hidden flex items-center justify-center p-4">
+<!-- Abstract representation of the graph -->
+<div class="w-full max-w-3xl flex flex-col items-center gap-8 relative z-10">
+<!-- Input -->
+<div class="bg-surface px-6 py-3 rounded border border-outline-variant/30 text-center shadow-lg">
+<div class="font-technical-label text-technical-label text-primary">INPUT TENSOR</div>
+<div class="font-technical-data text-technical-data text-on-surface-variant">224x224x3</div>
+</div>
+<!-- Branches -->
+<div class="flex justify-between w-full relative">
+<!-- Connecting lines -->
+<div class="absolute top-[-32px] left-1/2 w-1/2 h-8 border-t border-l border-primary/30 rounded-tl -translate-x-full"></div>
+<div class="absolute top-[-32px] right-1/2 w-1/2 h-8 border-t border-r border-primary/30 rounded-tr translate-x-full"></div>
+<!-- Branch 1 -->
+<div class="bg-surface px-4 py-4 rounded border border-primary/20 flex flex-col items-center w-5/12 scanner-marquee">
+<div class="font-technical-label text-technical-label text-on-surface mb-2">BRANCH 1: TEXTURE</div>
+<div class="font-technical-data text-technical-data text-on-surface-variant">Conv2D -&gt; DenseBlock -&gt; Transition</div>
+<div class="mt-2 text-xs text-primary/70">C: 3 -&gt; 1024</div>
+</div>
+<!-- Branch 2 -->
+<div class="bg-surface px-4 py-4 rounded border border-primary/20 flex flex-col items-center w-5/12">
+<div class="font-technical-label text-technical-label text-on-surface mb-2">BRANCH 2: STRUCTURAL</div>
+<div class="font-technical-data text-technical-data text-on-surface-variant">ResBlock -&gt; Bottleneck -&gt; Pool</div>
+<div class="mt-2 text-xs text-primary/70">Bottleneck: 64</div>
+</div>
+</div>
+<!-- Concat & Fusion -->
+<div class="flex flex-col items-center gap-4 relative">
+<!-- Connecting lines down -->
+<div class="absolute top-[-32px] left-1/4 w-[2px] h-8 bg-primary/30"></div>
+<div class="absolute top-[-32px] right-1/4 w-[2px] h-8 bg-primary/30"></div>
+<div class="bg-surface px-8 py-2 rounded-full border border-outline-variant/50 font-technical-label text-technical-label">
+                                    CONCATENATION
+                                </div>
+<div class="w-[2px] h-4 bg-primary/30"></div>
+<div class="bg-surface-elevated px-6 py-4 rounded-lg border border-primary/40 shadow-[0_0_15px_rgba(136,245,255,0.1)] text-center">
+<div class="font-technical-label text-technical-label text-primary">ATTENTION-GATED FEATURE FUSION</div>
+<div class="font-technical-data text-technical-data text-on-surface-variant mt-1">Spatial &amp; Channel Attention Maps</div>
+</div>
+</div>
+<!-- Output -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-[2px] h-6 bg-primary/30"></div>
+<div class="bg-research-violet/10 px-8 py-3 rounded border border-research-violet/30 text-center">
+<div class="font-technical-label text-technical-label text-research-violet">CLASSIFIER</div>
+<div class="font-technical-data text-technical-data text-on-surface-variant">Softmax Output</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Scientific Insight & Stats -->
+<div class="flex flex-col gap-panel-gap">
+<!-- Insight Panel -->
+<div class="glass-panel rounded-xl p-6 border-l-2 border-l-status-warning flex-1">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-status-warning" data-icon="science">science</span>
+                            Empirical Findings
+                        </h3>
+<div class="space-y-4 font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+<p>
+                                The Decoupled Dual-Branch approach successfully isolates texture from structural morphological features, aiming to mimic expert dermatologist visual analysis.
+                            </p>
+<div class="bg-surface p-4 rounded border border-outline-variant/20 mt-4 relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-status-warning"></div>
+<p class="font-body-md text-body-md text-on-surface italic">
+                                    "While the dual-branch architecture introduces novel attention mechanisms for feature fusion, benchmark testing revealed an unexpected performance delta."
+                                </p>
+</div>
+<p>
+                                Subsequent validation demonstrated that the monolithic <span class="text-on-surface font-medium">EfficientNet-B4</span> baseline, utilizing compound scaling, generalized more robustly across diverse lesion datasets than the custom decoupled architecture.
+                            </p>
+</div>
+</div>
+<!-- Benchmark Metrics -->
+<div class="glass-panel rounded-xl p-6">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-4 border-b border-outline-variant/10 pb-2">Benchmark Efficacy</h3>
+<div class="space-y-6">
+<!-- Custom Arch Metric -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<span class="font-technical-label text-technical-label text-on-surface-variant">Decoupled Dual-Branch (Custom)</span>
+<span class="font-technical-data text-technical-data text-on-surface">90.98%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary-container rounded-full" style="width: 90.98%;"></div>
+</div>
+</div>
+<!-- Baseline Metric -->
+<div>
+<div class="flex justify-between items-end mb-2">
+<span class="font-technical-label text-technical-label text-primary font-bold">EfficientNet-B4 (Baseline)</span>
+<span class="font-technical-data text-technical-data text-primary">95.92%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full relative" style="width: 95.92%;">
+<div class="absolute inset-0 bg-white/20 animate-pulse"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Footer (Shared Component) -->
+<footer class="bg-background border-t border-outline-variant/10 w-full py-8 px-gutter flex flex-col md:flex-row justify-between items-center z-50 relative mt-auto">
+<div class="font-headline-md text-headline-md text-on-surface mb-4 md:mb-0">
+            DermAI | Dermal Intelligence Lab
+        </div>
+<div class="flex gap-6 mb-4 md:mb-0">
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-sm text-body-sm" href="#">Methodology</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-sm text-body-sm" href="#">GitHub</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-sm text-body-sm" href="#">Contact</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-sm text-body-sm" href="#">Privacy Policy</a>
+</div>
+<div class="font-technical-data text-technical-data text-on-surface-variant">
+            © 2024 Dermal Intelligence Lab. For research use only. Not for diagnostic use.
+        </div>
+</footer>
+</body></html>

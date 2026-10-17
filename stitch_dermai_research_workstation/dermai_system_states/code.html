@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DermAI System States and Overrides</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#422c00",
+                        "on-secondary": "#002e6a",
+                        "on-primary": "#00363a",
+                        "secondary-container": "#0361d1",
+                        "primary-fixed-dim": "#00dbe9",
+                        "on-secondary-fixed-variant": "#004396",
+                        "on-secondary-container": "#dbe4ff",
+                        "surface-bright": "#37393e",
+                        "inverse-primary": "#006970",
+                        "tertiary-fixed-dim": "#fdbb3a",
+                        "research-violet": "#9B5CFF",
+                        "status-critical": "#FF4354",
+                        "status-warning": "#FFB800",
+                        "secondary-fixed": "#d8e2ff",
+                        "error": "#ffb4ab",
+                        "on-tertiary-container": "#6f4d00",
+                        "error-container": "#93000a",
+                        "on-background": "#e2e2e8",
+                        "secondary-fixed-dim": "#aec6ff",
+                        "on-error-container": "#ffdad6",
+                        "outline-variant": "#3b494b",
+                        "surface-container": "#1e2024",
+                        "inverse-surface": "#e2e2e8",
+                        "on-tertiary-fixed-variant": "#5f4100",
+                        "on-primary-fixed": "#002022",
+                        "surface-container-highest": "#333539",
+                        "primary": "#88f5ff",
+                        "on-primary-container": "#005d63",
+                        "primary-fixed": "#7df4ff",
+                        "on-primary-fixed-variant": "#004f54",
+                        "background": "#111318",
+                        "on-secondary-fixed": "#001a42",
+                        "secondary": "#aec6ff",
+                        "tertiary": "#ffdfb0",
+                        "surface": "#111318",
+                        "primary-container": "#00ddeb",
+                        "surface-default": "#11151C",
+                        "surface-deep": "#0D1015",
+                        "surface-container-lowest": "#0c0e12",
+                        "surface-container-high": "#282a2e",
+                        "on-surface": "#e2e2e8",
+                        "surface-container-low": "#1a1c20",
+                        "on-surface-variant": "#bac9cb",
+                        "surface-tint": "#00dbe9",
+                        "tertiary-fixed": "#ffdeab",
+                        "on-error": "#690005",
+                        "tertiary-container": "#ffbc3b",
+                        "surface-dim": "#111318",
+                        "status-benign": "#00D99A",
+                        "surface-elevated": "#151A22",
+                        "inverse-on-surface": "#2f3035",
+                        "surface-variant": "#333539",
+                        "outline": "#849395",
+                        "on-tertiary-fixed": "#271900",
+                        "surface-high": "#1A2029"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "max-width": "1440px",
+                        "panel-gap": "16px",
+                        "gutter": "24px",
+                        "margin-desktop": "32px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Geist"],
+                        "body-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Geist"],
+                        "technical-label": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Geist"],
+                        "technical-data": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "technical-label": ["13px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "technical-data": ["12px", { "lineHeight": "1.0", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .scanner-marquee {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(136, 245, 255, 0.8), transparent);
+            box-shadow: 0 0 8px 2px rgba(136, 245, 255, 0.5);
+            animation: scan 2s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { top: 0; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased h-screen overflow-hidden flex flex-col selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar -->
+<nav class="bg-background/80 backdrop-blur-xl docked full-width top-0 sticky border-b border-outline-variant/10 flat no shadows flex justify-between items-center w-full px-gutter max-w-max-width mx-auto h-16 z-50">
+<div class="font-headline-md text-headline-md font-bold tracking-tight text-primary">
+            DermAI | Dermal Intelligence Lab
+        </div>
+<div class="hidden md:flex gap-6 items-center">
+<a class="font-technical-label text-technical-label text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Home</a>
+<a class="font-technical-label text-technical-label text-primary font-bold border-b-2 border-primary pb-1 opacity-80 transition-opacity" href="#">Workstation</a>
+<a class="font-technical-label text-technical-label text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Research</a>
+<a class="font-technical-label text-technical-label text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Dataset</a>
+<a class="font-technical-label text-technical-label text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Architecture</a>
+<a class="font-technical-label text-technical-label text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Explainability</a>
+</div>
+<div class="flex gap-4 items-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-200">
+<span class="material-symbols-outlined">memory</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-200">
+<span class="material-symbols-outlined">terminal</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-200">
+<span class="material-symbols-outlined">sensors</span>
+</button>
+</div>
+</nav>
+<div class="flex flex-1 overflow-hidden max-w-max-width mx-auto w-full relative">
+<!-- SideNavBar -->
+<aside class="hidden md:flex bg-surface-container-low docked left-0 h-full w-64 border-r border-outline-variant/10 flat no shadows fixed left-0 top-16 h-[calc(100vh-64px)] flex flex-col p-unit z-40">
+<div class="p-4 mb-6 border-b border-outline-variant/10">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-surface-variant overflow-hidden shrink-0">
+<img alt="DermAI Research Avatar" class="w-full h-full object-cover" data-alt="A macro shot of a synthetic skin-like texture in a clinical setting, illuminated by cool, crisp lighting. The material has a subtle iridescent sheen with deep cyan highlights against a dark charcoal background. Medical laboratory context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLPDnHhZ16UZtvEpBpowZDcQWjNx18Jih0KZ1Wn-GpJEyGtRTeTe6Byil9ugU0dLorUTkymfBWuUSmWocBjvFb-ZhOxvRI1b_XwTwPE6iX2n2jMi-CrMQgfLVGjAqHBxmNjSSxKV3g3hUcKiTkINd2cwrkT3Whxq3pXoe1wwOSpMUoXC7m5X7kCH5ggoP_uqmuLIM5NzIjn58GfvOowH4p4iqSxklKH8vpdtw6TKGBMnlGZxIrSJQ_VA"/>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-primary text-sm mb-1 leading-tight">Dermal Intelligence</div>
+<div class="font-technical-label text-technical-label text-on-surface-variant text-[10px]">Clinical Research v4.2</div>
+</div>
+</div>
+<button class="w-full bg-primary text-black font-technical-label text-technical-label py-2 px-4 rounded hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]">add</span>
+                    New Analysis
+                </button>
+</div>
+<nav class="flex-1 flex flex-col gap-1 px-2">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant hover:bg-surface-variant/50 transition-all font-technical-label text-technical-label rounded-xl" href="#">
+<span class="material-symbols-outlined">analytics</span>
+                    Model Metrics
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant hover:bg-surface-variant/50 transition-all font-technical-label text-technical-label rounded-xl" href="#">
+<span class="material-symbols-outlined">developer_board</span>
+                    Hardware Trace
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 bg-primary-container text-on-primary-container rounded-xl font-technical-label text-technical-label scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">biotech</span>
+                    Diagnostics
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant hover:bg-surface-variant/50 transition-all font-technical-label text-technical-label rounded-xl" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+                    Data Flow
+                </a>
+</nav>
+<div class="mt-auto border-t border-outline-variant/10 p-2">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant hover:bg-surface-variant/50 transition-all font-technical-label text-technical-label rounded-xl" href="#">
+<span class="material-symbols-outlined">settings</span>
+                    Settings
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant hover:bg-surface-variant/50 transition-all font-technical-label text-technical-label rounded-xl" href="#">
+<span class="material-symbols-outlined">help</span>
+                    Support
+                </a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 md:ml-64 p-gutter overflow-y-auto bg-surface-deep flex flex-col gap-gutter">
+<header class="mb-4">
+<h1 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-2">Workstation States</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Diagnostics module exception handling and asynchronous task visualization.</p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-panel-gap">
+<!-- State 1: System Exception -->
+<section class="bg-surface-container rounded-xl border border-error/20 flex flex-col relative overflow-hidden h-[400px]">
+<div class="absolute inset-0 bg-error/5 pointer-events-none"></div>
+<div class="p-4 border-b border-error/10 flex items-center justify-between bg-surface-container-high z-10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error text-[18px]">warning</span>
+<span class="font-technical-label text-technical-label text-error">SYSTEM EXCEPTION</span>
+</div>
+<span class="font-technical-data text-technical-data text-on-surface-variant">ERR_INFERENCE_TIMEOUT</span>
+</div>
+<div class="flex-1 flex flex-col items-center justify-center p-8 text-center z-10">
+<div class="w-16 h-16 rounded-full bg-error/10 flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-error text-3xl">cloud_off</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Analysis Unavailable</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8 max-w-sm">Unable to complete inference. Please verify the image and model service.</p>
+<button class="border border-error text-error font-technical-label text-technical-label px-6 py-2 rounded flex items-center gap-2 hover:bg-error/10 transition-colors">
+<span class="material-symbols-outlined text-[16px]">refresh</span>
+                             RETRY
+                         </button>
+</div>
+</section>
+<!-- State 2: No Image Selected -->
+<section class="bg-surface-container rounded-xl border border-outline-variant/10 flex flex-col relative overflow-hidden h-[400px]">
+<div class="p-4 border-b border-outline-variant/10 flex items-center justify-between bg-surface-container-high z-10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">image</span>
+<span class="font-technical-label text-technical-label text-on-surface-variant">VIEWPORT IDLE</span>
+</div>
+</div>
+<div class="flex-1 flex flex-col items-center justify-center p-8 text-center border-2 border-dashed border-outline-variant/20 m-4 rounded-lg bg-surface-container-lowest">
+<div class="w-16 h-16 rounded-full bg-surface-variant flex items-center justify-center mb-6 border border-outline-variant/30">
+<span class="material-symbols-outlined text-on-surface-variant text-3xl">add_photo_alternate</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Awaiting Input</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8 max-w-sm">Load a dermoscopic image to begin clinical analysis and feature extraction.</p>
+<button class="bg-primary/10 border border-primary/30 text-primary font-technical-label text-technical-label px-6 py-2 rounded flex items-center gap-2 hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-[16px]">upload_file</span>
+                             Select Specimen
+                         </button>
+</div>
+</section>
+<!-- State 3: Processing Inference -->
+<section class="bg-surface-container rounded-xl border border-primary/20 flex flex-col relative overflow-hidden h-[400px] lg:col-span-2">
+<div class="p-4 border-b border-outline-variant/10 flex items-center justify-between bg-surface-container-high z-10">
+<div class="flex items-center gap-2">
+<span class="relative flex h-3 w-3 mr-1">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+</span>
+<span class="font-technical-label text-technical-label text-primary">PROCESSING INFERENCE</span>
+</div>
+<span class="font-technical-data text-technical-data text-primary animate-pulse">Running ResNet-50 v2...</span>
+</div>
+<div class="flex-1 relative bg-black overflow-hidden flex items-center justify-center">
+<div class="absolute inset-0 opacity-40">
+<img alt="Dermoscopic Sample" class="w-full h-full object-cover" data-alt="A highly detailed, ultra-high resolution clinical dermoscopic image showing skin lesion textures. The image is dark and moody, illuminated by specialized medical imaging lights, highlighting complex cellular structures in deep blues, grays, and subtle amber tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0XiS0C3I8-qI6mRsZd8YQMAtUFH6FGy_H_kLU7odm8y6_QQGiOE5xpHO8BLpb2rBuiN7vS8vdB4l-2_KXqgmKeEYWXbNfz8RyuqrelHWPFjpIH6EgbYvcH9GVoZgAd_0f_-EsI3u99iIlebKYnu5p6-46mGw7wibm6pD0mktUtXrUYzKXnZoc2uLqQLnt5UFTo7AGmlZm_91y7ELSkgVk1ysH2kv2fqCuhC5ox0uEtperNM6UA0voWg"/>
+</div>
+<!-- Grid Overlay -->
+<div class="absolute inset-0" style="background-image: linear-gradient(rgba(136, 245, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(136, 245, 255, 0.05) 1px, transparent 1px); background-size: 40px 40px;"></div>
+<!-- Scanner Marquee -->
+<div class="scanner-marquee"></div>
+<!-- Processing UI HUD -->
+<div class="absolute inset-0 p-8 flex flex-col justify-between pointer-events-none">
+<div class="flex justify-between">
+<div class="font-technical-data text-technical-data text-primary bg-background/50 px-2 py-1 rounded border border-primary/30 backdrop-blur-sm">
+                                     COORD: X:142 Y:892
+                                 </div>
+<div class="font-technical-data text-technical-data text-primary bg-background/50 px-2 py-1 rounded border border-primary/30 backdrop-blur-sm">
+                                     ZOOM: 400x
+                                 </div>
+</div>
+<div class="self-center flex flex-col items-center">
+<div class="w-24 h-24 border border-primary rounded-full mb-4 flex items-center justify-center relative">
+<div class="absolute inset-0 border-t-2 border-primary rounded-full animate-spin"></div>
+<span class="material-symbols-outlined text-primary text-3xl">center_focus_strong</span>
+</div>
+<div class="font-technical-label text-technical-label text-primary bg-background/80 px-4 py-2 rounded border border-primary/30 backdrop-blur-md">
+                                      EXTRACTING FEATURES... 45%
+                                  </div>
+</div>
+<div class="flex justify-between items-end">
+<div class="font-technical-data text-technical-data text-primary/70">
+                                     MODEL: DERM-AI-CORE
+                                 </div>
+<div class="font-technical-data text-technical-data text-primary/70 text-right">
+                                     LATENCY: 42ms<br/>
+                                     THROUGHPUT: 12FPS
+                                 </div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer Spacer -->
+<div class="h-16 w-full shrink-0"></div>
+</main>
+</div>
+</body></html>

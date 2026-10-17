@@ -1,0 +1,81 @@
+{
+  "baseline_established_at": "2026-10-17T04:57:00Z",
+  "git_state": {
+    "repository_path": "/Users/mithran/Documents/My projects/ADL",
+    "workspace_symlink": "/Users/mithran/Documents/ADL",
+    "original_branch": "main",
+    "modernization_branch": "feat-dermai-platform-v2",
+    "head_commit": "44d20ef",
+    "head_commit_message": "feat: DermAI UI/UX V2 complete research workstation",
+    "preserved_backups": [
+      "audit/modernization_baseline/inference_engine.py.bak",
+      "audit/modernization_baseline/main.py.bak",
+      "audit/modernization_baseline/ood_gate.py.bak",
+      "audit/modernization_baseline/fusion.py.bak",
+      "audit/modernization_baseline/dual_branch_net.py.bak"
+    ]
+  },
+  "environment": {
+    "hardware": "Apple MacBook M4 (16 GB unified memory)",
+    "os": "macOS 27.0.1 (Build 26A434)",
+    "python_version": "3.14.3",
+    "pytorch_version": "2.13.0",
+    "torchvision_version": "0.28.0",
+    "timm_version": "1.0.27",
+    "fastapi_version": "0.141.1",
+    "pydantic_version": "2.13.4",
+    "node_version": "v24.19.0",
+    "npm_version": "11.17.0",
+    "mps_available": true
+  },
+  "deployed_model_identity": {
+    "architecture": "efficientnet_b4 (timm)",
+    "parameters": 17561167,
+    "state_dict_tensors": 706,
+    "checkpoint_path": "checkpoints/efficientnet_b4/best_checkpoint.pth",
+    "checkpoint_sha256": "125340ffa59ca4a18fb0cd0bdca024eae9ca2fe3ce54d1f230b465bd9ad9658e",
+    "checkpoint_epoch": 35,
+    "canonical_classes": ["akiec", "bcc", "bkl", "df", "mel", "nv", "vasc"],
+    "preprocessing": "Resize(256, 256, BILINEAR) -> CenterCrop(224) -> ToTensor() -> Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])"
+  },
+  "baseline_tests_and_builds": {
+    "pytest_suite": "26 passed in 9.52s",
+    "nextjs_production_build": "Compiled successfully (8/8 static pages, First Load JS shared 87.3 kB)"
+  },
+  "existing_audit_artifacts": [
+    "audit/outputs/01_checkpoints.json",
+    "audit/outputs/02_dataset.json",
+    "audit/outputs/03_architecture.json",
+    "audit/outputs/04_evaluation_verified.json",
+    "audit/outputs/05_gradcam.json",
+    "audit/outputs/06_ood_audit.json",
+    "audit/modernization_baseline/baseline_performance_profile.json"
+  ],
+  "baseline_known_defects": [
+    {
+      "id": "P0-OOD-01",
+      "severity": "P0 Critical",
+      "summary": "OOD gate uses 7 demo images as MobileNetV2 prototypes; rejects 100% (50/50) of unseen in-domain HAM10000 test images at threshold 0.55 and 92% (46/50) at threshold 0.50, while falsely accepting synthetic text documents (score 0.5817)."
+    },
+    {
+      "id": "P1-ARCH-01",
+      "severity": "P1 High",
+      "summary": "models/fusion.py only implements V2 scalar gating (9,031,241 params), failing strict=True loading on V1 matrix-gated checkpoints (dual_branch_seed123 and dual_branch_seed999, 10,669,639 params)."
+    },
+    {
+      "id": "P1-PERF-01",
+      "severity": "P1 High",
+      "summary": "predict_and_explain runs preprocessing twice and EfficientNet-B4 forward pass twice, plus a separate MobileNetV2 forward pass; retains computation graph (retain_graph=True) and activation/gradient tensors between requests; permanent backward hook adds overhead to all predict() calls."
+    },
+    {
+      "id": "P1-API-01",
+      "severity": "P1 High",
+      "summary": "api/inference_engine.py loads checkpoint with strict=False, exposes local absolute filesystem paths in API responses, and lacks startup MPS warmup causing 3.77s/6.40s cold-start spikes."
+    },
+    {
+      "id": "P2-DATA-01",
+      "severity": "P2 Medium",
+      "summary": "Frontend and backend /benchmark hardcode historical summary figures without per-class precision/recall/F1, confusion matrices, or Dual-Branch V1 vs V2 versioning metadata."
+    }
+  ]
+}

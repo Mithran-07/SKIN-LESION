@@ -4,6 +4,11 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  experimental: {
+    outputFileTracingIncludes: {
+      "/api/**/*": ["./src/lib/verified_samples_cache.json"],
+    },
+  },
 };
 
 module.exports = nextConfig;

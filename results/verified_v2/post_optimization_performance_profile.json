@@ -1,0 +1,192 @@
+{
+  "timestamp_utc": "2026-10-17T05:34:32Z",
+  "device": "mps",
+  "startup_and_warmup": {
+    "total_load_and_warmup_ms": 10407.84,
+    "shader_warmup_ms": 9639.67,
+    "first_user_predict_ms": 236.38,
+    "first_user_explain_ms": 462.34
+  },
+  "warm_component_breakdown_ms": {
+    "ood_gate_from_features": {
+      "mean_ms": 2.819,
+      "median_ms": 2.76,
+      "p95_ms": 3.321,
+      "min_ms": 2.218,
+      "max_ms": 3.988,
+      "std_ms": 0.341,
+      "n": 20
+    },
+    "preprocessing": {
+      "mean_ms": 1.658,
+      "median_ms": 1.681,
+      "p95_ms": 1.923,
+      "min_ms": 1.255,
+      "max_ms": 1.945,
+      "std_ms": 0.164,
+      "n": 20
+    },
+    "model_forward_only": {
+      "mean_ms": 23.437,
+      "median_ms": 23.111,
+      "p95_ms": 25.377,
+      "min_ms": 22.261,
+      "max_ms": 25.483,
+      "std_ms": 0.909,
+      "n": 20
+    },
+    "gradcam_only": {
+      "mean_ms": 127.873,
+      "median_ms": 126.918,
+      "p95_ms": 132.537,
+      "min_ms": 124.127,
+      "max_ms": 133.607,
+      "std_ms": 2.768,
+      "n": 20
+    },
+    "engine_predict_total": {
+      "mean_ms": 28.319,
+      "median_ms": 27.643,
+      "p95_ms": 30.746,
+      "min_ms": 26.524,
+      "max_ms": 38.322,
+      "std_ms": 2.466,
+      "n": 20
+    },
+    "engine_explain_total": {
+      "mean_ms": 137.653,
+      "median_ms": 136.809,
+      "p95_ms": 141.678,
+      "min_ms": 135.047,
+      "max_ms": 143.321,
+      "std_ms": 2.208,
+      "n": 20
+    }
+  },
+  "api_end_to_end_ms": {
+    "post_predict": {
+      "mean_ms": 32.468,
+      "median_ms": 31.935,
+      "p95_ms": 36.315,
+      "min_ms": 30.109,
+      "max_ms": 36.904,
+      "std_ms": 1.966,
+      "n": 25
+    },
+    "post_predict_explain": {
+      "mean_ms": 144.119,
+      "median_ms": 143.086,
+      "p95_ms": 150.632,
+      "min_ms": 139.706,
+      "max_ms": 151.4,
+      "std_ms": 3.197,
+      "n": 25
+    }
+  },
+  "memory_profile": {
+    "before_load": {
+      "mps": {
+        "current_allocated_mb": 0.0,
+        "driver_allocated_mb": 0.453
+      },
+      "rss_mb": 365.55
+    },
+    "after_load_and_warmup": {
+      "mps": {
+        "current_allocated_mb": 67.541,
+        "driver_allocated_mb": 145.703
+      },
+      "rss_mb": 869.62
+    },
+    "trace_across_25_requests": [
+      {
+        "iteration": 1,
+        "mps": {
+          "current_allocated_mb": 69.948,
+          "driver_allocated_mb": 440.406
+        },
+        "rss_mb": 869.62
+      },
+      {
+        "iteration": 5,
+        "mps": {
+          "current_allocated_mb": 69.948,
+          "driver_allocated_mb": 440.406
+        },
+        "rss_mb": 869.62
+      },
+      {
+        "iteration": 10,
+        "mps": {
+          "current_allocated_mb": 69.948,
+          "driver_allocated_mb": 440.406
+        },
+        "rss_mb": 869.62
+      },
+      {
+        "iteration": 15,
+        "mps": {
+          "current_allocated_mb": 69.948,
+          "driver_allocated_mb": 440.406
+        },
+        "rss_mb": 869.62
+      },
+      {
+        "iteration": 20,
+        "mps": {
+          "current_allocated_mb": 69.948,
+          "driver_allocated_mb": 440.406
+        },
+        "rss_mb": 869.62
+      },
+      {
+        "iteration": 25,
+        "mps": {
+          "current_allocated_mb": 69.948,
+          "driver_allocated_mb": 440.406
+        },
+        "rss_mb": 869.62
+      }
+    ],
+    "active_hooks_after_requests": 0,
+    "retained_activations_after_requests": false
+  },
+  "before_vs_after_comparison": {
+    "first_request_predict_ms": {
+      "before": 3765.76,
+      "after": 236.38,
+      "speedup_factor": 15.93
+    },
+    "first_request_explain_ms": {
+      "before": 6396.38,
+      "after": 462.34,
+      "speedup_factor": 13.83
+    },
+    "warm_predict_median_ms": {
+      "before": 36.64,
+      "after": 27.643,
+      "reduction_pct": 24.6
+    },
+    "warm_explain_median_ms": {
+      "before": 165.706,
+      "after": 136.809,
+      "reduction_pct": 17.4
+    },
+    "api_predict_median_ms": {
+      "before": 37.69,
+      "after": 31.935,
+      "reduction_pct": 15.3
+    },
+    "api_explain_median_ms": {
+      "before": 167.069,
+      "after": 143.086,
+      "reduction_pct": 14.4
+    },
+    "mps_allocated_after_25_requests_mb": {
+      "before": 157.843,
+      "after": 69.948,
+      "saved_mb": 87.89,
+      "reduction_pct": 55.7
+    }
+  }
+}

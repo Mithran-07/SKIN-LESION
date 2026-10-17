@@ -1,0 +1,79 @@
+{
+  "prototypes_metadata": {
+    "keys": "<class 'torch.Tensor'>",
+    "classes": null,
+    "prototypes_shape": null,
+    "feature_dim": null
+  },
+  "demo_samples_validation": {
+    "akiec_sample.jpg": {
+      "score": 1.0,
+      "valid": true,
+      "domain": "dermoscopic"
+    },
+    "bcc_sample.jpg": {
+      "score": 1.0,
+      "valid": true,
+      "domain": "dermoscopic"
+    },
+    "bkl_sample.jpg": {
+      "score": 1.0,
+      "valid": true,
+      "domain": "dermoscopic"
+    },
+    "df_sample.jpg": {
+      "score": 1.0,
+      "valid": true,
+      "domain": "dermoscopic"
+    },
+    "mel_sample.jpg": {
+      "score": 1.0,
+      "valid": true,
+      "domain": "dermoscopic"
+    },
+    "nv_sample.jpg": {
+      "score": 1.0,
+      "valid": true,
+      "domain": "dermoscopic"
+    },
+    "vasc_sample.jpg": {
+      "score": 1.0,
+      "valid": true,
+      "domain": "dermoscopic"
+    }
+  },
+  "ham10000_test_sample_50": {
+    "min_score": 0.3032,
+    "max_score": 0.5406,
+    "mean_score": 0.419112,
+    "median_score": 0.40565,
+    "fraction_accepted": 0.0,
+    "false_rejection_count": 50
+  },
+  "synthetic_ood_results": {
+    "solid_black": {
+      "score": 0.4741,
+      "valid": false,
+      "domain": "non_dermoscopic",
+      "reason": "Input image deviates significantly from dermoscopic domain (Similarity: 0.4741 < 0.55)."
+    },
+    "solid_white": {
+      "score": 0.3982,
+      "valid": false,
+      "domain": "non_dermoscopic",
+      "reason": "Input image deviates significantly from dermoscopic domain (Similarity: 0.3982 < 0.55)."
+    },
+    "random_noise": {
+      "score": 0.1228,
+      "valid": false,
+      "domain": "non_dermoscopic",
+      "reason": "Input image deviates significantly from dermoscopic domain (Similarity: 0.1228 < 0.55)."
+    },
+    "text_document": {
+      "score": 0.5817,
+      "valid": true,
+      "domain": "dermoscopic",
+      "reason": "Feature similarity within expected dermoscopic domain."
+    }
+  }
+}

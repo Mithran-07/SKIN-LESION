@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DermAI - Grad-CAM Explainability</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Config -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#422c00",
+                        "on-secondary": "#002e6a",
+                        "on-primary": "#00363a",
+                        "secondary-container": "#0361d1",
+                        "primary-fixed-dim": "#00dbe9",
+                        "on-secondary-fixed-variant": "#004396",
+                        "on-secondary-container": "#dbe4ff",
+                        "surface-bright": "#37393e",
+                        "inverse-primary": "#006970",
+                        "tertiary-fixed-dim": "#fdbb3a",
+                        "research-violet": "#9B5CFF",
+                        "status-critical": "#FF4354",
+                        "status-warning": "#FFB800",
+                        "secondary-fixed": "#d8e2ff",
+                        "error": "#ffb4ab",
+                        "on-tertiary-container": "#6f4d00",
+                        "error-container": "#93000a",
+                        "on-background": "#e2e2e8",
+                        "secondary-fixed-dim": "#aec6ff",
+                        "on-error-container": "#ffdad6",
+                        "outline-variant": "#3b494b",
+                        "surface-container": "#1e2024",
+                        "inverse-surface": "#e2e2e8",
+                        "on-tertiary-fixed-variant": "#5f4100",
+                        "on-primary-fixed": "#002022",
+                        "surface-container-highest": "#333539",
+                        "primary": "#88f5ff",
+                        "on-primary-container": "#005d63",
+                        "primary-fixed": "#7df4ff",
+                        "on-primary-fixed-variant": "#004f54",
+                        "background": "#111318",
+                        "on-secondary-fixed": "#001a42",
+                        "secondary": "#aec6ff",
+                        "tertiary": "#ffdfb0",
+                        "surface": "#111318",
+                        "primary-container": "#00ddeb",
+                        "surface-default": "#11151C",
+                        "surface-deep": "#0D1015",
+                        "surface-container-lowest": "#0c0e12",
+                        "surface-container-high": "#282a2e",
+                        "on-surface": "#e2e2e8",
+                        "surface-container-low": "#1a1c20",
+                        "on-surface-variant": "#bac9cb",
+                        "surface-tint": "#00dbe9",
+                        "tertiary-fixed": "#ffdeab",
+                        "on-error": "#690005",
+                        "tertiary-container": "#ffbc3b",
+                        "surface-dim": "#111318",
+                        "status-benign": "#00D99A",
+                        "surface-elevated": "#151A22",
+                        "inverse-on-surface": "#2f3035",
+                        "surface-variant": "#333539",
+                        "outline": "#849395",
+                        "on-tertiary-fixed": "#271900",
+                        "surface-high": "#1A2029"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "max-width": "1440px",
+                        "panel-gap": "16px",
+                        "gutter": "24px",
+                        "margin-desktop": "32px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Geist"],
+                        "body-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Geist"],
+                        "technical-label": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Geist"],
+                        "technical-data": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "technical-label": ["13px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "technical-data": ["12px", { "lineHeight": "1.0", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #3b494b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #849395; }
+        
+        /* Utility for Material Symbols */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill { font-variation-settings: 'FILL' 1; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md h-screen w-screen overflow-hidden flex flex-col selection:bg-primary/20 selection:text-primary">
+<!-- TopNavBar -->
+<header class="w-full h-16 bg-background/80 backdrop-blur-xl border-b border-outline-variant/10 sticky top-0 z-50 flex-shrink-0">
+<div class="flex justify-between items-center w-full px-gutter max-w-max-width mx-auto h-16">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md font-bold tracking-tight text-primary">DermAI | Dermal Intelligence Lab</span>
+<nav class="hidden md:flex items-center gap-6 h-full pt-1">
+<a class="text-on-surface-variant font-medium font-technical-label text-technical-label hover:text-primary transition-colors duration-200" href="#">Home</a>
+<a class="text-on-surface-variant font-medium font-technical-label text-technical-label hover:text-primary transition-colors duration-200" href="#">Workstation</a>
+<a class="text-on-surface-variant font-medium font-technical-label text-technical-label hover:text-primary transition-colors duration-200" href="#">Research</a>
+<a class="text-on-surface-variant font-medium font-technical-label text-technical-label hover:text-primary transition-colors duration-200" href="#">Dataset</a>
+<a class="text-on-surface-variant font-medium font-technical-label text-technical-label hover:text-primary transition-colors duration-200" href="#">Architecture</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-technical-label text-technical-label opacity-80 transition-opacity" href="#">Explainability</a>
+</nav>
+</div>
+<div class="flex items-center gap-4 text-primary">
+<button class="hover:text-primary transition-colors duration-200 opacity-80 hover:opacity-100"><span class="material-symbols-outlined">memory</span></button>
+<button class="hover:text-primary transition-colors duration-200 opacity-80 hover:opacity-100"><span class="material-symbols-outlined">terminal</span></button>
+<button class="hover:text-primary transition-colors duration-200 opacity-80 hover:opacity-100"><span class="material-symbols-outlined">sensors</span></button>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden relative">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col w-64 h-full bg-surface-container-low border-r border-outline-variant/10 p-unit flex-shrink-0 z-40">
+<div class="p-4 mb-4">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded bg-surface-variant flex items-center justify-center overflow-hidden border border-outline-variant/20">
+<img class="w-full h-full object-cover opacity-80 mix-blend-luminosity" data-alt="A highly detailed, ultra-realistic macro photograph of synthetic skin tissue under cool blue laboratory lighting, highlighting microscopic textures and clinical precision in a dark mode setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLCBkhD-lbaeef6PC_wR_rJs2ggFIiulWIomXqeWS5YIfR1X4Uy56HzKLBAUeTaSOEKi3o1ZYtY4Y7Tx5g4BUYNtqMnVtAgOKVZLKCrGnrIj9DPab8GDp2dM6QQ5Q8dbEZgmOwdavO_vzm5BpMno0_KHO0QAcbdpxjztDZapO2AZCQZ-MNhwTPuImGbppkOjD-rB0a0uVwIuFMlpCXY32uwxprehCWgiVxLc6RnKX6k80SXZj73Ow84w"/>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-primary text-sm leading-tight">Dermal Intelligence</div>
+<div class="font-technical-label text-technical-label text-on-surface-variant text-xs opacity-70">Clinical Research v4.2</div>
+</div>
+</div>
+<button class="w-full flex items-center justify-center gap-2 bg-transparent border border-primary/30 text-primary hover:bg-primary/10 transition-all font-technical-label text-technical-label py-2 rounded-DEFAULT mb-2">
+<span class="material-symbols-outlined text-sm">add</span> New Analysis
+                </button>
+</div>
+<nav class="flex-1 flex flex-col gap-1 px-2 overflow-y-auto">
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-variant/50 transition-all font-technical-label text-technical-label rounded-lg group" href="#">
+<span class="material-symbols-outlined text-lg group-hover:text-primary transition-colors">analytics</span>
+                    Model Metrics
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-variant/50 transition-all font-technical-label text-technical-label rounded-lg group" href="#">
+<span class="material-symbols-outlined text-lg group-hover:text-primary transition-colors">developer_board</span>
+                    Hardware Trace
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 bg-primary-container text-on-primary-container rounded-xl font-technical-label text-technical-label scale-95 duration-150" href="#">
+<span class="material-symbols-outlined text-lg icon-fill">biotech</span>
+                    Diagnostics
+                </a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-on-surface-variant hover:bg-surface-variant/50 transition-all font-technical-label text-technical-label rounded-lg group" href="#">
+<span class="material-symbols-outlined text-lg group-hover:text-primary transition-colors">account_tree</span>
+                    Data Flow
+                </a>
+</nav>
+<div class="mt-auto pt-4 border-t border-outline-variant/10 px-2 pb-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/50 transition-all font-technical-label text-technical-label rounded-lg" href="#">
+<span class="material-symbols-outlined text-lg">settings</span> Settings
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-variant/50 transition-all font-technical-label text-technical-label rounded-lg" href="#">
+<span class="material-symbols-outlined text-lg">help</span> Support
+                </a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 flex flex-col min-w-0 overflow-y-auto bg-surface-default p-gutter gap-panel-gap">
+<!-- Header Section -->
+<div class="flex flex-col gap-1 mb-2">
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">Grad-CAM Explainability</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl">Model attribution visualization for the predicted category.</p>
+</div>
+<!-- Workspace Grid -->
+<div class="flex flex-col xl:flex-row gap-panel-gap h-full min-h-0">
+<!-- Visualization Area (Left/Main) -->
+<section class="flex-[2.5] flex flex-col gap-4 min-h-[600px] bg-surface-container rounded-xl border border-outline-variant/10 p-4 relative overflow-hidden">
+<!-- View Toggles -->
+<div class="flex items-center justify-between z-10 bg-surface/80 backdrop-blur-md p-2 rounded-lg border border-outline-variant/20">
+<div class="flex gap-1">
+<button class="px-4 py-1.5 font-technical-label text-technical-label text-on-surface-variant hover:text-primary transition-colors rounded-DEFAULT">ORIGINAL</button>
+<button class="px-4 py-1.5 font-technical-label text-technical-label text-on-surface-variant hover:text-primary transition-colors rounded-DEFAULT">HEATMAP</button>
+<button class="px-4 py-1.5 font-technical-label text-technical-label bg-primary/10 text-primary border border-primary/30 rounded-DEFAULT relative shadow-[0_0_8px_rgba(136,245,255,0.15)]">OVERLAY</button>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">zoom_in</span>
+<span class="font-technical-data text-technical-data">145%</span>
+</div>
+</div>
+<!-- Image Container -->
+<div class="flex-1 relative rounded-lg border border-outline-variant/10 overflow-hidden bg-black flex items-center justify-center">
+<!-- Base Image -->
+<img class="absolute inset-0 w-full h-full object-contain grayscale opacity-60" data-alt="High-resolution dermoscopic image of a skin lesion, clinical quality, neutral lighting, dark background, extreme macro detail, scientific medical imaging style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-4AfxKMLZM3h9_0hzb8B7fCt9jnfj6OgxvjKhmEvSk5Fct7-qJXD-7XUS-dwO5KQAxXGdE7h_922iKmYGZdjb1ziiVw-3AnEsx6Lea75pF5GO3oidZUkOyu77tMPa6VKsOD33YCvQMR5f4kRfeD7pCy79zppDMW0CanyfpuDwgV888PcTIECnC7V6QlxTy3MyRFt202X6ByVWuXk7JOzOz-l3pH9AdaybO02U2ywVhdmm_aCYE2oIMA"/>
+<!-- Heatmap Overlay (simulated via placeholder) -->
+<div class="absolute inset-0 w-full h-full bg-contain bg-center bg-no-repeat mix-blend-screen opacity-90 transition-opacity duration-500" data-alt="A vivid thermal heatmap overlay showing intense 'hot' regions in bright cyan and white, fading out to deep blues and black. The shape mimics an irregular organic skin lesion. Dark mode clinical diagnostic tool aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDedk63Lj0P2cKlgZyLhbSOcW3UGO5kkR1jOT6aPxcnbkcyJJlV89d5sLczC1PvFW2lhRuLL_-jMN4JNLyBhKBMuE1ID9CZtglzUMWZLq0jn1T49agr9IQ1d0YUucVxpM1yCzfWEaeo3H9VDD1oxLQse6aIkJt_Npc1-p7O0LDvvyUKTpTFVI3xbqnUjjadOmHwRI9WZ0xz3QN3kWg3dBl3o9sW_0JTIYcp60U5pi1FHAFP6mj3w2sIPQ')"></div>
+<!-- Scanning Marquee Effect -->
+<div class="absolute inset-0 border border-primary/20 pointer-events-none rounded-lg z-20"></div>
+</div>
+<!-- Legend -->
+<div class="flex items-center gap-4 bg-surface-container-highest rounded-lg p-3 border border-outline-variant/10 mt-auto">
+<span class="font-technical-label text-technical-label text-on-surface-variant whitespace-nowrap">CONTRIBUTION:</span>
+<div class="flex-1 h-2 rounded-full bg-gradient-to-r from-surface-deep via-secondary-container to-primary-fixed relative">
+<div class="absolute -top-4 left-0 font-technical-data text-technical-data text-on-surface-variant text-[10px]">LOW</div>
+<div class="absolute -top-4 right-0 font-technical-data text-technical-data text-primary text-[10px]">HIGH</div>
+</div>
+</div>
+</section>
+<!-- Controls & Info Panel (Right) -->
+<aside class="flex-1 flex flex-col gap-panel-gap min-w-[320px]">
+<!-- Controls Card -->
+<div class="bg-surface-container-low rounded-xl border border-outline-variant/10 p-5 flex flex-col gap-6">
+<div class="flex items-center gap-2 border-b border-outline-variant/10 pb-3">
+<span class="material-symbols-outlined text-primary">tune</span>
+<h2 class="font-headline-md text-headline-md text-on-surface text-lg">Visualization Parameters</h2>
+</div>
+<!-- Sliders -->
+<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<label class="font-technical-label text-technical-label text-on-surface-variant">Heatmap Opacity</label>
+<span class="font-technical-data text-technical-data text-primary">0.85</span>
+</div>
+<input class="w-full h-1 bg-surface-variant rounded-lg appearance-none cursor-pointer accent-primary focus:outline-none focus:ring-1 focus:ring-primary/50" max="100" min="0" type="range" value="85"/>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<label class="font-technical-label text-technical-label text-on-surface-variant">Intensity Threshold</label>
+<span class="font-technical-data text-technical-data text-primary">0.30</span>
+</div>
+<input class="w-full h-1 bg-surface-variant rounded-lg appearance-none cursor-pointer accent-primary focus:outline-none focus:ring-1 focus:ring-primary/50" max="100" min="0" type="range" value="30"/>
+</div>
+</div>
+<!-- Dropdown -->
+<div class="flex flex-col gap-2">
+<label class="font-technical-label text-technical-label text-on-surface-variant">Color Map Scheme</label>
+<div class="relative">
+<select class="w-full bg-surface-container border border-outline-variant/30 text-on-surface font-technical-label text-technical-label rounded-lg p-2.5 appearance-none focus:border-primary focus:ring-1 focus:ring-primary/50 hover:border-outline-variant/60 transition-colors">
+<option>JET (Default)</option>
+<option>VIRIDIS</option>
+<option>PLASMA</option>
+<option>INFERNO</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Explanation Card -->
+<div class="bg-surface-container-low rounded-xl border border-outline-variant/10 p-5 flex flex-col gap-4 flex-1">
+<div class="flex items-center gap-2 border-b border-outline-variant/10 pb-3">
+<span class="material-symbols-outlined text-primary">info</span>
+<h2 class="font-headline-md text-headline-md text-on-surface text-lg">Model Attribution</h2>
+</div>
+<div class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+<p>Highlighted regions represent spatial features that contributed to the model's classification score.</p>
+<p class="mt-4 text-sm opacity-80">The Gradient-weighted Class Activation Mapping (Grad-CAM) technique utilizes the gradients of the target concept flowing into the final convolutional layer to produce a coarse localization map highlighting important regions in the image.</p>
+</div>
+<div class="mt-auto pt-4 flex items-center justify-between border-t border-outline-variant/10">
+<span class="font-technical-label text-technical-label text-on-surface-variant">Target Class:</span>
+<span class="font-technical-data text-technical-data bg-primary/10 text-primary px-2 py-1 rounded border border-primary/20">MELANOMA (0.94)</span>
+</div>
+</div>
+</aside>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,512 @@
+{
+  "LOQ:densenet121/best_checkpoint.pth": {
+    "sha256": "d6eae64e2065e0970abb3a9ce9ff09e23e6090480afdb50a0b988a3d7d6531d7",
+    "size_bytes": 84482593,
+    "top_level_keys": [
+      "best_val_bal_acc",
+      "epoch",
+      "history",
+      "model_name",
+      "optimizer",
+      "scheduler",
+      "state_dict"
+    ],
+    "model_name": "densenet121",
+    "saved_epoch_1idx": 19,
+    "best_val_bal_acc_field": 0.7366896958017245,
+    "n_learnable_params_in_state_dict": 6961031,
+    "n_tensors": 727,
+    "history_len_epochs": 19,
+    "history_best_val_bal_acc": 0.7366896958017245,
+    "history_best_epoch_1idx": 19,
+    "val_bal_acc_at_saved_epoch": 0.7366896958017245,
+    "fusion_param_shapes": null,
+    "first_keys": [
+      "features.conv0.weight",
+      "features.norm0.weight",
+      "features.norm0.bias"
+    ]
+  },
+  "LOQ:densenet121/latest_checkpoint.pth": {
+    "sha256": "d2a78009a1ed1aad2df4114f39587a4f360cee56682d770aa27568e9d6a38cf5",
+    "size_bytes": 84483617,
+    "top_level_keys": [
+      "best_val_bal_acc",
+      "epoch",
+      "history",
+      "model_name",
+      "optimizer",
+      "scheduler",
+      "state_dict"
+    ],
+    "model_name": "densenet121",
+    "saved_epoch_1idx": 29,
+    "best_val_bal_acc_field": 0.7366896958017245,
+    "n_learnable_params_in_state_dict": 6961031,
+    "n_tensors": 727,
+    "history_len_epochs": 29,
+    "history_best_val_bal_acc": 0.7366896958017245,
+    "history_best_epoch_1idx": 19,
+    "val_bal_acc_at_saved_epoch": 0.7008038014906974,
+    "fusion_param_shapes": null,
+    "first_keys": [
+      "features.conv0.weight",
+      "features.norm0.weight",
+      "features.norm0.bias"
+    ]
+  },
+  "LOQ:dual_branch_seed123/best_checkpoint.pth": {
+    "sha256": "bcece2501c91947e253e792e6ff5b82a49e9a4b90bd0f15185e0229fd28170e4",
+    "size_bytes": 128169246,
+    "top_level_keys": [
+      "best_val_bal_acc",
+      "epoch",
+      "history",
+      "model_name",
+      "optimizer",
+      "scheduler",
+      "state_dict"
+    ],
+    "model_name": "dual_branch_seed123",
+    "saved_epoch_1idx": 49,
+    "best_val_bal_acc_field": 0.6211723227988292,
+    "n_learnable_params_in_state_dict": 17496391,
+    "n_tensors": 117,
+    "history_len_epochs": 49,
+    "history_best_val_bal_acc": 0.6211723227988292,
+    "history_best_epoch_1idx": 49,
+    "val_bal_acc_at_saved_epoch": 0.6211723227988292,
+    "fusion_param_shapes": {
+      "fusion.gate.0.weight": [
+        1280,
+        1280
+      ],
+      "fusion.gate.0.bias": [
+        1280
+      ],
+      "fusion.mlp.0.weight": [
+        512,
+        1280
+      ],
+      "fusion.mlp.0.bias": [
+        512
+      ],
+      "fusion.mlp.3.weight": [
+        256,
+        512
+      ],
+      "fusion.mlp.3.bias": [
+        256
+      ]
+    },
+    "first_keys": [
+      "shallow_branch.block1.block.0.weight",
+      "shallow_branch.block1.block.1.weight",
+      "shallow_branch.block1.block.1.bias"
+    ]
+  },
+  "LOQ:dual_branch_seed123/latest_checkpoint.pth": {
+    "sha256": "7a8a995a7416ee0454fb76b254a8c63275b707fc3c5af0e2ab39463b256abb65",
+    "size_bytes": 128169374,
+    "top_level_keys": [
+      "best_val_bal_acc",
+      "epoch",
+      "history",
+      "model_name",
+      "optimizer",
+      "scheduler",
+      "state_dict"
+    ],
+    "model_name": "dual_branch_seed123",
+    "saved_epoch_1idx": 50,
+    "best_val_bal_acc_field": 0.6211723227988292,
+    "n_learnable_params_in_state_dict": 17496391,
+    "n_tensors": 117,
+    "history_len_epochs": 50,
+    "history_best_val_bal_acc": 0.6211723227988292,
+    "history_best_epoch_1idx": 49,
+    "val_bal_acc_at_saved_epoch": 0.6154750223314988,
+    "fusion_param_shapes": {
+      "fusion.gate.0.weight": [
+        1280,
+        1280
+      ],
+      "fusion.gate.0.bias": [
+        1280
+      ],
+      "fusion.mlp.0.weight": [
+        512,
+        1280
+      ],
+      "fusion.mlp.0.bias": [
+        512
+      ],
+      "fusion.mlp.3.weight": [
+        256,
+        512
+      ],
+      "fusion.mlp.3.bias": [
+        256
+      ]
+    },
+    "first_keys": [
+      "shallow_branch.block1.block.0.weight",
+      "shallow_branch.block1.block.1.weight",
+      "shallow_branch.block1.block.1.bias"
+    ]
+  },
+  "LOQ:dual_branch_seed42/best_checkpoint.pth": {
+    "sha256": "ebf6b1253b24669f5152ea1d7bd8bee366072c2d359a5aaf475872e69e8b0c1d",
+    "size_bytes": 108508263,
+    "top_level_keys": [
+      "best_val_bal_acc",
+      "epoch",
+      "history",
+      "model_name",
+      "optimizer",
+      "scheduler",
+      "state_dict"
+    ],
+    "model_name": "dual_branch_seed42",
+    "saved_epoch_1idx": 17,
+    "best_val_bal_acc_field": 0.6244492452969651,
+    "n_learnable_params_in_state_dict": 15857993,
+    "n_tensors": 119,
+    "history_len_epochs": 17,
+    "history_best_val_bal_acc": 0.6244492452969651,
+    "history_best_epoch_1idx": 17,
+    "val_bal_acc_at_saved_epoch": 0.6244492452969651,
+    "fusion_param_shapes": {
+      "fusion.gate_t.0.weight": [
+        1,
+        1024
+      ],
+      "fusion.gate_t.0.bias": [
+        1
+      ],
+      "fusion.gate_s.0.weight": [
+        1,
+        256
+      ],
+      "fusion.gate_s.0.bias": [
+        1
+      ],
+      "fusion.mlp.0.weight": [
+        512,
+        1280
+      ],
+      "fusion.mlp.0.bias": [
+        512
+      ],
+      "fusion.mlp.3.weight": [
+        256,
+        512
+      ],
+      "fusion.mlp.3.bias": [
+        256
+      ]
+    },
+    "first_keys": [
+      "shallow_branch.block1.block.0.weight",
+      "shallow_branch.block1.block.1.weight",
+      "shallow_branch.block1.block.1.bias"
+    ]
+  },
+  "LOQ:dual_branch_seed42/latest_checkpoint.pth": {
+    "sha256": "438d3a023c7b04cd39065f6f755de2f70e85e6bf97d9caa3c53874b048bc8484",
+    "size_bytes": 108508775,
+    "top_level_keys": [
+      "best_val_bal_acc",
+      "epoch",
+      "history",
+      "model_name",
+      "optimizer",
+      "scheduler",
+      "state_dict"
+    ],
+    "model_name": "dual_branch_seed42",
+    "saved_epoch_1idx": 22,
+    "best_val_bal_acc_field": 0.6244492452969651,
+    "n_learnable_params_in_state_dict": 15857993,
+    "n_tensors": 119,
+    "history_len_epochs": 22,
+    "history_best_val_bal_acc": 0.6244492452969651,
+    "history_best_epoch_1idx": 17,
+    "val_bal_acc_at_saved_epoch": 0.5882801946318512,
+    "fusion_param_shapes": {
+      "fusion.gate_t.0.weight": [
+        1,
+        1024
+      ],
+      "fusion.gate_t.0.bias": [
+        1
+      ],
+      "fusion.gate_s.0.weight": [
+        1,
+        256
+      ],
+      "fusion.gate_s.0.bias": [
+        1
+      ],
+      "fusion.mlp.0.weight": [
+        512,
+        1280
+      ],
+      "fusion.mlp.0.bias": [
+        512
+      ],
+      "fusion.mlp.3.weight": [
+        256,
+        512
+      ],
+      "fusion.mlp.3.bias": [
+        256
+      ]
+    },
+    "first_keys": [
+      "shallow_branch.block1.block.0.weight",
+      "shallow_branch.block1.block.1.weight",
+      "shallow_branch.block1.block.1.bias"
+    ]
+  },
+  "LOQ:dual_branch_seed999/best_checkpoint.pth": {
+    "sha256": "dd1e8ac62e11ada17a081361cb4fc1d642f0be73cb6fae6a4a6c033ce0788413",
+    "size_bytes": 128167262,
+    "top_level_keys": [
+      "best_val_bal_acc",
+      "epoch",
+      "history",
+      "model_name",
+      "optimizer",
+      "scheduler",
+      "state_dict"
+    ],
+    "model_name": "dual_branch_seed999",
+    "saved_epoch_1idx": 29,
+    "best_val_bal_acc_field": 0.6375512672013643,
+    "n_learnable_params_in_state_dict": 17496391,
+    "n_tensors": 117,
+    "history_len_epochs": 29,
+    "history_best_val_bal_acc": 0.6375512672013643,
+    "history_best_epoch_1idx": 29,
+    "val_bal_acc_at_saved_epoch": 0.6375512672013643,
+    "fusion_param_shapes": {
+      "fusion.gate.0.weight": [
+        1280,
+        1280
+      ],
+      "fusion.gate.0.bias": [
+        1280
+      ],
+      "fusion.mlp.0.weight": [
+        512,
+        1280
+      ],
+      "fusion.mlp.0.bias": [
+        512
+      ],
+      "fusion.mlp.3.weight": [
+        256,
+        512
+      ],
+      "fusion.mlp.3.bias": [
+        256
+      ]
+    },
+    "first_keys": [
+      "shallow_branch.block1.block.0.weight",
+      "shallow_branch.block1.block.1.weight",
+      "shallow_branch.block1.block.1.bias"
+    ]
+  },
+  "LOQ:dual_branch_seed999/latest_checkpoint.pth": {
+    "sha256": "74b47e92d8c04a8371aceab9b278f603cca58bdc55e83ee2e664f37d60daf4fa",
+    "size_bytes": 128168286,
+    "top_level_keys": [
+      "best_val_bal_acc",
+      "epoch",
+      "history",
+      "model_name",
+      "optimizer",
+      "scheduler",
+      "state_dict"
+    ],
+    "model_name": "dual_branch_seed999",
+    "saved_epoch_1idx": 39,
+    "best_val_bal_acc_field": 0.6375512672013643,
+    "n_learnable_params_in_state_dict": 17496391,
+    "n_tensors": 117,
+    "history_len_epochs": 39,
+    "history_best_val_bal_acc": 0.6375512672013643,
+    "history_best_epoch_1idx": 29,
+    "val_bal_acc_at_saved_epoch": 0.5989785935269655,
+    "fusion_param_shapes": {
+      "fusion.gate.0.weight": [
+        1280,
+        1280
+      ],
+      "fusion.gate.0.bias": [
+        1280
+      ],
+      "fusion.mlp.0.weight": [
+        512,
+        1280
+      ],
+      "fusion.mlp.0.bias": [
+        512
+      ],
+      "fusion.mlp.3.weight": [
+        256,
+        512
+      ],
+      "fusion.mlp.3.bias": [
+        256
+      ]
+    },
+    "first_keys": [
+      "shallow_branch.block1.block.0.weight",
+      "shallow_branch.block1.block.1.weight",
+      "shallow_branch.block1.block.1.bias"
+    ]
+  },
+  "LOQ:efficientnet_b4/best_checkpoint.pth": {
+    "sha256": "125340ffa59ca4a18fb0cd0bdca024eae9ca2fe3ce54d1f230b465bd9ad9658e",
+    "size_bytes": 211867594,
+    "top_level_keys": [
+      "best_val_bal_acc",
+      "epoch",
+      "history",
+      "model_name",
+      "optimizer",
+      "scheduler",
+      "state_dict"
+    ],
+    "model_name": "efficientnet_b4",
+    "saved_epoch_1idx": 35,
+    "best_val_bal_acc_field": 0.745788602262049,
+    "n_learnable_params_in_state_dict": 17561167,
+    "n_tensors": 706,
+    "history_len_epochs": 35,
+    "history_best_val_bal_acc": 0.745788602262049,
+    "history_best_epoch_1idx": 35,
+    "val_bal_acc_at_saved_epoch": 0.745788602262049,
+    "fusion_param_shapes": null,
+    "first_keys": [
+      "conv_stem.weight",
+      "bn1.weight",
+      "bn1.bias"
+    ]
+  },
+  "LOQ:efficientnet_b4/latest_checkpoint.pth": {
+    "sha256": "cf51a16166040da9833aa061089a4078f077ab5365adf14e267e72b343e3ea37",
+    "size_bytes": 211868618,
+    "top_level_keys": [
+      "best_val_bal_acc",
+      "epoch",
+      "history",
+      "model_name",
+      "optimizer",
+      "scheduler",
+      "state_dict"
+    ],
+    "model_name": "efficientnet_b4",
+    "saved_epoch_1idx": 45,
+    "best_val_bal_acc_field": 0.745788602262049,
+    "n_learnable_params_in_state_dict": 17561167,
+    "n_tensors": 706,
+    "history_len_epochs": 45,
+    "history_best_val_bal_acc": 0.745788602262049,
+    "history_best_epoch_1idx": 35,
+    "val_bal_acc_at_saved_epoch": 0.7417446155655354,
+    "fusion_param_shapes": null,
+    "first_keys": [
+      "conv_stem.weight",
+      "bn1.weight",
+      "bn1.bias"
+    ]
+  },
+  "LOQ:resnet50/best_checkpoint.pth": {
+    "sha256": "d65e1189eaff712a9f092c0396b189a3289f6095fc965c5ac5697a5b65782380",
+    "size_bytes": 282739854,
+    "top_level_keys": [
+      "best_val_bal_acc",
+      "epoch",
+      "history",
+      "model_name",
+      "optimizer",
+      "scheduler",
+      "state_dict"
+    ],
+    "model_name": "resnet50",
+    "saved_epoch_1idx": 30,
+    "best_val_bal_acc_field": 0.7453056538885046,
+    "n_learnable_params_in_state_dict": 23522375,
+    "n_tensors": 320,
+    "history_len_epochs": 30,
+    "history_best_val_bal_acc": 0.7453056538885046,
+    "history_best_epoch_1idx": 30,
+    "val_bal_acc_at_saved_epoch": 0.7453056538885046,
+    "fusion_param_shapes": null,
+    "first_keys": [
+      "conv1.weight",
+      "bn1.weight",
+      "bn1.bias"
+    ]
+  },
+  "LOQ:resnet50/latest_checkpoint.pth": {
+    "sha256": "8fe6d0700a066d4a40cfeee2ce594fe9198cd0233d673e53d832a3b9be8862bf",
+    "size_bytes": 282740814,
+    "top_level_keys": [
+      "best_val_bal_acc",
+      "epoch",
+      "history",
+      "model_name",
+      "optimizer",
+      "scheduler",
+      "state_dict"
+    ],
+    "model_name": "resnet50",
+    "saved_epoch_1idx": 40,
+    "best_val_bal_acc_field": 0.7453056538885046,
+    "n_learnable_params_in_state_dict": 23522375,
+    "n_tensors": 320,
+    "history_len_epochs": 40,
+    "history_best_val_bal_acc": 0.7453056538885046,
+    "history_best_epoch_1idx": 30,
+    "val_bal_acc_at_saved_epoch": 0.712189430128194,
+    "fusion_param_shapes": null,
+    "first_keys": [
+      "conv1.weight",
+      "bn1.weight",
+      "bn1.bias"
+    ]
+  },
+  "MAC:efficientnet_b4/best_checkpoint.pth": {
+    "sha256": "125340ffa59ca4a18fb0cd0bdca024eae9ca2fe3ce54d1f230b465bd9ad9658e",
+    "size_bytes": 211867594,
+    "top_level_keys": [
+      "best_val_bal_acc",
+      "epoch",
+      "history",
+      "model_name",
+      "optimizer",
+      "scheduler",
+      "state_dict"
+    ],
+    "model_name": "efficientnet_b4",
+    "saved_epoch_1idx": 35,
+    "best_val_bal_acc_field": 0.745788602262049,
+    "n_learnable_params_in_state_dict": 17561167,
+    "n_tensors": 706,
+    "history_len_epochs": 35,
+    "history_best_val_bal_acc": 0.745788602262049,
+    "history_best_epoch_1idx": 35,
+    "val_bal_acc_at_saved_epoch": 0.745788602262049,
+    "fusion_param_shapes": null,
+    "first_keys": [
+      "conv_stem.weight",
+      "bn1.weight",
+      "bn1.bias"
+    ]
+  }
+}

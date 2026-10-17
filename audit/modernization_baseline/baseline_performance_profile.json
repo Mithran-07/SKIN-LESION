@@ -1,0 +1,151 @@
+{
+  "phase": "baseline_pre_optimization",
+  "timestamp": "2026-10-17T04:56:10Z",
+  "environment": {
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "processor": "arm",
+    "python": "3.14.3",
+    "torch": "2.13.0",
+    "torchvision": "0.28.0",
+    "timm": "1.0.27",
+    "fastapi": "0.141.1",
+    "pydantic": "2.13.4",
+    "device": "mps",
+    "mps_available": true
+  },
+  "model_loading": {
+    "load_time_ms": 1259.27,
+    "mps_before_mb": {
+      "current_allocated_mb": 0.0,
+      "driver_allocated_mb": 0.453
+    },
+    "mps_after_mb": {
+      "current_allocated_mb": 82.636,
+      "driver_allocated_mb": 296.453
+    },
+    "rss_before_mb": 363.53,
+    "rss_after_mb": 539.45
+  },
+  "cold_start": {
+    "first_predict_ms": 3765.76,
+    "first_explain_ms": 6396.38
+  },
+  "component_latency_20_runs": {
+    "ood_gate": {
+      "mean_ms": 9.467,
+      "median_ms": 9.52,
+      "p95_ms": 10.41,
+      "min_ms": 8.254,
+      "max_ms": 11.087,
+      "std_ms": 0.638,
+      "n": 20
+    },
+    "preprocessing": {
+      "mean_ms": 0.897,
+      "median_ms": 0.894,
+      "p95_ms": 0.968,
+      "min_ms": 0.826,
+      "max_ms": 1.074,
+      "std_ms": 0.06,
+      "n": 20
+    },
+    "model_forward_only": {
+      "mean_ms": 25.049,
+      "median_ms": 25.134,
+      "p95_ms": 26.039,
+      "min_ms": 22.909,
+      "max_ms": 26.5,
+      "std_ms": 0.76,
+      "n": 20
+    },
+    "gradcam_only": {
+      "mean_ms": 128.631,
+      "median_ms": 128.313,
+      "p95_ms": 130.297,
+      "min_ms": 127.254,
+      "max_ms": 131.791,
+      "std_ms": 1.093,
+      "n": 20
+    },
+    "engine_predict_total": {
+      "mean_ms": 36.355,
+      "median_ms": 36.64,
+      "p95_ms": 38.138,
+      "min_ms": 31.374,
+      "max_ms": 38.332,
+      "std_ms": 1.499,
+      "n": 20
+    },
+    "engine_explain_total": {
+      "mean_ms": 165.171,
+      "median_ms": 165.706,
+      "p95_ms": 166.64,
+      "min_ms": 161.797,
+      "max_ms": 167.75,
+      "std_ms": 1.691,
+      "n": 20
+    }
+  },
+  "end_to_end_api_25_runs": {
+    "post_predict": {
+      "mean_ms": 37.595,
+      "median_ms": 37.69,
+      "p95_ms": 39.137,
+      "min_ms": 34.012,
+      "max_ms": 42.326,
+      "std_ms": 1.562,
+      "n": 25
+    },
+    "post_predict_explain": {
+      "mean_ms": 167.396,
+      "median_ms": 167.069,
+      "p95_ms": 170.301,
+      "min_ms": 163.268,
+      "max_ms": 179.69,
+      "std_ms": 2.963,
+      "n": 25
+    }
+  },
+  "memory_trace_over_25_requests": [
+    {
+      "iteration": 1,
+      "current_allocated_mb": 157.836,
+      "driver_allocated_mb": 547.328,
+      "max_rss_mb": 747.61
+    },
+    {
+      "iteration": 5,
+      "current_allocated_mb": 157.836,
+      "driver_allocated_mb": 547.328,
+      "max_rss_mb": 747.86
+    },
+    {
+      "iteration": 10,
+      "current_allocated_mb": 157.836,
+      "driver_allocated_mb": 547.328,
+      "max_rss_mb": 748.11
+    },
+    {
+      "iteration": 15,
+      "current_allocated_mb": 157.836,
+      "driver_allocated_mb": 547.328,
+      "max_rss_mb": 748.34
+    },
+    {
+      "iteration": 20,
+      "current_allocated_mb": 157.836,
+      "driver_allocated_mb": 547.328,
+      "max_rss_mb": 748.67
+    },
+    {
+      "iteration": 25,
+      "current_allocated_mb": 157.836,
+      "driver_allocated_mb": 547.328,
+      "max_rss_mb": 748.89
+    }
+  ],
+  "retained_gradcam_tensors_after_request": {
+    "activations_retained": true,
+    "gradients_retained": true
+  }
+}
